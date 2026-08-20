@@ -62,4 +62,11 @@
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
   </url>
+
+  <!-- モールスマスター (Morse Master) -->
+  <url>
+    <loc>https://c1t0d0s0.github.io/morse-master/index.html</loc>
+    <lastmod>2026-08-20</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
