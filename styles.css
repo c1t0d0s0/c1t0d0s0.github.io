@@ -225,61 +225,12 @@ a {
   display: block;
 }
 
-/* --- Hero Section --- */
-.hero {
-  position: relative;
-  z-index: 1;
-  max-width: 900px;
-  margin: 4rem auto 2.5rem;
-  padding: 0 1.5rem;
-  text-align: center;
-}
-
-.hero-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.35rem 1rem;
-  border-radius: var(--radius-full);
-  background: rgba(99, 102, 241, 0.1);
-  border: 1px solid rgba(99, 102, 241, 0.25);
-  color: var(--accent-indigo);
-  font-size: 0.85rem;
-  font-weight: 600;
-  margin-bottom: 1.5rem;
-}
-
-[data-theme="light"] .hero-badge {
-  background: rgba(99, 102, 241, 0.08);
-}
-
-.hero-title {
-  font-size: clamp(2.2rem, 5vw, 3.4rem);
-  font-weight: 800;
-  line-height: 1.15;
-  letter-spacing: -0.03em;
-  margin-bottom: 1.25rem;
-}
-
-.hero-title span {
-  background: var(--gradient-brand);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-.hero-subtitle {
-  font-size: clamp(1rem, 2.5vw, 1.2rem);
-  color: var(--text-secondary);
-  max-width: 650px;
-  margin: 0 auto 2.5rem;
-}
-
 /* --- Search & Category Filter Section --- */
 .filter-section {
   position: relative;
   z-index: 1;
   max-width: 1200px;
-  margin: 0 auto 2.5rem;
+  margin: 2.5rem auto;
   padding: 0 1.5rem;
   display: flex;
   flex-direction: column;
@@ -584,10 +535,6 @@ a {
 
 /* --- Responsive Layout Adjustments --- */
 @media (max-width: 768px) {
-  .hero {
-    margin: 2.5rem auto 2rem;
-  }
-  
   .cards-grid {
     grid-template-columns: 1fr;
     gap: 1.5rem;
@@ -598,6 +545,6 @@ a {
   }
   
   .filter-section {
-    margin-bottom: 2rem;
+    margin: 1.75rem auto 2rem;
   }
 }

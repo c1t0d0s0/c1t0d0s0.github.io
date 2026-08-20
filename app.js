@@ -9,7 +9,6 @@ const I18N_DATA = {
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
-    heroSubtitle: '思考を刺激するパズルからコレクション、アイデアツールまで。<br>c1t0d0s0 が制作したWebアプリケーションのポータルサイトです。',
     searchPlaceholder: 'プロジェクトを検索...',
     searchAria: 'プロジェクトを検索',
     categories: {
@@ -66,7 +65,6 @@ const I18N_DATA = {
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
-    heroSubtitle: 'From mind-bending puzzles to interactive collections and productivity tools.<br>A portal of web applications crafted by c1t0d0s0.',
     searchPlaceholder: 'Search projects...',
     searchAria: 'Search projects',
     categories: {
@@ -161,13 +159,7 @@ function applyLanguage(lang) {
     metaDesc.setAttribute('content', data.metaDesc);
   }
 
-  // 3. Update Hero Subtitle
-  const heroSubtitle = document.getElementById('heroSubtitle');
-  if (heroSubtitle) {
-    heroSubtitle.innerHTML = data.heroSubtitle;
-  }
-
-  // 4. Update Search Input
+  // 3. Update Search Input
   const searchInput = document.getElementById('searchInput');
   if (searchInput) {
     searchInput.placeholder = data.searchPlaceholder;
