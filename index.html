@@ -1,13 +1,22 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-RXPWGDLM9J"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-RXPWGDLM9J');
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>c1t0d0s0 | Web Applications & Tools Portal</title>
   
   <!-- SEO & Meta Tags -->
-  <meta name="description" content="c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボなどにアクセスできます。">
-  <meta name="keywords" content="c1t0d0s0, 面積迷路, マンホールカード, NoxMind, 世界遺産マスター, LexDrop, Unit Converter, 元素ラボ, Element Lab, 単位変換, 周期表, 化学反応, Webアプリ, ポータル">
+  <meta name="description" content="c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲームなどにアクセスできます。">
+  <meta name="keywords" content="c1t0d0s0, 面積迷路, マンホールカード, NoxMind, 世界遺産マスター, LexDrop, Unit Converter, 元素ラボ, ライフゲーム, Conway's Game of Life, セルオートマトン, Webアプリ, ポータル">
   <meta name="author" content="c1t0d0s0">
 
   <!-- Open Graph / Facebook -->
@@ -353,6 +362,43 @@
           </p>
           <div class="card-footer">
             <span class="card-url-domain">element-lab</span>
+            <span class="card-action-btn">
+              サイトを開く
+              <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- 8. ライフゲーム (Conway's Game of Life) -->
+      <a href="https://c1t0d0s0.github.io/conway-life/index.html" 
+         target="_blank" 
+         rel="noopener noreferrer" 
+         class="app-card" 
+         data-category="puzzle" 
+         data-title="ライフゲーム Conway's Game of Life ライフ ゲーム セルオートマトン シミュレーション 科学 物理 生命" 
+         data-desc="シンプルかつ奥深い生命シミュレーション。世代交代のルールが生み出す無限のパターンや宇宙船、振動子を観察・探索。">
+        <div class="card-media">
+          <img src="assets/images/conway-life.jpg" alt="ライフゲームのイメージ" class="card-img" loading="lazy">
+          <span class="card-badge badge-puzzle">Simulation</span>
+        </div>
+        <div class="card-body">
+          <h2 class="card-title">
+            ライフゲーム
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+              <polyline points="15 3 21 3 21 9"></polyline>
+              <line x1="10" y1="14" x2="21" y2="3"></line>
+            </svg>
+          </h2>
+          <p class="card-desc">
+            生き残りと死滅のシンプルなルールから生まれる驚異の生命シミュレーション。グライダーやパルサーなど多彩なプリセットや自由なセル描画を楽しめます。
+          </p>
+          <div class="card-footer">
+            <span class="card-url-domain">conway-life</span>
             <span class="card-action-btn">
               サイトを開く
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
