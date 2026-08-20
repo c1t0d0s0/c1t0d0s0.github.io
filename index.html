@@ -10,26 +10,36 @@
 
     gtag('config', 'G-RXPWGDLM9J');
   </script>
+  <script>
+    /* Early language detection to set html lang attribute immediately */
+    (function() {
+      try {
+        var stored = localStorage.getItem('lang');
+        var isJa = stored ? (stored === 'ja') : ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase().startsWith('ja');
+        document.documentElement.lang = isJa ? 'ja' : 'en';
+      } catch (e) {}
+    })();
+  </script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>c1t0d0s0 | Web Applications & Tools Portal</title>
+  <title id="pageTitle">c1t0d0s0 | Web Applications & Tools Portal</title>
   
   <!-- SEO & Meta Tags -->
-  <meta name="description" content="c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスターなどにアクセスできます。">
-  <meta name="keywords" content="c1t0d0s0, 面積迷路, マンホールカード, NoxMind, 世界遺産マスター, LexDrop, Unit Converter, 元素ラボ, ライフゲーム, モールスマスター, Morse Master, モールス信号, Webアプリ, ポータル">
+  <meta name="description" id="metaDescription" content="c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスターなどにアクセスできます。">
+  <meta name="keywords" content="c1t0d0s0, 面積迷路, Area Mazes, マンホールカード, Manhole Cards, NoxMind, 世界遺産マスター, World Heritage Quiz, LexDrop, Unit Converter, 元素ラボ, Element Lab, ライフゲーム, Conway's Game of Life, モールスマスター, Morse Master, モールス信号, Webアプリ, ポータル">
   <meta name="author" content="c1t0d0s0">
 
   <!-- Open Graph / Facebook -->
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://c1t0d0s0.github.io/">
-  <meta property="og:title" content="c1t0d0s0 | Portal">
-  <meta property="og:description" content="c1t0d0s0が制作したWebアプリケーション・ツールのリンク集ポータル">
+  <meta property="og:title" id="ogTitle" content="c1t0d0s0 | Portal">
+  <meta property="og:description" id="ogDescription" content="c1t0d0s0が制作したWebアプリケーション・ツールのリンク集ポータル">
   <meta property="og:image" content="https://c1t0d0s0.github.io/assets/images/area-maze.jpg">
 
   <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="c1t0d0s0 | Portal">
-  <meta name="twitter:description" content="c1t0d0s0 Web Applications & Tools Portal">
+  <meta name="twitter:title" id="twitterTitle" content="c1t0d0s0 | Portal">
+  <meta name="twitter:description" id="twitterDescription" content="c1t0d0s0 Web Applications & Tools Portal">
 
   <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>✨</text></svg>">
@@ -53,6 +63,17 @@
       </a>
 
       <div class="nav-actions">
+        <!-- Language Switcher Button -->
+        <button type="button" class="lang-toggle-btn" id="langToggleBtn" aria-label="Switch to English" title="Switch Language">
+          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="2" y1="12" x2="22" y2="12"></line>
+            <path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+          </svg>
+          <span id="langText">EN</span>
+        </button>
+
+        <!-- Theme Toggle Button -->
         <button type="button" class="theme-toggle-btn" id="themeToggleBtn" aria-label="テーマ切替">
           <!-- Moon Icon (Dark Mode) -->
           <svg class="theme-icon-moon" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -77,16 +98,16 @@
 
   <!-- Hero Section -->
   <section class="hero">
-    <div class="hero-badge">
+    <div class="hero-badge" id="heroBadge">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
       </svg>
-      Curated Digital Collection
+      <span id="heroBadgeText">Curated Digital Collection</span>
     </div>
-    <h1 class="hero-title">
+    <h1 class="hero-title" id="heroTitle">
       Creative Projects & <span>Web Applications</span>
     </h1>
-    <p class="hero-subtitle">
+    <p class="hero-subtitle" id="heroSubtitle">
       思考を刺激するパズルからコレクション、アイデアツールまで。<br>c1t0d0s0 が制作したWebアプリケーションのポータルサイトです。
     </p>
   </section>
@@ -102,11 +123,11 @@
     </div>
 
     <div class="category-tags" id="categoryTags">
-      <button type="button" class="tag-btn active" data-category="all">すべて</button>
-      <button type="button" class="tag-btn" data-category="puzzle">パズル・ゲーム</button>
-      <button type="button" class="tag-btn" data-category="collection">コレクション</button>
-      <button type="button" class="tag-btn" data-category="tool">思考ツール</button>
-      <button type="button" class="tag-btn" data-category="education">クイズ・学習</button>
+      <button type="button" class="tag-btn active" data-category="all" data-i18n-cat="all">すべて</button>
+      <button type="button" class="tag-btn" data-category="puzzle" data-i18n-cat="puzzle">パズル・ゲーム</button>
+      <button type="button" class="tag-btn" data-category="collection" data-i18n-cat="collection">コレクション</button>
+      <button type="button" class="tag-btn" data-category="tool" data-i18n-cat="tool">思考ツール</button>
+      <button type="button" class="tag-btn" data-category="education" data-i18n-cat="education">クイズ・学習</button>
     </div>
   </section>
 
@@ -119,16 +140,19 @@
          target="_blank" 
          rel="noopener noreferrer" 
          class="app-card" 
+         data-app-id="area-mazes"
          data-category="puzzle" 
-         data-title="面積迷路 Area Mazes 算数パズル 脳トレ" 
-         data-desc="ひらめきと理論的思考を試す面積パズル。四則演算のみで未知の長さや面積を解き明かすロジックゲーム。">
+         data-title-ja="面積迷路 Area Mazes 算数パズル 脳トレ" 
+         data-title-en="Area Mazes 面積迷路 Math Puzzle Brain Training Logic geometry rectangle arithmetic" 
+         data-desc-ja="ひらめきと理論的思考を試す面積パズル。四則演算のみで未知の長さや面積を解き明かすロジックゲーム。"
+         data-desc-en="A logic puzzle that trains intuition and reasoning. Find unknown lengths and areas using rectangle proportions and basic arithmetic.">
         <div class="card-media">
-          <img src="assets/images/area-maze.jpg" alt="面積迷路のイメージ" class="card-img" loading="lazy">
+          <img src="assets/images/area-maze.jpg" alt="面積迷路 Area Mazes" class="card-img" loading="lazy">
           <span class="card-badge badge-puzzle">Puzzle</span>
         </div>
         <div class="card-body">
           <h2 class="card-title">
-            面積迷路
+            <span class="card-title-text">面積迷路</span>
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
@@ -141,7 +165,7 @@
           <div class="card-footer">
             <span class="card-url-domain">area-mazes</span>
             <span class="card-action-btn">
-              サイトを開く
+              <span class="card-action-text">サイトを開く</span>
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -156,16 +180,19 @@
          target="_blank" 
          rel="noopener noreferrer" 
          class="app-card" 
+         data-app-id="manhole"
          data-category="collection" 
-         data-title="マンホールカード Manhole Cards コレクション マップ" 
-         data-desc="日本全国のご当地デザインマンホールカードを閲覧・管理・探索できるインタラクティブコレクション。">
+         data-title-ja="マンホールカード Manhole Cards コレクション マップ" 
+         data-title-en="Manhole Cards マンホールカード collection map japan travel design regional culture landmarks" 
+         data-desc-ja="日本全国のご当地デザインマンホールカードを閲覧・管理・探索できるインタラクティブコレクション。"
+         data-desc-en="An interactive collection viewer and map of Japan's artistic manhole cards. Explore vibrant regional designs rich in local culture and history.">
         <div class="card-media">
-          <img src="assets/images/manhole.jpg" alt="マンホールカードのイメージ" class="card-img" loading="lazy">
+          <img src="assets/images/manhole.jpg" alt="マンホールカード Manhole Cards" class="card-img" loading="lazy">
           <span class="card-badge badge-collection">Collection</span>
         </div>
         <div class="card-body">
           <h2 class="card-title">
-            マンホールカード
+            <span class="card-title-text">マンホールカード</span>
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
@@ -178,7 +205,7 @@
           <div class="card-footer">
             <span class="card-url-domain">manhole</span>
             <span class="card-action-btn">
-              サイトを開く
+              <span class="card-action-text">サイトを開く</span>
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -193,16 +220,19 @@
          target="_blank" 
          rel="noopener noreferrer" 
          class="app-card" 
+         data-app-id="noxmind"
          data-category="tool" 
-         data-title="NoxMind マインドマップ 思考ツール ブレインストーミング アイデア" 
-         data-desc="アイディアの構造化やブレインストーミングをサポートするグラフィカル思考ノードツール。">
+         data-title-ja="NoxMind マインドマップ 思考ツール ブレインストーミング アイデア" 
+         data-title-en="NoxMind mind map brainstorming idea productivity nodes visual diagram thinking tool" 
+         data-desc-ja="アイディアの構造化やブレインストーミングをサポートするグラフィカル思考ノードツール。"
+         data-desc-en="A graphical thinking canvas to brainstorm freely and structure complex ideas. Connect concept nodes seamlessly to unlock creative inspiration.">
         <div class="card-media">
-          <img src="assets/images/noxmind.jpg" alt="NoxMindのイメージ" class="card-img" loading="lazy">
+          <img src="assets/images/noxmind.jpg" alt="NoxMind" class="card-img" loading="lazy">
           <span class="card-badge badge-tool">Productivity</span>
         </div>
         <div class="card-body">
           <h2 class="card-title">
-            NoxMind
+            <span class="card-title-text">NoxMind</span>
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
@@ -215,7 +245,7 @@
           <div class="card-footer">
             <span class="card-url-domain">noxmind</span>
             <span class="card-action-btn">
-              サイトを開く
+              <span class="card-action-text">サイトを開く</span>
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -230,16 +260,19 @@
          target="_blank" 
          rel="noopener noreferrer" 
          class="app-card" 
+         data-app-id="world-heritage-quiz"
          data-category="education" 
-         data-title="世界遺産マスター World Heritage Quiz クイズ 図鑑 歴史 地理" 
-         data-desc="世界各地の文化遺産・自然遺産の知識を楽しく深めるクイズ＆リファレンスアプリケーション。">
+         data-title-ja="世界遺産マスター World Heritage Quiz クイズ 図鑑 歴史 地理" 
+         data-title-en="World Heritage Master 世界遺産マスター UNESCO quiz travel history geography monuments nature culture" 
+         data-desc-ja="世界各地の文化遺産・自然遺産の知識を楽しく深めるクイズ＆リファレンスアプリケーション。"
+         data-desc-en="A knowledge quiz and interactive guide exploring magnificent UNESCO cultural and natural heritage sites across the globe.">
         <div class="card-media">
-          <img src="assets/images/world-heritage.jpg" alt="世界遺産マスターのイメージ" class="card-img" loading="lazy">
+          <img src="assets/images/world-heritage.jpg" alt="世界遺産マスター World Heritage Master" class="card-img" loading="lazy">
           <span class="card-badge badge-education">Education</span>
         </div>
         <div class="card-body">
           <h2 class="card-title">
-            世界遺産マスター
+            <span class="card-title-text">世界遺産マスター</span>
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
@@ -252,7 +285,7 @@
           <div class="card-footer">
             <span class="card-url-domain">world-heritage-quiz</span>
             <span class="card-action-btn">
-              サイトを開く
+              <span class="card-action-text">サイトを開く</span>
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -267,16 +300,19 @@
          target="_blank" 
          rel="noopener noreferrer" 
          class="app-card" 
+         data-app-id="lexidrop"
          data-category="puzzle" 
-         data-title="LexDrop LexiDrop レキシドロップ 英単語 タイピング ゲーム 脳トレ 英語学習" 
-         data-desc="落下する英単語ブロックをタイピングして消去！ネイティブ英語発音と日本語訳で楽しく学べる新感覚英単語タイピングゲーム。">
+         data-title-ja="LexDrop LexiDrop レキシドロップ 英単語 タイピング ゲーム 脳トレ 英語学習" 
+         data-title-en="LexDrop LexiDrop english words typing game vocabulary pronunciation audio education brain training" 
+         data-desc-ja="落下する英単語ブロックをタイピングして消去！ネイティブ英語発音と日本語訳で楽しく学べる新感覚英単語タイピングゲーム。"
+         data-desc-en="An exhilarating typing game where you blast falling word blocks! Features native English audio pronunciations and translations for intuitive learning.">
         <div class="card-media">
-          <img src="assets/images/lexdrop.jpg" alt="LexDropのイメージ" class="card-img" loading="lazy">
+          <img src="assets/images/lexdrop.jpg" alt="LexDrop" class="card-img" loading="lazy">
           <span class="card-badge badge-puzzle">Puzzle</span>
         </div>
         <div class="card-body">
           <h2 class="card-title">
-            LexDrop
+            <span class="card-title-text">LexDrop</span>
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
@@ -289,7 +325,7 @@
           <div class="card-footer">
             <span class="card-url-domain">lexidrop</span>
             <span class="card-action-btn">
-              サイトを開く
+              <span class="card-action-text">サイトを開く</span>
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -304,16 +340,19 @@
          target="_blank" 
          rel="noopener noreferrer" 
          class="app-card" 
+         data-app-id="unit-converter"
          data-category="tool" 
-         data-title="Unit Converter 単位変換器 日米単位変換 単位 変換 長さ 重さ 面積 温度" 
-         data-desc="アメリカと日本の各種単位（長さ・重さ・量・面積・温度）を双方向に瞬時に変換できる便利な日米単位変換ツール。">
+         data-title-ja="Unit Converter 単位変換器 日米単位変換 単位 変換 長さ 重さ 面積 温度" 
+         data-title-en="Unit Converter 単位変換器 metric imperial conversion length weight temperature volume inches centimeters pounds kg fahrenheit celsius" 
+         data-desc-ja="アメリカと日本の各種単位（長さ・重さ・量・面積・温度）を双方向に瞬時に変換できる便利な日米単位変換ツール。"
+         data-desc-en="A swift bidirectional converter between US customary and Japanese metric units (length, weight, volume, area, temperature) for travel, shopping, and work.">
         <div class="card-media">
-          <img src="assets/images/unit-converter.jpg" alt="Unit Converterのイメージ" class="card-img" loading="lazy">
+          <img src="assets/images/unit-converter.jpg" alt="Unit Converter" class="card-img" loading="lazy">
           <span class="card-badge badge-tool">Productivity</span>
         </div>
         <div class="card-body">
           <h2 class="card-title">
-            Unit Converter
+            <span class="card-title-text">Unit Converter</span>
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
@@ -326,7 +365,7 @@
           <div class="card-footer">
             <span class="card-url-domain">unit-converter</span>
             <span class="card-action-btn">
-              サイトを開く
+              <span class="card-action-text">サイトを開く</span>
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -341,16 +380,19 @@
          target="_blank" 
          rel="noopener noreferrer" 
          class="app-card" 
+         data-app-id="element-lab"
          data-category="education" 
-         data-title="元素ラボ Element Lab 周期表 元素 化学 反応 シミュレーション 科学 理科 実験 サンドボックス" 
-         data-desc="全118元素の周期表とリアルタイム物理・化学反応サンドボックスシミュレーション。加熱・冷却・状態変化や様々な化学反応を体験。">
+         data-title-ja="元素ラボ Element Lab 周期表 元素 化学 反応 シミュレーション 科学 理科 実験 サンドボックス" 
+         data-title-en="Element Lab 元素ラボ periodic table chemistry science simulation elements atoms reaction physics sandbox" 
+         data-desc-ja="全118元素の周期表とリアルタイム物理・化学反応サンドボックスシミュレーション。加熱・冷却・状態変化や様々な化学反応を体験。"
+         data-desc-en="An interactive periodic table of all 118 elements with a real-time chemistry sandbox. Experiment with heating, cooling, phase transitions, and chemical reactions.">
         <div class="card-media">
-          <img src="assets/images/element-lab.jpg" alt="元素ラボのイメージ" class="card-img" loading="lazy">
+          <img src="assets/images/element-lab.jpg" alt="元素ラボ Element Lab" class="card-img" loading="lazy">
           <span class="card-badge badge-education">Education</span>
         </div>
         <div class="card-body">
           <h2 class="card-title">
-            元素ラボ
+            <span class="card-title-text">元素ラボ</span>
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
@@ -363,7 +405,7 @@
           <div class="card-footer">
             <span class="card-url-domain">element-lab</span>
             <span class="card-action-btn">
-              サイトを開く
+              <span class="card-action-text">サイトを開く</span>
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -378,16 +420,19 @@
          target="_blank" 
          rel="noopener noreferrer" 
          class="app-card" 
+         data-app-id="conway-life"
          data-category="puzzle" 
-         data-title="ライフゲーム Conway's Game of Life ライフ ゲーム セルオートマトン シミュレーション 科学 物理 生命" 
-         data-desc="シンプルかつ奥深い生命シミュレーション。世代交代のルールが生み出す無限のパターンや宇宙船、振動子を観察・探索。">
+         data-title-ja="ライフゲーム Conway's Game of Life ライフ ゲーム セルオートマトン シミュレーション 科学 物理 生命" 
+         data-title-en="Conway's Game of Life ライフゲーム cellular automaton simulation science math glider pulsar algorithm" 
+         data-desc-ja="シンプルかつ奥深い生命シミュレーション。世代交代のルールが生み出す無限のパターンや宇宙船、振動子を観察・探索。"
+         data-desc-en="A captivating cellular automaton simulation where mesmerizing life patterns emerge from simple rules. Includes gliders, pulsars, and custom cell drawing.">
         <div class="card-media">
-          <img src="assets/images/conway-life.jpg" alt="ライフゲームのイメージ" class="card-img" loading="lazy">
+          <img src="assets/images/conway-life.jpg" alt="ライフゲーム Conway's Game of Life" class="card-img" loading="lazy">
           <span class="card-badge badge-puzzle">Simulation</span>
         </div>
         <div class="card-body">
           <h2 class="card-title">
-            ライフゲーム
+            <span class="card-title-text">ライフゲーム</span>
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
@@ -400,7 +445,7 @@
           <div class="card-footer">
             <span class="card-url-domain">conway-life</span>
             <span class="card-action-btn">
-              サイトを開く
+              <span class="card-action-text">サイトを開く</span>
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -415,16 +460,19 @@
          target="_blank" 
          rel="noopener noreferrer" 
          class="app-card" 
+         data-app-id="morse-master"
          data-category="education" 
-         data-title="モールスマスター Morse Master モールス信号 電信 電鍵 タイピング 音声 翻訳 学習 クイズ" 
-         data-desc="音と光とタップで直感的に学ぶモールス信号学習アプリ。聞き取りクイズ、パドル・電鍵打鍵練習、リアルタイム翻訳機を搭載。">
+         data-title-ja="モールスマスター Morse Master モールス信号 電信 電鍵 タイピング 音声 翻訳 学習 クイズ" 
+         data-title-en="Morse Master モールスマスター morse code telegraph audio keyer translator cw radio quiz learning" 
+         data-desc-ja="音と光とタップで直感的に学ぶモールス信号学習アプリ。聞き取りクイズ、パドル・電鍵打鍵練習、リアルタイム翻訳機を搭載。"
+         data-desc-en="Master Morse code intuitively through sound, light, and interactive tap keyers. Features listening quizzes, telegraph keying practice, and real-time translators.">
         <div class="card-media">
-          <img src="assets/images/morse-master.jpg" alt="モールスマスターのイメージ" class="card-img" loading="lazy">
+          <img src="assets/images/morse-master.jpg" alt="モールスマスター Morse Master" class="card-img" loading="lazy">
           <span class="card-badge badge-education">Education</span>
         </div>
         <div class="card-body">
           <h2 class="card-title">
-            モールスマスター
+            <span class="card-title-text">モールスマスター</span>
             <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
               <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
               <polyline points="15 3 21 3 21 9"></polyline>
@@ -437,7 +485,7 @@
           <div class="card-footer">
             <span class="card-url-domain">morse-master</span>
             <span class="card-action-btn">
-              サイトを開く
+              <span class="card-action-text">サイトを開く</span>
               <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
@@ -450,7 +498,7 @@
       <!-- No Search Results Container -->
       <div class="no-results" id="noResults">
         <i>🔍</i>
-        <p>該当するプロジェクトが見つかりませんでした。</p>
+        <p id="noResultsText">該当するプロジェクトが見つかりませんでした。</p>
       </div>
 
     </div>

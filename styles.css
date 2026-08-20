@@ -161,7 +161,36 @@ a {
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 1rem;
+  gap: 0.75rem;
+}
+
+/* Language Toggle Button */
+.lang-toggle-btn {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  height: 42px;
+  padding: 0 0.85rem;
+  border-radius: var(--radius-full);
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  transition: var(--transition-smooth);
+}
+
+.lang-toggle-btn:hover {
+  border-color: var(--border-color-hover);
+  transform: scale(1.05);
+}
+
+.lang-toggle-btn svg {
+  color: var(--accent-indigo);
+  flex-shrink: 0;
 }
 
 /* Theme Toggle Button */
