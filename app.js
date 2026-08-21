@@ -5,7 +5,7 @@
 /* --- Translation Data --- */
 const I18N_DATA = {
   ja: {
-    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスターなどにアクセスできます。',
+    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Voticaなどにアクセスできます。',
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
@@ -57,11 +57,15 @@ const I18N_DATA = {
       'morse-master': {
         title: 'モールスマスター',
         desc: '音・光・タップで直感的にマスターできるモールス信号学習アプリ。聞き取りクイズ、パドル・電鍵による送信練習、和文・欧文の相互翻訳機を搭載。'
+      },
+      'votica': {
+        title: 'Votica',
+        desc: '多人数での決選投票・同率1位自動再投票に対応した、手軽で安全なGoogle認証投票Webサービス。'
       }
     }
   },
   en: {
-    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, and more.',
+    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, and more.',
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
@@ -113,6 +117,10 @@ const I18N_DATA = {
       'morse-master': {
         title: 'Morse Master',
         desc: 'Master Morse code intuitively through sound, light, and interactive tap keyers. Features listening quizzes, telegraph keying practice, and real-time translators.'
+      },
+      'votica': {
+        title: 'Votica',
+        desc: 'A lightweight and secure Google-authenticated voting platform supporting multi-candidate runoff voting and automatic revotes for ties.'
       }
     }
   }
