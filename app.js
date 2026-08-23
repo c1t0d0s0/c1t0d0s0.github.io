@@ -145,12 +145,34 @@ const I18N_DATA = {
 let currentLanguage = 'ja';
 
 document.addEventListener('DOMContentLoaded', () => {
+  shuffleCards();
   initLanguage();
   initThemeToggle();
   initFiltering();
   initTiltEffect();
   initBackToTop();
 });
+
+/* --- 0. Card Randomization (Shuffle) --- */
+function shuffleCards() {
+  const cardsGrid = document.getElementById('cardsGrid');
+  const noResults = document.getElementById('noResults');
+  if (!cardsGrid) return;
+
+  const cards = Array.from(cardsGrid.querySelectorAll('.app-card'));
+  for (let i = cards.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [cards[i], cards[j]] = [cards[j], cards[i]];
+  }
+
+  cards.forEach(card => {
+    if (noResults) {
+      cardsGrid.insertBefore(card, noResults);
+    } else {
+      cardsGrid.appendChild(card);
+    }
+  });
+}
 
 /* --- 1. Internationalization (i18n) & Language Switcher --- */
 function detectBrowserLanguage() {
