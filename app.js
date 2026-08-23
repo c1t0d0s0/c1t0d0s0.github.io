@@ -5,7 +5,7 @@
 /* --- Translation Data --- */
 const I18N_DATA = {
   ja: {
-    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Voticaなどにアクセスできます。',
+    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズなどにアクセスできます。',
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
@@ -61,11 +61,15 @@ const I18N_DATA = {
       'votica': {
         title: 'Votica',
         desc: '多人数での決選投票・同率1位自動再投票に対応した、手軽で安全なGoogle認証投票Webサービス。'
+      },
+      'classic-solo-games': {
+        title: 'クラシック・ソロゲームズ',
+        desc: 'ソリティア（クロンダイク）、マインスイーパー、上海（麻雀ソリティア）など、一人遊びの名作クラシックゲームを快適な操作感と美しい演出で楽しめるゲームハブ。'
       }
     }
   },
   en: {
-    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, and more.',
+    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, and more.',
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
@@ -121,6 +125,10 @@ const I18N_DATA = {
       'votica': {
         title: 'Votica',
         desc: 'A lightweight and secure Google-authenticated voting platform supporting multi-candidate runoff voting and automatic revotes for ties.'
+      },
+      'classic-solo-games': {
+        title: 'Classic Solo Games',
+        desc: 'A collection of legendary single-player classics including Klondike Solitaire, Minesweeper, and Shanghai (Mahjong Solitaire) with sleek controls and rich stats.'
       }
     }
   }
