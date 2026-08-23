@@ -83,4 +83,11 @@
     <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
   </url>
+
+  <!-- Planet Merge (惑星合体ゲーム) -->
+  <url>
+    <loc>https://c1t0d0s0.github.io/planet-game/</loc>
+    <lastmod>2026-08-23</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>

@@ -5,7 +5,7 @@
 /* --- Translation Data --- */
 const I18N_DATA = {
   ja: {
-    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズなどにアクセスできます。',
+    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Mergeなどにアクセスできます。',
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
@@ -65,11 +65,15 @@ const I18N_DATA = {
       'classic-solo-games': {
         title: 'クラシック・ソロゲームズ',
         desc: 'ソリティア（クロンダイク）、マインスイーパー、上海（麻雀ソリティア）など、一人遊びの名作クラシックゲームを快適な操作感と美しい演出で楽しめるゲームハブ。'
+      },
+      'planet-game': {
+        title: 'Planet Merge',
+        desc: '同じ惑星同士をぶつけて合体・進化！月や地球から太陽を目指してスコアを伸ばす爽快な物理演算落ち物パズルゲーム。'
       }
     }
   },
   en: {
-    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, and more.',
+    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, and more.',
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
@@ -129,6 +133,10 @@ const I18N_DATA = {
       'classic-solo-games': {
         title: 'Classic Solo Games',
         desc: 'A collection of legendary single-player classics including Klondike Solitaire, Minesweeper, and Shanghai (Mahjong Solitaire) with sleek controls and rich stats.'
+      },
+      'planet-game': {
+        title: 'Planet Merge',
+        desc: 'Drop and merge identical planets to evolve them into bigger celestial bodies! Reach the Sun and trigger black holes in this cosmic physics puzzle.'
       }
     }
   }
