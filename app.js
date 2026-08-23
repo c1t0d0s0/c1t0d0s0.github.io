@@ -13,9 +13,9 @@ const I18N_DATA = {
     searchAria: 'プロジェクトを検索',
     categories: {
       all: 'すべて',
-      puzzle: 'パズル・ゲーム',
+      puzzle: 'ゲーム',
       collection: 'コレクション',
-      tool: '思考ツール',
+      tool: 'ツール',
       education: 'クイズ・学習'
     },
     cardAction: 'サイトを開く',
