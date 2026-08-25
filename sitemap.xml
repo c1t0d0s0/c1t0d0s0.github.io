@@ -3,7 +3,7 @@
   <!-- Portal Top -->
   <url>
     <loc>https://c1t0d0s0.github.io/</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>weekly</changefreq>
   </url>
 
@@ -95,6 +95,13 @@
   <url>
     <loc>https://c1t0d0s0.github.io/native-ear/</loc>
     <lastmod>2026-08-24</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- 釣行ナビ (Fishing Info) -->
+  <url>
+    <loc>https://c1t0d0s0.github.io/fishing-info/</loc>
+    <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 </urlset>
