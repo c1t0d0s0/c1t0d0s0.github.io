@@ -10,7 +10,7 @@ const I18N_DATA = {
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
     heroTitle: 'つくったものを、ひとつの場所に。',
-    heroSubtitle: 'c1t0d0s0 が制作・公開している Web アプリケーションとツールのポータルです。',
+    heroSubtitle: 'c1t0d0s0 が制作・公開している Web アプリのポータルです。',
     searchPlaceholder: 'プロジェクトを検索...',
     searchAria: 'プロジェクトを検索',
     categories: {
