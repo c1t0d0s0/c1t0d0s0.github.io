@@ -223,25 +223,21 @@ a {
   max-width: 1080px;
   width: 100%;
   margin: 0 auto;
-  padding: 5.5rem 1.5rem 0;
+  padding: 4.5rem 1.5rem 0;
   text-align: center;
 }
 
-.hero-title {
-  font-size: clamp(2rem, 5vw, 3.25rem);
-  font-weight: 600;
-  line-height: 1.12;
-  letter-spacing: -0.035em;
-  color: var(--text-primary);
-}
-
-.hero-subtitle {
+.hero-lead {
   max-width: 34rem;
-  margin: 1.125rem auto 0;
-  font-size: clamp(0.9375rem, 1.6vw, 1.1875rem);
-  font-weight: 400;
+  margin: 0 auto;
+  font-size: clamp(1rem, 2.2vw, 1.5rem);
+  font-weight: 500;
   line-height: 1.5;
-  color: var(--text-secondary);
+  color: var(--text-primary);
+  /* 日本語の任意改行を禁止し、本文中の U+200B のみを改行位置として使う */
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+  text-wrap: balance;
 }
 
 /* --- Search & Category Filter Section --- */
@@ -592,7 +588,7 @@ a {
   }
 
   .hero {
-    padding: 3.5rem 1.25rem 0;
+    padding: 2.75rem 1.25rem 0;
   }
 
   .filter-section {

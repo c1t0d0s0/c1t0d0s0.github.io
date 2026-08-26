@@ -9,8 +9,8 @@ const I18N_DATA = {
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
-    heroTitle: 'つくったものを、ひとつの場所に。',
-    heroSubtitle: 'c1t0d0s0 が制作・公開している Web アプリのポータルです。',
+    /* U+00A0 は改行させない半角スペース、U+200B は許可する改行位置 */
+    heroLead: 'c1t0d0s0\u00A0が制作・公開している\u200BWeb\u00A0アプリのポータルです。',
     searchPlaceholder: 'プロジェクトを検索...',
     searchAria: 'プロジェクトを検索',
     categories: {
@@ -87,8 +87,7 @@ const I18N_DATA = {
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
-    heroTitle: 'Everything I build, in one place.',
-    heroSubtitle: 'A portal for the web applications and tools created by c1t0d0s0.',
+    heroLead: 'A portal for the web applications and tools created by c1t0d0s0.',
     searchPlaceholder: 'Search projects...',
     searchAria: 'Search projects',
     categories: {
@@ -228,14 +227,9 @@ function applyLanguage(lang) {
   }
 
   // 3. Update Hero
-  const heroTitle = document.getElementById('heroTitle');
-  if (heroTitle) {
-    heroTitle.textContent = data.heroTitle;
-  }
-
-  const heroSubtitle = document.getElementById('heroSubtitle');
-  if (heroSubtitle) {
-    heroSubtitle.textContent = data.heroSubtitle;
+  const heroLead = document.getElementById('heroLead');
+  if (heroLead) {
+    heroLead.textContent = data.heroLead;
   }
 
   // 4. Update Search Input
