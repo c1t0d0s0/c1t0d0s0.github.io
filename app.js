@@ -9,6 +9,8 @@ const I18N_DATA = {
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
+    heroTitle: 'つくったものを、ひとつの場所に。',
+    heroSubtitle: 'c1t0d0s0 が制作・公開している Web アプリケーションとツールのポータルです。',
     searchPlaceholder: 'プロジェクトを検索...',
     searchAria: 'プロジェクトを検索',
     categories: {
@@ -85,6 +87,8 @@ const I18N_DATA = {
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
+    heroTitle: 'Everything I build, in one place.',
+    heroSubtitle: 'A portal for the web applications and tools created by c1t0d0s0.',
     searchPlaceholder: 'Search projects...',
     searchAria: 'Search projects',
     categories: {
@@ -160,12 +164,14 @@ const I18N_DATA = {
 
 let currentLanguage = 'ja';
 
+/* Apply the stored theme before first paint to avoid a flash of the wrong theme */
+applyStoredTheme();
+
 document.addEventListener('DOMContentLoaded', () => {
   shuffleCards();
   initLanguage();
   initThemeToggle();
   initFiltering();
-  initTiltEffect();
   initBackToTop();
 });
 
@@ -221,7 +227,18 @@ function applyLanguage(lang) {
     metaDesc.setAttribute('content', data.metaDesc);
   }
 
-  // 3. Update Search Input
+  // 3. Update Hero
+  const heroTitle = document.getElementById('heroTitle');
+  if (heroTitle) {
+    heroTitle.textContent = data.heroTitle;
+  }
+
+  const heroSubtitle = document.getElementById('heroSubtitle');
+  if (heroSubtitle) {
+    heroSubtitle.textContent = data.heroSubtitle;
+  }
+
+  // 4. Update Search Input
   const searchInput = document.getElementById('searchInput');
   if (searchInput) {
     searchInput.placeholder = data.searchPlaceholder;
@@ -298,20 +315,17 @@ function initLanguage() {
   }
 }
 
-/* --- 2. Theme Toggle (Dark / Light) --- */
-function initThemeToggle() {
-  const themeBtn = document.getElementById('themeToggleBtn');
+/* --- 2. Theme Toggle (Light / Dark) --- */
+function applyStoredTheme() {
   const storedTheme = localStorage.getItem('theme');
   const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const theme = storedTheme || (systemPrefersDark ? 'dark' : 'light');
 
-  // Set initial theme
-  if (storedTheme) {
-    document.documentElement.setAttribute('data-theme', storedTheme);
-  } else if (!systemPrefersDark) {
-    document.documentElement.setAttribute('data-theme', 'light');
-  } else {
-    document.documentElement.setAttribute('data-theme', 'dark');
-  }
+  document.documentElement.setAttribute('data-theme', theme);
+}
+
+function initThemeToggle() {
+  const themeBtn = document.getElementById('themeToggleBtn');
 
   // Toggle handler
   if (themeBtn) {
@@ -354,8 +368,6 @@ function initFiltering() {
 
       if (matchesCategory && matchesSearch) {
         card.style.display = 'flex';
-        card.style.opacity = '1';
-        card.style.transform = 'translateY(0)';
         visibleCount++;
       } else {
         card.style.display = 'none';
@@ -390,35 +402,7 @@ function initFiltering() {
   }
 }
 
-/* --- 4. Subtle 3D Card Tilt Effect --- */
-function initTiltEffect() {
-  const cards = document.querySelectorAll('.app-card');
-
-  // Disable on mobile / touch devices for performance
-  if (window.matchMedia('(pointer: coarse)').matches) return;
-
-  cards.forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-
-      const rotateX = ((y - centerY) / centerY) * -4; // max 4deg
-      const rotateY = ((x - centerX) / centerX) * 4;
-
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateY(-6px)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0px)';
-    });
-  });
-}
-
-/* --- 5. Back to Top Button --- */
+/* --- 4. Back to Top Button --- */
 function initBackToTop() {
   const backToTopBtn = document.getElementById('backToTopBtn');
   if (!backToTopBtn) return;
