@@ -2,70 +2,70 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <!-- Portal Top -->
   <url>
-    <loc>https://c1t0d0s0.github.io/</loc>
-    <lastmod>2026-08-25</lastmod>
+    <loc>https://c1t0d0s0.y8n.org/</loc>
+    <lastmod>2026-08-27</lastmod>
     <changefreq>weekly</changefreq>
   </url>
 
   <!-- 面積迷路 (Area Mazes) -->
   <url>
-    <loc>https://c1t0d0s0.github.io/area-mazes/</loc>
+    <loc>https://area-mazes.y8n.org/</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 
   <!-- マンホールカード (Manhole Cards) -->
   <url>
-    <loc>https://c1t0d0s0.github.io/manhole/</loc>
+    <loc>https://manhole.y8n.org/</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 
   <!-- NoxMind -->
   <url>
-    <loc>https://c1t0d0s0.github.io/noxmind/</loc>
+    <loc>https://noxmind.y8n.org/</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 
   <!-- 世界遺産マスター (World Heritage Quiz) -->
   <url>
-    <loc>https://c1t0d0s0.github.io/world-heritage-quiz/</loc>
+    <loc>https://world-heritage.y8n.org/</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 
   <!-- LexDrop -->
   <url>
-    <loc>https://c1t0d0s0.github.io/lexidrop/</loc>
+    <loc>https://lexidrop.y8n.org/</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 
   <!-- Unit Converter -->
   <url>
-    <loc>https://c1t0d0s0.github.io/unit-converter/</loc>
+    <loc>https://unit-converter.y8n.org/</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 
   <!-- 元素ラボ (Element Lab) -->
   <url>
-    <loc>https://c1t0d0s0.github.io/element-lab/</loc>
+    <loc>https://element-lab.y8n.org/</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 
   <!-- ライフゲーム (Conway's Game of Life) -->
   <url>
-    <loc>https://c1t0d0s0.github.io/conway-life/</loc>
+    <loc>https://life.y8n.org/</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 
   <!-- モールスマスター (Morse Master) -->
   <url>
-    <loc>https://c1t0d0s0.github.io/morse-master/</loc>
+    <loc>https://morse.y8n.org/</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
   </url>
@@ -79,28 +79,28 @@
 
   <!-- クラシック・ソロゲームズ (Classic Solo Games) -->
   <url>
-    <loc>https://c1t0d0s0.github.io/classic-solo-games/</loc>
+    <loc>https://sologames.y8n.org/</loc>
     <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 
   <!-- Planet Merge (惑星合体ゲーム) -->
   <url>
-    <loc>https://c1t0d0s0.github.io/planet-game/</loc>
+    <loc>https://planet-merge.y8n.org/</loc>
     <lastmod>2026-08-23</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 
   <!-- NativeEar (英語リスニング・ディクテーション特訓) -->
   <url>
-    <loc>https://c1t0d0s0.github.io/native-ear/</loc>
+    <loc>https://native-ear.y8n.org/</loc>
     <lastmod>2026-08-24</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 
   <!-- 釣行ナビ (Fishing Info) -->
   <url>
-    <loc>https://c1t0d0s0.github.io/fishing-info/</loc>
+    <loc>https://fishing.y8n.org/</loc>
     <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
   </url>
