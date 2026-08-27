@@ -5,7 +5,7 @@
 /* --- Translation Data --- */
 const I18N_DATA = {
   ja: {
-    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成などにアクセスできます。',
+    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブなどにアクセスできます。',
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
@@ -83,11 +83,15 @@ const I18N_DATA = {
       'qr-generator': {
         title: 'QRコード生成',
         desc: 'URL、テキスト、Wi-Fi接続、メール、電話番号、連絡先（vCard）など多彩な形式のQRコードを瞬時に作成。ラベル付与やカラー設定、画像保存・コピーに対応。'
+      },
+      'leaders-archive': {
+        title: '歴代指導者アーカイブ',
+        desc: '日本の歴代首相、米歴代大統領、徳川十五代将軍の歩みを網羅した歴史アーカイブ。詳細な人物プロフィール、実績、歴史年表、理解度クイズを搭載。'
       }
     }
   },
   en: {
-    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, and more.',
+    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, and more.',
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
@@ -164,6 +168,10 @@ const I18N_DATA = {
       'qr-generator': {
         title: 'QR Code Generator',
         desc: 'Instantly generate custom QR codes for URLs, text, Wi-Fi networks, emails, phone numbers, and vCard contacts with label customizer and instant image download/copy.'
+      },
+      'leaders-archive': {
+        title: 'National Leaders Archive',
+        desc: 'An interactive historical archive and encyclopedia of Japanese Prime Ministers, US Presidents, and Tokugawa Shoguns. Explore detailed profiles, timelines, achievements, and quizzes.'
       }
     }
   }
