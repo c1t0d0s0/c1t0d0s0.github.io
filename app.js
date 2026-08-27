@@ -355,13 +355,13 @@ function initFiltering() {
     let visibleCount = 0;
 
     cards.forEach(card => {
-      const category = card.dataset.category || '';
+      const categories = (card.dataset.category || '').split(/\s+/);
       const titleJa = (card.dataset.titleJa || '').toLowerCase();
       const titleEn = (card.dataset.titleEn || '').toLowerCase();
       const descJa = (card.dataset.descJa || '').toLowerCase();
       const descEn = (card.dataset.descEn || '').toLowerCase();
 
-      const matchesCategory = activeCategory === 'all' || category === activeCategory;
+      const matchesCategory = activeCategory === 'all' || categories.includes(activeCategory);
       const matchesSearch = !searchQuery || 
                             titleJa.includes(searchQuery) || 
                             titleEn.includes(searchQuery) || 
