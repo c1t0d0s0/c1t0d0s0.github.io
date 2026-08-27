@@ -5,7 +5,7 @@
 /* --- Translation Data --- */
 const I18N_DATA = {
   ja: {
-    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビなどにアクセスできます。',
+    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成などにアクセスできます。',
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
@@ -79,11 +79,15 @@ const I18N_DATA = {
       'fishing-info': {
         title: '釣行ナビ',
         desc: '全国の釣り場の潮汐（タイドグラフ）・波高・風速・海水温などの海洋気象データと釣行指数、魚種図鑑、釣果ログを完備した釣り人向け総合ダッシュボード。'
+      },
+      'qr-generator': {
+        title: 'QRコード生成',
+        desc: 'URL、テキスト、Wi-Fi接続、メール、電話番号、連絡先（vCard）など多彩な形式のQRコードを瞬時に作成。ラベル付与やカラー設定、画像保存・コピーに対応。'
       }
     }
   },
   en: {
-    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, and more.',
+    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, and more.',
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
@@ -156,6 +160,10 @@ const I18N_DATA = {
       'fishing-info': {
         title: 'Fishing Info',
         desc: 'A comprehensive marine fishing dashboard offering real-time tide charts, wave heights, wind speeds, sea surface temperatures, fishing index, and catch logs.'
+      },
+      'qr-generator': {
+        title: 'QR Code Generator',
+        desc: 'Instantly generate custom QR codes for URLs, text, Wi-Fi networks, emails, phone numbers, and vCard contacts with label customizer and instant image download/copy.'
       }
     }
   }

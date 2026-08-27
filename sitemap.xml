@@ -104,4 +104,12 @@
     <lastmod>2026-08-25</lastmod>
     <changefreq>monthly</changefreq>
   </url>
+
+  <!-- QRコード生成 (QR Code Generator) -->
+  <url>
+    <loc>https://qr.y8n.org/</loc>
+    <lastmod>2026-08-27</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
+
