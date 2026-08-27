@@ -34,7 +34,7 @@ const I18N_DATA = {
       },
       'noxmind': {
         title: 'NoxMind',
-        desc: '思考を自由に広げ、複雑なアイデアを明快に整理するグラフィカル思考キャンバス。ノードを自由につなぎ合わせて発想を爆発させます。'
+        desc: '思考を自由に広げ、複雑なアイデアを明快に整理するマインドマップ＆グラフィカル思考キャンバス。ノードを自由につなぎ合わせて発想を爆発させます。'
       },
       'world-heritage-quiz': {
         title: '世界遺産マスター',
@@ -115,7 +115,7 @@ const I18N_DATA = {
       },
       'noxmind': {
         title: 'NoxMind',
-        desc: 'A graphical thinking canvas to brainstorm freely and structure complex ideas. Connect concept nodes seamlessly to unlock creative inspiration.'
+        desc: 'A mind map and graphical thinking canvas to brainstorm freely and structure complex ideas. Connect concept nodes seamlessly to unlock creative inspiration.'
       },
       'world-heritage-quiz': {
         title: 'World Heritage Master',
