@@ -328,8 +328,7 @@ function initLanguage() {
 /* --- 2. Theme Toggle (Light / Dark) --- */
 function applyStoredTheme() {
   const storedTheme = localStorage.getItem('theme');
-  const systemPrefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-  const theme = storedTheme || (systemPrefersDark ? 'dark' : 'light');
+  const theme = storedTheme || 'light';
 
   document.documentElement.setAttribute('data-theme', theme);
 }
