@@ -5,7 +5,7 @@
 /* --- Translation Data --- */
 const I18N_DATA = {
   ja: {
-    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexiDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブなどにアクセスできます。',
+    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブ、カレンダーなどにアクセスできます。',
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
@@ -41,7 +41,7 @@ const I18N_DATA = {
         desc: '世界中の素晴らしい文化遺産や壮大な自然遺産をめぐる知識クイズ＆ガイド。多彩なクイズを通して世界遺産の歴史や魅力を楽しく学べます。'
       },
       'lexidrop': {
-        title: 'LexiDrop',
+        title: 'LexDrop',
         desc: '落下してくる英単語をキーボードでタイピングして爽快消去。ネイティブ音声の発音と日本語訳が表示され、楽しみながら英単語を学べるタイピングゲーム。'
       },
       'unit-converter': {
@@ -87,11 +87,15 @@ const I18N_DATA = {
       'leaders-archive': {
         title: '歴代指導者アーカイブ',
         desc: '日本の歴代首相、米歴代大統領、徳川十五代将軍の歩みを網羅した歴史アーカイブ。詳細な人物プロフィール、実績、歴史年表、理解度クイズを搭載。'
+      },
+      'calendar': {
+        title: 'カレンダー',
+        desc: '日本・アメリカ・イギリスの祝日に対応した年間カレンダー。西暦・和暦・干支の表示や祝日一覧、国別の年間スケジュールを1画面で直感的に確認できます。'
       }
     }
   },
   en: {
-    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, and more.',
+    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, and more.',
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
@@ -126,7 +130,7 @@ const I18N_DATA = {
         desc: 'A knowledge quiz and interactive guide exploring magnificent UNESCO cultural and natural heritage sites across the globe.'
       },
       'lexidrop': {
-        title: 'LexiDrop',
+        title: 'LexDrop',
         desc: 'An exhilarating typing game where you blast falling word blocks! Features native English audio pronunciations and translations for intuitive learning.'
       },
       'unit-converter': {
@@ -172,6 +176,10 @@ const I18N_DATA = {
       'leaders-archive': {
         title: 'National Leaders Archive',
         desc: 'An interactive historical archive and encyclopedia of Japanese Prime Ministers, US Presidents, and Tokugawa Shoguns. Explore detailed profiles, timelines, achievements, and quizzes.'
+      },
+      'calendar': {
+        title: 'Calendar',
+        desc: 'An interactive yearly calendar supporting public holidays for Japan, the US, and the UK. View 12-month layouts, Japanese era names, and holiday schedules at a glance.'
       }
     }
   }
