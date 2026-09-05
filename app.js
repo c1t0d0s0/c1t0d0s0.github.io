@@ -5,7 +5,7 @@
 /* --- Translation Data --- */
 const I18N_DATA = {
   ja: {
-    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブ、カレンダーなどにアクセスできます。',
+    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexiDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブ、カレンダーなどにアクセスできます。',
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
@@ -41,7 +41,7 @@ const I18N_DATA = {
         desc: '世界中の素晴らしい文化遺産や壮大な自然遺産をめぐる知識クイズ＆ガイド。多彩なクイズを通して世界遺産の歴史や魅力を楽しく学べます。'
       },
       'lexidrop': {
-        title: 'LexDrop',
+        title: 'LexiDrop',
         desc: '落下してくる英単語をキーボードでタイピングして爽快消去。ネイティブ音声の発音と日本語訳が表示され、楽しみながら英単語を学べるタイピングゲーム。'
       },
       'unit-converter': {
@@ -130,7 +130,7 @@ const I18N_DATA = {
         desc: 'A knowledge quiz and interactive guide exploring magnificent UNESCO cultural and natural heritage sites across the globe.'
       },
       'lexidrop': {
-        title: 'LexDrop',
+        title: 'LexiDrop',
         desc: 'An exhilarating typing game where you blast falling word blocks! Features native English audio pronunciations and translations for intuitive learning.'
       },
       'unit-converter': {
