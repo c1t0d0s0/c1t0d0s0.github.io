@@ -5,7 +5,7 @@
 /* --- Translation Data --- */
 const I18N_DATA = {
   ja: {
-    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexiDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブ、カレンダーなどにアクセスできます。',
+    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブ、カレンダー、Sumrisなどにアクセスできます。',
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
@@ -41,7 +41,7 @@ const I18N_DATA = {
         desc: '世界中の素晴らしい文化遺産や壮大な自然遺産をめぐる知識クイズ＆ガイド。多彩なクイズを通して世界遺産の歴史や魅力を楽しく学べます。'
       },
       'lexidrop': {
-        title: 'LexiDrop',
+        title: 'LexDrop',
         desc: '落下してくる英単語をキーボードでタイピングして爽快消去。ネイティブ音声の発音と日本語訳が表示され、楽しみながら英単語を学べるタイピングゲーム。'
       },
       'unit-converter': {
@@ -91,11 +91,15 @@ const I18N_DATA = {
       'calendar': {
         title: 'カレンダー',
         desc: '日本・アメリカ・イギリスの祝日に対応した年間カレンダー。西暦・和暦・干支の表示や祝日一覧、国別の年間スケジュールを1画面で直感的に確認できます。'
+      },
+      'sumris': {
+        title: 'Sumris',
+        desc: '暗算の爽快感と落ち物パズルのスリルが融合した新感覚の数字パズルゲーム。落下する数字ブロックを積み上げ、縦・横の合計を「10の倍数」にして爽快コンボ消去！'
       }
     }
   },
   en: {
-    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, and more.',
+    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, Sumris, and more.',
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
@@ -130,7 +134,7 @@ const I18N_DATA = {
         desc: 'A knowledge quiz and interactive guide exploring magnificent UNESCO cultural and natural heritage sites across the globe.'
       },
       'lexidrop': {
-        title: 'LexiDrop',
+        title: 'LexDrop',
         desc: 'An exhilarating typing game where you blast falling word blocks! Features native English audio pronunciations and translations for intuitive learning.'
       },
       'unit-converter': {
@@ -180,6 +184,10 @@ const I18N_DATA = {
       'calendar': {
         title: 'Calendar',
         desc: 'An interactive yearly calendar supporting public holidays for Japan, the US, and the UK. View 12-month layouts, Japanese era names, and holiday schedules at a glance.'
+      },
+      'sumris': {
+        title: 'Sumris',
+        desc: 'A fast-paced falling-block puzzle game blending spatial strategy with quick mental arithmetic. Stack falling numbered blocks to sum contiguous lines to multiples of 10 for explosive combo clears!'
       }
     }
   }
