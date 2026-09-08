@@ -1,6 +1,26 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="pageTitle">c1t0d0s0 | Web Applications & Tools Portal</title>
+
+  <!-- Early Theme & Language Detection (Zero Flash, Zero Blocking) -->
+  <script>
+    (function() {
+      try {
+        var theme = localStorage.getItem('theme') || 'light';
+        document.documentElement.setAttribute('data-theme', theme);
+        var stored = localStorage.getItem('lang');
+        var isJa = stored ? (stored === 'ja') : ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase().startsWith('ja');
+        document.documentElement.lang = isJa ? 'ja' : 'en';
+      } catch (e) {}
+    })();
+  </script>
+
+  <!-- Preload LCP Thumbnail for First Card -->
+  <link rel="preload" as="image" href="assets/images/area-maze.jpg" fetchpriority="high">
+
   <!-- Google tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-W76HCVTSNX"></script>
   <script>
@@ -10,19 +30,6 @@
 
     gtag('config', 'G-W76HCVTSNX');
   </script>
-  <script>
-    /* Early language detection to set html lang attribute immediately */
-    (function() {
-      try {
-        var stored = localStorage.getItem('lang');
-        var isJa = stored ? (stored === 'ja') : ((navigator.languages && navigator.languages[0]) || navigator.language || '').toLowerCase().startsWith('ja');
-        document.documentElement.lang = isJa ? 'ja' : 'en';
-      } catch (e) {}
-    })();
-  </script>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="pageTitle">c1t0d0s0 | Web Applications & Tools Portal</title>
   
   <!-- SEO & Meta Tags -->
   <meta name="description" id="metaDescription" content="c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexiDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブ、カレンダー、Sumrisなどにアクセスできます。">
@@ -46,10 +53,14 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
-  <!-- Google Fonts -->
+  <!-- Google Fonts (Non-blocking Asynchronous Load) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
+  <noscript>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap">
+  </noscript>
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="styles.css">
@@ -138,7 +149,7 @@
          data-desc-ja="ひらめきと理論的思考を試す面積パズル。四則演算のみで未知の長さや面積を解き明かすロジックゲーム。"
          data-desc-en="A logic puzzle that trains intuition and reasoning. Find unknown lengths and areas using rectangle proportions and basic arithmetic.">
         <div class="card-media">
-          <img src="assets/images/area-maze.jpg" alt="面積迷路 Area Mazes" class="card-img" width="600" height="400" loading="lazy">
+          <img src="assets/images/area-maze.jpg" alt="面積迷路 Area Mazes" class="card-img" width="600" height="400" fetchpriority="high">
         </div>
         <div class="card-body">
           <span class="card-badge">Puzzle · Education</span>
@@ -175,10 +186,10 @@
          data-category="collection" 
          data-title-ja="マンホールカード Manhole Cards コレクション マップ" 
          data-title-en="Manhole Cards マンホールカード collection map japan travel design regional culture landmarks" 
-         data-desc-ja="日本全国のご当地デザインマンホールカードを閲覧・管理・探索できるインタラクティブコレクション。"
+         data-desc-ja="日本全国のご当地デザインマンホールカードを閲覧・管理・探索できるインタラクティブコレクション。" 
          data-desc-en="An interactive collection viewer and map of Japan's artistic manhole cards. Explore vibrant regional designs rich in local culture and history.">
         <div class="card-media">
-          <img src="assets/images/manhole.jpg" alt="マンホールカード Manhole Cards" class="card-img" width="600" height="400" loading="lazy">
+          <img src="assets/images/manhole.jpg" alt="マンホールカード Manhole Cards" class="card-img" width="600" height="400">
         </div>
         <div class="card-body">
           <span class="card-badge">Collection</span>
@@ -881,6 +892,13 @@
   </button>
 
   <!-- Interactive Scripts -->
-  <script src="app.js"></script>
+  <script src="app.js" defer></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('./sw.js').catch(function() {});
+      });
+    }
+  </script>
 </body>
 </html>
