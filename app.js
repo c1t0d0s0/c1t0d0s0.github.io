@@ -213,8 +213,12 @@ function shuffleCards() {
   if (!cardsGrid) return;
 
   const cards = Array.from(cardsGrid.querySelectorAll('.app-card'));
-  for (let i = cards.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
+  if (cards.length <= 1) return;
+
+  // Keep the first card (featured/LCP card) stable at index 0 to optimize Core Web Vitals (LCP),
+  // and shuffle cards 1 through N.
+  for (let i = cards.length - 1; i > 1; i--) {
+    const j = 1 + Math.floor(Math.random() * i);
     [cards[i], cards[j]] = [cards[j], cards[i]];
   }
 
