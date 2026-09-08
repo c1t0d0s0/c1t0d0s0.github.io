@@ -21,14 +21,19 @@
   <!-- Preload LCP Thumbnail for First Card -->
   <link rel="preload" as="image" href="assets/images/area-maze.jpg" fetchpriority="high">
 
-  <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-W76HCVTSNX"></script>
+  <!-- Google tag (gtag.js) - Deferred to eliminate mobile bandwidth contention -->
   <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-W76HCVTSNX');
+
+    window.addEventListener('load', function() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-W76HCVTSNX';
+      document.head.appendChild(s);
+    });
   </script>
   
   <!-- SEO & Meta Tags -->
@@ -52,15 +57,6 @@
   <link rel="icon" href="favicon.ico" sizes="any">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
-
-  <!-- Google Fonts (Non-blocking Asynchronous Load) -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap" media="print" onload="this.media='all'">
-  <noscript>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;600&display=swap">
-  </noscript>
 
   <!-- Main Stylesheet -->
   <link rel="stylesheet" href="styles.css">
@@ -189,7 +185,7 @@
          data-desc-ja="日本全国のご当地デザインマンホールカードを閲覧・管理・探索できるインタラクティブコレクション。" 
          data-desc-en="An interactive collection viewer and map of Japan's artistic manhole cards. Explore vibrant regional designs rich in local culture and history.">
         <div class="card-media">
-          <img src="assets/images/manhole.jpg" alt="マンホールカード Manhole Cards" class="card-img" width="600" height="400">
+          <img src="assets/images/manhole.jpg" alt="マンホールカード Manhole Cards" class="card-img" width="600" height="400" loading="lazy">
         </div>
         <div class="card-body">
           <span class="card-badge">Collection</span>
