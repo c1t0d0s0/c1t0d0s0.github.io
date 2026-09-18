@@ -171,6 +171,146 @@
       --terminal-cursor: #ffb000;
     }
 
+    /* macOS (Apple Aqua / Platinum / UNIX Darwin) */
+    [data-theme="macos"] {
+      --theme-name: "macos";
+      --desktop-bg: #224d77;
+      --desktop-pattern-1: #2a5f91;
+      --desktop-pattern-2: #193a5b;
+      --panel-bg: rgba(230, 235, 242, 0.88);
+      --panel-dark: #8292a2;
+      --panel-light: #ffffff;
+      --panel-inset: #d2dbe5;
+      --bevel-light: rgba(255, 255, 255, 0.9);
+      --bevel-dark: rgba(0, 0, 0, 0.2);
+      --bevel-mid: #b8c4d0;
+      --window-bg: #f4f5f8;
+      --window-fg: #1d1d1f;
+      --titlebar-active-bg: linear-gradient(180deg, #e8e8ea 0%, #d2d2d6 100%);
+      --titlebar-active-fg: #333333;
+      --titlebar-inactive-bg: #e5e5e7;
+      --titlebar-inactive-fg: #8e8e93;
+      --btn-active-bg: #007aff;
+      --selection-bg: #007aff;
+      --selection-fg: #ffffff;
+      --terminal-bg: #1e1e24;
+      --terminal-fg: #f1f1f1;
+      --terminal-cursor: #007aff;
+      --font-system: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", "Lucida Grande", sans-serif;
+    }
+
+    /* macOS Theme Specific Overrides */
+    [data-theme="macos"] #desktop {
+      background: radial-gradient(circle at 50% 25%, #3d79b2 0%, #204c76 60%, #122f4c 100%);
+      background-image: radial-gradient(circle at 50% 25%, #3d79b2 0%, #204c76 60%, #122f4c 100%);
+    }
+    [data-theme="macos"] #top-bar {
+      background: rgba(246, 246, 248, 0.9);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+      color: #222;
+    }
+    [data-theme="macos"] #top-bar .brand::before {
+      content: " ";
+      font-size: 15px;
+      margin-right: 2px;
+    }
+    [data-theme="macos"] .wm-window {
+      border-radius: 9px;
+      border: 1px solid rgba(0, 0, 0, 0.22);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.4), 0 3px 8px rgba(0, 0, 0, 0.2);
+      overflow: hidden;
+    }
+    [data-theme="macos"] .wm-window::before {
+      display: none;
+    }
+    [data-theme="macos"] .wm-titlebar {
+      height: 28px;
+      background: var(--titlebar-active-bg);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+    }
+    [data-theme="macos"] .wm-window:not(.active) .wm-titlebar {
+      background: var(--titlebar-inactive-bg);
+    }
+    [data-theme="macos"] .wm-titlebar .wm-title-text {
+      font-size: 12px;
+      font-weight: 600;
+      color: #333;
+    }
+    /* macOS Traffic Lights Buttons */
+    [data-theme="macos"] .wm-title-left .wm-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      background: #ff5f56;
+      color: transparent;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      margin-right: 4px;
+    }
+    [data-theme="macos"] .wm-title-left .wm-btn:hover {
+      background: #e0443e;
+      color: #5c0000;
+      font-size: 8px;
+    }
+    [data-theme="macos"] .wm-title-right .wm-btn:first-child {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      background: #ffbd2e;
+      color: transparent;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+      margin-right: 4px;
+    }
+    [data-theme="macos"] .wm-title-right .wm-btn:first-child:hover {
+      background: #dea123;
+      color: #5c3b00;
+      font-size: 8px;
+    }
+    [data-theme="macos"] .wm-title-right .wm-btn:last-child {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid rgba(0, 0, 0, 0.18);
+      background: #27c93f;
+      color: transparent;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    }
+    [data-theme="macos"] .wm-title-right .wm-btn:last-child:hover {
+      background: #1ca832;
+      color: #004d00;
+      font-size: 8px;
+    }
+    /* macOS Dock Styling */
+    [data-theme="macos"] #front-panel {
+      border-radius: 14px 14px 0 0;
+      background: rgba(235, 240, 248, 0.82);
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-bottom: none;
+      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.28);
+    }
+    [data-theme="macos"] .fp-icon-btn {
+      border-radius: 8px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      background: rgba(255, 255, 255, 0.5);
+    }
+    [data-theme="macos"] .fp-icon-btn:hover {
+      background: rgba(255, 255, 255, 0.9);
+      transform: translateY(-2px);
+      transition: transform 0.15s ease, background 0.15s;
+    }
+    [data-theme="macos"] .desktop-icon.selected .desktop-icon-label {
+      background-color: #007aff;
+      border-radius: 4px;
+    }
+
     /* ==========================================================================
        GLOBAL RESETS & WORKSPACE BACKGROUND
        ========================================================================== */
@@ -1789,6 +1929,7 @@
         <div class="ctx-item" onclick="ThemeManager.setTheme('sgi')">SGI IRIX 4Dwm (Indigo)</div>
         <div class="ctx-item" onclick="ThemeManager.setTheme('nextstep')">NeXTSTEP 3.3 (Dark Gray)</div>
         <div class="ctx-item" onclick="ThemeManager.setTheme('x11')">MIT X11 Athena / twm</div>
+        <div class="ctx-item" onclick="ThemeManager.setTheme('macos')">🍎 Apple macOS (Aqua)</div>
       </div>
     </div>
 
@@ -1851,6 +1992,7 @@
     <div class="fp-subpanel-item" onclick="ThemeManager.setTheme('sgi'); closeSubpanels();">🌌 SGI IRIX 4Dwm (Indigo/Teal)</div>
     <div class="fp-subpanel-item" onclick="ThemeManager.setTheme('nextstep'); closeSubpanels();">⬛ NeXTSTEP 3.3 (Dark Titanium)</div>
     <div class="fp-subpanel-item" onclick="ThemeManager.setTheme('x11'); closeSubpanels();">🖥️ MIT X11 Athena / twm (1993)</div>
+    <div class="fp-subpanel-item" onclick="ThemeManager.setTheme('macos'); closeSubpanels();">🍎 Apple macOS (Aqua / Modern)</div>
   </div>
 
   <!-- JAVASCRIPT LOGIC -->
@@ -2131,7 +2273,7 @@
        3. THEME MANAGER
        ========================================================================== */
     const ThemeManager = {
-      themes: ['cde-classic', 'solaris', 'sgi', 'nextstep', 'x11'],
+      themes: ['cde-classic', 'solaris', 'sgi', 'nextstep', 'x11', 'macos'],
       current: 'cde-classic',
 
       init() {
@@ -2867,7 +3009,7 @@ Type 'help' for commands, 'ls' for applications, 'cde-fetch' for system info.
   cde-fetch          Show ASCII workstation specs
   matrix             Run green digital rain (press any key to stop)
   fortune            Display a retro UNIX aphorism
-  theme <name>       Change desktop theme (cde, solaris, sgi, next, x11)
+  theme <name>       Change desktop theme (cde, solaris, sgi, next, x11, macos)
   clear, cls         Clear terminal screen
   exit               Close this terminal window\n\n`;
             break;
@@ -2971,6 +3113,7 @@ drwxr-xr-x   4 root     sys          512 Sep 18 10:49 ..
             else if (t.includes('sgi') || t.includes('iri')) ThemeManager.setTheme('sgi');
             else if (t.includes('next')) ThemeManager.setTheme('nextstep');
             else if (t.includes('x11') || t.includes('twm')) ThemeManager.setTheme('x11');
+            else if (t.includes('mac') || t.includes('apple') || t.includes('aqua')) ThemeManager.setTheme('macos');
             else ThemeManager.setTheme('cde-classic');
             output.textContent += `Theme set to: ${ThemeManager.current}\n\n`;
             break;
