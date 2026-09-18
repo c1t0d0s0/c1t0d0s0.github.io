@@ -711,16 +711,23 @@
     .wm-resize-sw { bottom: -5px; left: -5px; width: 16px; height: 16px; cursor: sw-resize; }
     .wm-resize-se { bottom: -5px; right: -5px; width: 16px; height: 16px; cursor: se-resize; }
 
-    /* Minimized Window Icon on Desktop */
+    /* Minimized Window Tray on Desktop (Bottom-Right corner to prevent overlapping desktop icons) */
     .minimized-icons-bar {
       position: absolute;
       bottom: 84px;
-      left: 12px;
+      right: 16px;
       display: flex;
       flex-direction: column-reverse;
+      align-items: flex-end;
       gap: 6px;
-      z-index: 30;
+      z-index: 450;
       pointer-events: none;
+      max-height: calc(100vh - 160px);
+      overflow-y: auto;
+      scrollbar-width: none;
+    }
+    .minimized-icons-bar::-webkit-scrollbar {
+      display: none;
     }
     .minimized-win-box {
       width: 140px;
@@ -1914,11 +1921,14 @@
         z-index: 10000 !important;
       }
 
-      /* Minimized Icons on Mobile */
+      /* Minimized Icons on Mobile (Bottom-Right corner) */
       .minimized-icons-bar {
-        bottom: 66px;
-        left: 6px;
+        bottom: 64px;
+        right: 8px;
+        left: auto;
         gap: 4px;
+        align-items: flex-end;
+        max-height: 45vh;
       }
       /* macOS Dock Adjustments on Mobile */
       [data-theme="macos"] #front-panel-container {
