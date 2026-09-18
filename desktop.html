@@ -2207,12 +2207,18 @@
           if (initialX === undefined) initialX = 6;
           if (initialY === undefined) initialY = 34;
         } else {
-          const activeCount = this.windows.length % 10;
+          const activeCount = this.windows.length % 8;
+          // Desktop icons occupy approx 220px-280px on the left side
+          const leftIconArea = screenW > 1100 ? 280 : 220;
           if (initialX === undefined) {
-            initialX = Math.max(20, Math.min(screenW - 600, 60 + activeCount * this.cascadeOffset));
+            if (screenW > 960) {
+              initialX = Math.max(leftIconArea, Math.min(screenW - initialWidth - 20, leftIconArea + activeCount * this.cascadeOffset));
+            } else {
+              initialX = Math.max(40, Math.min(screenW - initialWidth - 10, 60 + activeCount * this.cascadeOffset));
+            }
           }
           if (initialY === undefined) {
-            initialY = Math.max(30, Math.min(screenH - 500, 40 + activeCount * this.cascadeOffset));
+            initialY = Math.max(34, Math.min(screenH - initialHeight - 80, 44 + activeCount * this.cascadeOffset));
           }
         }
         
@@ -2807,9 +2813,15 @@ Type 'help' for commands, 'ls' for applications, 'cde-fetch' for system info.
           </div>
         `;
 
+        const isMobile = window.innerWidth <= 768;
+        const defaultTermX = isMobile ? 6 : Math.max(280, Math.min(window.innerWidth - 720, 320));
+        const defaultTermY = isMobile ? 34 : 44;
+
         const win = WindowManager.createWindow({
           title: 'dtterm - /bin/tcsh (80x24)',
           appId: 'terminal',
+          x: defaultTermX,
+          y: defaultTermY,
           width: 680,
           height: 440,
           content: termContainer
@@ -3564,9 +3576,12 @@ drwxr-xr-x   4 root     sys          512 Sep 18 10:49 ..
       // 4. Restore Theme
       ThemeManager.init();
 
-      // 5. Open Default Welcome Window (Terminal only)
+      // 5. Open Default Welcome Window (Terminal on desktop PC only, skip on mobile)
       setTimeout(() => {
-        AppLauncher.open('terminal');
+        const isMobile = window.innerWidth <= 768;
+        if (!isMobile) {
+          AppLauncher.open('terminal');
+        }
       }, 300);
     }
 
