@@ -1,0 +1,3398 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>c1t0d0s0 Workstation | CDE Web Desktop</title>
+  
+  <meta name="description" content="CDE / Motif / NeXTSTEP / 90s X11スタイルのレトロUNIXワークステーション風Webデスクトップ環境。c1t0d0s0のWebアプリ群をマルチウィンドウで同時実行できるポータル兼メタアプリです。">
+  <meta name="author" content="c1t0d0s0">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="icon" href="favicon.ico" sizes="any">
+
+  <!-- Retro / Monospace Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DotGothic16&family=Share+Tech+Mono&family=VT323&display=swap" rel="stylesheet">
+
+  <style>
+    /* ==========================================================================
+       THEMES (CDE Classic, Solaris Slate, SGI IRIX Indigo, NeXTSTEP 3.3, X11 Athena)
+       ========================================================================== */
+    :root {
+      /* CDE Classic (Brokat / HP-UX / AIX) - Default */
+      --theme-name: "cde-classic";
+      --desktop-bg: #4e635e;
+      --desktop-pattern-1: #4e635e;
+      --desktop-pattern-2: #455954;
+      --panel-bg: #b2aba1;
+      --panel-dark: #827c73;
+      --panel-light: #ded9d0;
+      --panel-inset: #706a61;
+      --bevel-light: #ece9e2;
+      --bevel-dark: #625c54;
+      --bevel-mid: #9c958b;
+      --window-bg: #c5beb4;
+      --window-fg: #000000;
+      --titlebar-active-bg: #4a6375;
+      --titlebar-active-fg: #ffffff;
+      --titlebar-inactive-bg: #9c958b;
+      --titlebar-inactive-fg: #d2cec7;
+      --btn-active-bg: #60798a;
+      --selection-bg: #274359;
+      --selection-fg: #ffffff;
+      --led-active: #00ff66;
+      --led-inactive: #004411;
+      --terminal-bg: #0c100e;
+      --terminal-fg: #33ff66;
+      --terminal-cursor: #33ff66;
+      --font-system: "Lucida Sans", "Lucida Grande", "Liberation Sans", Tahoma, "DotGothic16", sans-serif;
+      --font-mono: "Share Tech Mono", "Courier New", Courier, monospace;
+      --border-width: 5px;
+      --corner-size: 20px;
+    }
+
+    /* Solaris CDE (Slate Blue) */
+    [data-theme="solaris"] {
+      --desktop-bg: #324759;
+      --desktop-pattern-1: #324759;
+      --desktop-pattern-2: #283947;
+      --panel-bg: #9aa8b5;
+      --panel-dark: #6a7784;
+      --panel-light: #c8d3de;
+      --panel-inset: #535e6b;
+      --bevel-light: #d8e3ed;
+      --bevel-dark: #495460;
+      --bevel-mid: #8694a1;
+      --window-bg: #adb9c5;
+      --window-fg: #000000;
+      --titlebar-active-bg: #1e3a5f;
+      --titlebar-active-fg: #ffffff;
+      --titlebar-inactive-bg: #808e9c;
+      --titlebar-inactive-fg: #c4d0dc;
+      --btn-active-bg: #304e75;
+      --selection-bg: #15325b;
+      --selection-fg: #ffffff;
+      --terminal-bg: #090e14;
+      --terminal-fg: #64b5f6;
+      --terminal-cursor: #64b5f6;
+    }
+
+    /* SGI IRIX 4Dwm (Silicon Graphics Indigo / Teal & Magenta) */
+    [data-theme="sgi"] {
+      --desktop-bg: #1a4f54;
+      --desktop-pattern-1: #1a4f54;
+      --desktop-pattern-2: #143e42;
+      --panel-bg: #5f7478;
+      --panel-dark: #3a4b4e;
+      --panel-light: #8ba2a6;
+      --panel-inset: #2d3b3e;
+      --bevel-light: #a0b8bc;
+      --bevel-dark: #273336;
+      --bevel-mid: #4d6063;
+      --window-bg: #748c90;
+      --window-fg: #ffffff;
+      --titlebar-active-bg: #a62b55;
+      --titlebar-active-fg: #ffffff;
+      --titlebar-inactive-bg: #4f6366;
+      --titlebar-inactive-fg: #a2b4b7;
+      --btn-active-bg: #c43867;
+      --selection-bg: #a62b55;
+      --selection-fg: #ffffff;
+      --terminal-bg: #041214;
+      --terminal-fg: #00f0ff;
+      --terminal-cursor: #ff2b75;
+    }
+
+    /* NeXTSTEP 3.3 (Steve Jobs' NeXT Computer) */
+    [data-theme="nextstep"] {
+      --desktop-bg: #555555;
+      --desktop-pattern-1: #555555;
+      --desktop-pattern-2: #484848;
+      --panel-bg: #222222;
+      --panel-dark: #111111;
+      --panel-light: #444444;
+      --panel-inset: #0a0a0a;
+      --bevel-light: #ffffff;
+      --bevel-dark: #000000;
+      --bevel-mid: #888888;
+      --window-bg: #aeaeae;
+      --window-fg: #000000;
+      --titlebar-active-bg: #000000;
+      --titlebar-active-fg: #ffffff;
+      --titlebar-inactive-bg: #777777;
+      --titlebar-inactive-fg: #cccccc;
+      --btn-active-bg: #333333;
+      --selection-bg: #000000;
+      --selection-fg: #ffffff;
+      --terminal-bg: #000000;
+      --terminal-fg: #ffffff;
+      --terminal-cursor: #ffffff;
+    }
+
+    /* X11 Athena / twm (MIT 1993) */
+    [data-theme="x11"] {
+      --desktop-bg: #356578;
+      --desktop-pattern-1: #356578;
+      --desktop-pattern-2: #2b5363;
+      --panel-bg: #cccccc;
+      --panel-dark: #888888;
+      --panel-light: #ffffff;
+      --panel-inset: #666666;
+      --bevel-light: #ffffff;
+      --bevel-dark: #555555;
+      --bevel-mid: #aaaaaa;
+      --window-bg: #dcdcdc;
+      --window-fg: #000000;
+      --titlebar-active-bg: #2d6b82;
+      --titlebar-active-fg: #ffffff;
+      --titlebar-inactive-bg: #a0a0a0;
+      --titlebar-inactive-fg: #505050;
+      --btn-active-bg: #3d86a2;
+      --selection-bg: #2d6b82;
+      --selection-fg: #ffffff;
+      --terminal-bg: #000000;
+      --terminal-fg: #ffb000;
+      --terminal-cursor: #ffb000;
+    }
+
+    /* ==========================================================================
+       GLOBAL RESETS & WORKSPACE BACKGROUND
+       ========================================================================== */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      font-family: var(--font-system);
+      font-size: 13px;
+      color: var(--window-fg);
+      background-color: var(--desktop-bg);
+      image-rendering: pixelated;
+    }
+
+    /* Classic X11 Stipple / Grid Wallpaper */
+    #desktop {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 74px; /* Space for Front Panel */
+      overflow: hidden;
+      background-color: var(--desktop-bg);
+      background-image: radial-gradient(var(--desktop-pattern-2) 15%, transparent 16%),
+                        radial-gradient(var(--desktop-pattern-2) 15%, transparent 16%);
+      background-size: 8px 8px;
+      background-position: 0 0, 4px 4px;
+    }
+
+    /* Top Info Bar (Optional UNIX Workstation Status) */
+    #top-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 24px;
+      background-color: var(--panel-bg);
+      border-bottom: 2px solid var(--bevel-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px;
+      font-size: 11px;
+      font-weight: bold;
+      z-index: 10;
+      box-shadow: inset 0 1px 0 var(--bevel-light);
+    }
+    #top-bar .brand {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      letter-spacing: 0.5px;
+    }
+    #top-bar .brand-icon {
+      width: 14px;
+      height: 14px;
+    }
+    #top-bar .menus {
+      display: flex;
+      gap: 12px;
+    }
+    .top-menu-item {
+      cursor: pointer;
+      padding: 2px 6px;
+      border: 1px solid transparent;
+    }
+    .top-menu-item:hover {
+      background-color: var(--panel-light);
+      border: 1px solid var(--bevel-dark);
+    }
+    #top-bar .sys-info {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-mono);
+    }
+
+    /* Desktop adjusted for top bar */
+    #desktop {
+      top: 24px;
+    }
+
+    /* ==========================================================================
+       BEVEL STYLES (MOTIF 3D LOOK)
+       ========================================================================== */
+    .bevel-raised {
+      border-top: 2px solid var(--bevel-light);
+      border-left: 2px solid var(--bevel-light);
+      border-right: 2px solid var(--bevel-dark);
+      border-bottom: 2px solid var(--bevel-dark);
+      background-color: var(--panel-bg);
+    }
+    .bevel-sunken {
+      border-top: 2px solid var(--bevel-dark);
+      border-left: 2px solid var(--bevel-dark);
+      border-right: 2px solid var(--bevel-light);
+      border-bottom: 2px solid var(--bevel-light);
+      background-color: var(--panel-inset);
+    }
+    .bevel-etched {
+      border: 2px groove var(--bevel-mid);
+    }
+    .bevel-button {
+      border-top: 2px solid var(--bevel-light);
+      border-left: 2px solid var(--bevel-light);
+      border-right: 2px solid var(--bevel-dark);
+      border-bottom: 2px solid var(--bevel-dark);
+      background-color: var(--panel-bg);
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+    .bevel-button:active, .bevel-button.active {
+      border-top: 2px solid var(--bevel-dark);
+      border-left: 2px solid var(--bevel-dark);
+      border-right: 2px solid var(--bevel-light);
+      border-bottom: 2px solid var(--bevel-light);
+      background-color: var(--panel-dark);
+    }
+
+    /* ==========================================================================
+       DESKTOP ICONS
+       ========================================================================== */
+    #desktop-icons {
+      position: absolute;
+      top: 12px;
+      left: 12px;
+      bottom: 12px;
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+      gap: 16px 20px;
+      align-content: flex-start;
+      z-index: 20;
+      pointer-events: none;
+    }
+    .desktop-icon {
+      width: 76px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      pointer-events: auto;
+      padding: 4px 2px;
+      border: 1px dotted transparent;
+      transition: background 0.1s;
+    }
+    .desktop-icon:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+    .desktop-icon.selected {
+      border-color: var(--bevel-light);
+      background: rgba(0, 0, 0, 0.35);
+    }
+    .desktop-icon-img-box {
+      width: 44px;
+      height: 44px;
+      border: 2px solid var(--bevel-dark);
+      box-shadow: 1px 1px 0 var(--bevel-light);
+      background: var(--panel-bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 5px;
+      overflow: hidden;
+      border-radius: 2px;
+    }
+    .desktop-icon-img-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      image-rendering: auto;
+    }
+    .desktop-icon-img-box svg {
+      width: 28px;
+      height: 28px;
+      fill: currentColor;
+    }
+    .desktop-icon-label {
+      font-size: 11px;
+      color: #ffffff;
+      text-shadow: 1px 1px 1px #000000, -1px -1px 1px #000, 1px -1px 1px #000, -1px 1px 1px #000;
+      word-break: break-word;
+      line-height: 1.2;
+      padding: 1px 4px;
+      border-radius: 2px;
+    }
+    .desktop-icon.selected .desktop-icon-label {
+      background-color: var(--selection-bg);
+      color: var(--selection-fg);
+      text-shadow: none;
+    }
+
+    /* ==========================================================================
+       MOTIF / CDE WINDOW MANAGER (MWM)
+       ========================================================================== */
+    .wm-window {
+      position: absolute;
+      background-color: var(--window-bg);
+      border: var(--border-width) solid var(--panel-bg);
+      box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6),
+                  inset 1px 1px 0 var(--bevel-light),
+                  inset -1px -1px 0 var(--bevel-dark);
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      min-width: 240px;
+      min-height: 160px;
+    }
+    .wm-window.active {
+      border-color: var(--panel-light);
+      box-shadow: 5px 5px 16px rgba(0, 0, 0, 0.75),
+                  inset 1px 1px 0 #ffffff,
+                  inset -1px -1px 0 var(--bevel-dark);
+    }
+
+    /* Motif Outer Bevels & Corner Grips */
+    .wm-window::before {
+      content: "";
+      position: absolute;
+      top: calc(-1 * var(--border-width));
+      left: calc(-1 * var(--border-width));
+      right: calc(-1 * var(--border-width));
+      bottom: calc(-1 * var(--border-width));
+      border-top: 2px solid var(--bevel-light);
+      border-left: 2px solid var(--bevel-light);
+      border-right: 2px solid var(--bevel-dark);
+      border-bottom: 2px solid var(--bevel-dark);
+      pointer-events: none;
+    }
+
+    /* Title Bar */
+    .wm-titlebar {
+      height: 26px;
+      background-color: var(--titlebar-inactive-bg);
+      color: var(--titlebar-inactive-fg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 2px;
+      cursor: move;
+      border-bottom: 2px solid var(--bevel-dark);
+      font-size: 12px;
+      font-weight: bold;
+      user-select: none;
+    }
+    .wm-window.active .wm-titlebar {
+      background-color: var(--titlebar-active-bg);
+      color: var(--titlebar-active-fg);
+    }
+    .wm-title-left, .wm-title-right {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .wm-btn {
+      width: 20px;
+      height: 20px;
+      background-color: var(--panel-bg);
+      border-top: 1px solid var(--bevel-light);
+      border-left: 1px solid var(--bevel-light);
+      border-right: 1px solid var(--bevel-dark);
+      border-bottom: 1px solid var(--bevel-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #000;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: bold;
+      line-height: 1;
+      padding: 0;
+    }
+    .wm-btn:hover {
+      background-color: var(--bevel-light);
+    }
+    .wm-btn:active {
+      border-top: 1px solid var(--bevel-dark);
+      border-left: 1px solid var(--bevel-dark);
+      border-right: 1px solid var(--bevel-light);
+      border-bottom: 1px solid var(--bevel-light);
+      background-color: var(--panel-dark);
+    }
+    .wm-title-text {
+      flex: 1;
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 8px;
+      letter-spacing: 0.5px;
+      font-family: var(--font-system);
+    }
+
+    /* Window Menu Bar (File, Edit, View, Help) */
+    .wm-menubar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 2px 6px;
+      background: var(--panel-bg);
+      border-bottom: 1px solid var(--bevel-dark);
+      font-size: 11px;
+    }
+    .wm-menubar-item {
+      cursor: pointer;
+      padding: 1px 5px;
+      color: #000;
+    }
+    .wm-menubar-item:hover {
+      background: var(--panel-dark);
+      color: #fff;
+    }
+
+    /* Sub Toolbar (URL, Reload, Popout) */
+    .wm-urlbar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 3px 6px;
+      background: var(--panel-bg);
+      border-bottom: 2px solid var(--bevel-dark);
+      font-size: 11px;
+    }
+    .wm-url-input {
+      flex: 1;
+      background: var(--panel-inset);
+      color: #fff;
+      border-top: 1px solid var(--bevel-dark);
+      border-left: 1px solid var(--bevel-dark);
+      border-right: 1px solid var(--bevel-light);
+      border-bottom: 1px solid var(--bevel-light);
+      padding: 2px 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      outline: none;
+    }
+    .wm-tool-btn {
+      padding: 2px 6px;
+      font-size: 11px;
+      height: 20px;
+    }
+
+    /* Window Body */
+    .wm-body {
+      flex: 1;
+      position: relative;
+      background-color: #ffffff;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+    .wm-body iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+      flex: 1;
+      background-color: #ffffff;
+    }
+    
+    /* Drag / Resize Shim (prevents iframe from swallowing mousemove) */
+    .wm-shim {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 999;
+      display: none;
+      background: transparent;
+    }
+    .dragging-or-resizing .wm-shim {
+      display: block !important;
+    }
+
+    /* Window Status Bar */
+    .wm-statusbar {
+      height: 20px;
+      background-color: var(--panel-bg);
+      border-top: 1px solid var(--bevel-light);
+      border-bottom: 1px solid var(--bevel-dark);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 6px;
+      font-size: 10px;
+      font-family: var(--font-mono);
+      color: #000;
+    }
+
+    /* Motif 8-way Resize Handles */
+    .wm-resize-handle {
+      position: absolute;
+      z-index: 50;
+    }
+    .wm-resize-n { top: -5px; left: 15px; right: 15px; height: 7px; cursor: n-resize; }
+    .wm-resize-s { bottom: -5px; left: 15px; right: 15px; height: 7px; cursor: s-resize; }
+    .wm-resize-w { left: -5px; top: 15px; bottom: 15px; width: 7px; cursor: w-resize; }
+    .wm-resize-e { right: -5px; top: 15px; bottom: 15px; width: 7px; cursor: e-resize; }
+    .wm-resize-nw { top: -5px; left: -5px; width: 16px; height: 16px; cursor: nw-resize; }
+    .wm-resize-ne { top: -5px; right: -5px; width: 16px; height: 16px; cursor: ne-resize; }
+    .wm-resize-sw { bottom: -5px; left: -5px; width: 16px; height: 16px; cursor: sw-resize; }
+    .wm-resize-se { bottom: -5px; right: -5px; width: 16px; height: 16px; cursor: se-resize; }
+
+    /* Minimized Window Icon on Desktop */
+    .minimized-icons-bar {
+      position: absolute;
+      bottom: 84px;
+      left: 12px;
+      display: flex;
+      flex-direction: column-reverse;
+      gap: 6px;
+      z-index: 30;
+      pointer-events: none;
+    }
+    .minimized-win-box {
+      width: 140px;
+      height: 28px;
+      background: var(--panel-bg);
+      border-top: 2px solid var(--bevel-light);
+      border-left: 2px solid var(--bevel-light);
+      border-right: 2px solid var(--bevel-dark);
+      border-bottom: 2px solid var(--bevel-dark);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 2px 6px;
+      cursor: pointer;
+      pointer-events: auto;
+      font-size: 11px;
+      box-shadow: 2px 2px 4px rgba(0,0,0,0.4);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .minimized-win-box:hover {
+      background: var(--bevel-light);
+    }
+    .minimized-win-box img, .minimized-win-box svg {
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+    }
+
+    /* ==========================================================================
+       CDE FRONT PANEL (THE ICONIC DASHBOARD)
+       ========================================================================== */
+    #front-panel-container {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 74px;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      z-index: 500;
+      pointer-events: none;
+    }
+    #front-panel {
+      pointer-events: auto;
+      height: 70px;
+      background-color: var(--panel-bg);
+      border-top: 3px solid var(--bevel-light);
+      border-left: 3px solid var(--bevel-light);
+      border-right: 3px solid var(--bevel-dark);
+      box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.6);
+      display: flex;
+      align-items: center;
+      padding: 0 4px;
+      gap: 4px;
+      border-top-left-radius: 4px;
+      border-top-right-radius: 4px;
+    }
+
+    /* Front Panel Drawer/Slide arrow handles */
+    .fp-drawer-arrow {
+      position: absolute;
+      top: -12px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 22px;
+      height: 11px;
+      background: var(--panel-bg);
+      border-top: 1px solid var(--bevel-light);
+      border-left: 1px solid var(--bevel-light);
+      border-right: 1px solid var(--bevel-dark);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 8px;
+      line-height: 1;
+      color: #000;
+      z-index: 10;
+    }
+    .fp-drawer-arrow:hover {
+      background: var(--bevel-light);
+    }
+
+    /* Subpanels (Popup Drawer Menus) */
+    .fp-subpanel {
+      position: absolute;
+      bottom: 70px;
+      background: var(--panel-bg);
+      border-top: 2px solid var(--bevel-light);
+      border-left: 2px solid var(--bevel-light);
+      border-right: 2px solid var(--bevel-dark);
+      border-bottom: 2px solid var(--bevel-dark);
+      box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.5);
+      display: none;
+      flex-direction: column;
+      gap: 4px;
+      padding: 6px;
+      min-width: 140px;
+      z-index: 600;
+    }
+    .fp-subpanel.open {
+      display: flex;
+    }
+    .fp-subpanel-title {
+      font-size: 10px;
+      font-weight: bold;
+      color: var(--panel-dark);
+      border-bottom: 1px solid var(--bevel-mid);
+      padding-bottom: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .fp-subpanel-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 6px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      font-size: 11px;
+    }
+    .fp-subpanel-item:hover {
+      background: var(--panel-dark);
+      color: #ffffff;
+      border: 1px solid var(--bevel-light);
+    }
+    .fp-subpanel-item img, .fp-subpanel-item svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    /* Left & Right Control Banks */
+    .fp-bank {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      height: 100%;
+    }
+    .fp-slot {
+      position: relative;
+      width: 48px;
+      height: 58px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding-bottom: 4px;
+    }
+    .fp-icon-btn {
+      width: 44px;
+      height: 44px;
+      background: var(--panel-bg);
+      border-top: 2px solid var(--bevel-light);
+      border-left: 2px solid var(--bevel-light);
+      border-right: 2px solid var(--bevel-dark);
+      border-bottom: 2px solid var(--bevel-dark);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2px;
+      padding: 2px;
+    }
+    .fp-icon-btn:hover {
+      background: var(--bevel-light);
+    }
+    .fp-icon-btn:active {
+      border-top: 2px solid var(--bevel-dark);
+      border-left: 2px solid var(--bevel-dark);
+      border-right: 2px solid var(--bevel-light);
+      border-bottom: 2px solid var(--bevel-light);
+      background: var(--panel-dark);
+    }
+    .fp-icon-btn img, .fp-icon-btn svg {
+      width: 24px;
+      height: 24px;
+    }
+    .fp-icon-label {
+      font-size: 8px;
+      font-weight: bold;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      line-height: 1;
+    }
+
+    /* Center Switch & Monitor Box */
+    .fp-center {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--panel-dark);
+      padding: 4px 6px;
+      border-top: 2px solid var(--bevel-dark);
+      border-left: 2px solid var(--bevel-dark);
+      border-right: 2px solid var(--bevel-light);
+      border-bottom: 2px solid var(--bevel-light);
+    }
+
+    /* Workspace Switcher (One, Two, Three, Four) */
+    .fp-workspace-switch {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: 1fr 1fr;
+      gap: 3px;
+      width: 90px;
+      height: 52px;
+    }
+    .fp-ws-btn {
+      background: var(--panel-bg);
+      border-top: 2px solid var(--bevel-light);
+      border-left: 2px solid var(--bevel-light);
+      border-right: 2px solid var(--bevel-dark);
+      border-bottom: 2px solid var(--bevel-dark);
+      font-size: 9px;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: #000;
+      text-transform: uppercase;
+    }
+    .fp-ws-btn:hover {
+      background: var(--bevel-light);
+    }
+    .fp-ws-btn.active {
+      border-top: 2px solid var(--bevel-dark);
+      border-left: 2px solid var(--bevel-dark);
+      border-right: 2px solid var(--bevel-light);
+      border-bottom: 2px solid var(--bevel-light);
+      background: var(--btn-active-bg);
+      color: #ffffff;
+    }
+
+    /* Center Gauges / Clock */
+    .fp-gauges {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      width: 76px;
+    }
+    .fp-clock-box {
+      background: #000;
+      color: var(--led-active);
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 2px 4px;
+      text-align: center;
+      border: 1px solid var(--bevel-dark);
+      box-shadow: inset 0 0 4px rgba(0, 255, 100, 0.3);
+      cursor: pointer;
+    }
+    .fp-perf-box {
+      height: 24px;
+      background: #000;
+      border: 1px solid var(--bevel-dark);
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .fp-perf-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    /* Quick Lock & Power Keys */
+    .fp-quick-keys {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+    .fp-tiny-btn {
+      width: 22px;
+      height: 24px;
+      padding: 0;
+      font-size: 10px;
+    }
+
+    /* ==========================================================================
+       BUILT-IN ACCESSORIES STYLING
+       ========================================================================== */
+    
+    /* 1. Terminal (dtterm) */
+    .app-terminal {
+      background: var(--terminal-bg);
+      color: var(--terminal-fg);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      padding: 8px;
+      height: 100%;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+    .term-output {
+      flex: 1;
+      white-space: pre-wrap;
+      word-break: break-all;
+      line-height: 1.35;
+    }
+    .term-input-line {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 4px;
+    }
+    .term-prompt {
+      color: #ffb000;
+      font-weight: bold;
+    }
+    .term-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      color: var(--terminal-fg);
+      font-family: var(--font-mono);
+      font-size: 13px;
+      caret-color: var(--terminal-cursor);
+    }
+
+    /* 2. System Monitor (xload / perfmeter) */
+    .app-sysmon {
+      background: #111;
+      color: #eee;
+      padding: 10px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+    }
+    .sysmon-graph-box {
+      height: 110px;
+      background: #000;
+      border: 2px solid var(--bevel-mid);
+      position: relative;
+    }
+    .sysmon-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .sysmon-stats-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      background: #222;
+      padding: 6px;
+      border: 1px solid #444;
+    }
+    .sysmon-proc-list {
+      flex: 1;
+      background: #000;
+      border: 1px solid #444;
+      overflow-y: auto;
+      padding: 4px;
+    }
+    .sysmon-proc-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 10px;
+    }
+    .sysmon-proc-table th {
+      text-align: left;
+      border-bottom: 1px solid #555;
+      color: #aaa;
+    }
+    .sysmon-proc-table td {
+      padding: 2px 0;
+    }
+
+    /* 3. Text Editor (dtpad) */
+    .app-editor {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background: #fff;
+    }
+    .app-editor textarea {
+      flex: 1;
+      border: none;
+      outline: none;
+      padding: 8px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      resize: none;
+      line-height: 1.4;
+      background: #ffffff;
+      color: #000000;
+    }
+
+    /* 4. Calculator (dtcalc) */
+    .app-calc {
+      background: var(--panel-bg);
+      padding: 12px;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .calc-screen {
+      background: #c8d2c4;
+      color: #1a2418;
+      font-family: var(--font-mono);
+      font-size: 24px;
+      text-align: right;
+      padding: 6px 10px;
+      border: 2px inset var(--bevel-dark);
+      box-shadow: inset 1px 1px 4px rgba(0,0,0,0.3);
+      height: 44px;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 6px;
+      flex: 1;
+    }
+    .calc-btn {
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    /* 5. Clock (xclock) */
+    .app-clock {
+      background: var(--panel-bg);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      padding: 12px;
+      gap: 12px;
+    }
+    .clock-face {
+      width: 160px;
+      height: 160px;
+      background: #ffffff;
+      border: 6px solid var(--bevel-dark);
+      border-radius: 50%;
+      box-shadow: inset 2px 2px 6px rgba(0,0,0,0.4), 2px 2px 4px rgba(0,0,0,0.3);
+      position: relative;
+    }
+    .clock-face-canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    .clock-digital {
+      font-family: var(--font-mono);
+      font-size: 18px;
+      font-weight: bold;
+      background: #000;
+      color: var(--led-active);
+      padding: 4px 12px;
+      border: 2px inset var(--bevel-dark);
+    }
+
+    /* 6. Application Manager (dtfile) */
+    .app-launcher-mgr {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      background: var(--panel-bg);
+    }
+    .app-mgr-header {
+      padding: 8px;
+      border-bottom: 2px solid var(--bevel-dark);
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+    .app-mgr-search {
+      flex: 1;
+      padding: 4px 8px;
+      font-family: var(--font-system);
+      font-size: 12px;
+      outline: none;
+    }
+    .app-mgr-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+      gap: 12px;
+      align-content: flex-start;
+      background: #fff;
+    }
+    .app-mgr-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+    .app-mgr-item:hover {
+      background: #e4e9f0;
+      border-color: #9cb1c9;
+    }
+    .app-mgr-item img, .app-mgr-item svg {
+      width: 48px;
+      height: 48px;
+      object-fit: cover;
+      margin-bottom: 6px;
+      box-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+    }
+    .app-mgr-item-title {
+      font-size: 11px;
+      font-weight: bold;
+      color: #000;
+    }
+    .app-mgr-item-cat {
+      font-size: 9px;
+      color: #666;
+    }
+
+    /* ==========================================================================
+       CONTEXT MENU (ROOT WORKSPACE MENU)
+       ========================================================================== */
+    #context-menu {
+      position: absolute;
+      z-index: 10000;
+      background: var(--panel-bg);
+      border-top: 2px solid var(--bevel-light);
+      border-left: 2px solid var(--bevel-light);
+      border-right: 2px solid var(--bevel-dark);
+      border-bottom: 2px solid var(--bevel-dark);
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.6);
+      display: none;
+      flex-direction: column;
+      min-width: 170px;
+      padding: 2px;
+    }
+    .ctx-header {
+      background: var(--titlebar-active-bg);
+      color: var(--titlebar-active-fg);
+      font-size: 11px;
+      font-weight: bold;
+      padding: 2px 6px;
+      text-align: center;
+      margin-bottom: 2px;
+    }
+    .ctx-item {
+      padding: 4px 10px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      font-size: 11px;
+      color: #000;
+    }
+    .ctx-item:hover {
+      background: var(--selection-bg);
+      color: var(--selection-fg);
+    }
+    .ctx-separator {
+      height: 1px;
+      background: var(--bevel-dark);
+      margin: 2px 4px;
+      border-bottom: 1px solid var(--bevel-light);
+    }
+    .ctx-submenu-arrow {
+      font-size: 9px;
+    }
+
+    /* Cascade Submenu */
+    .ctx-parent {
+      position: relative;
+    }
+    .ctx-submenu {
+      position: absolute;
+      top: -2px;
+      left: 100%;
+      background: var(--panel-bg);
+      border-top: 2px solid var(--bevel-light);
+      border-left: 2px solid var(--bevel-light);
+      border-right: 2px solid var(--bevel-dark);
+      border-bottom: 2px solid var(--bevel-dark);
+      box-shadow: 4px 4px 10px rgba(0,0,0,0.6);
+      display: none;
+      flex-direction: column;
+      min-width: 160px;
+      padding: 2px;
+      z-index: 10001;
+    }
+    .ctx-parent:hover > .ctx-submenu {
+      display: flex;
+    }
+
+    /* ==========================================================================
+       MOTIF WINDOW MENU (mwm MENU)
+       ========================================================================== */
+    #window-menu {
+      position: absolute;
+      z-index: 10005;
+      background: var(--panel-bg);
+      border-top: 2px solid var(--bevel-light);
+      border-left: 2px solid var(--bevel-light);
+      border-right: 2px solid var(--bevel-dark);
+      border-bottom: 2px solid var(--bevel-dark);
+      box-shadow: 4px 4px 12px rgba(0,0,0,0.6);
+      display: none;
+      flex-direction: column;
+      min-width: 195px;
+      padding: 2px;
+      font-size: 11px;
+    }
+    .wm-menu-header {
+      background: var(--titlebar-active-bg);
+      color: var(--titlebar-active-fg);
+      font-weight: bold;
+      padding: 2px 6px;
+      text-align: center;
+      margin-bottom: 2px;
+    }
+    .wm-menu-item {
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      color: #000;
+    }
+    .wm-menu-item:hover {
+      background: var(--selection-bg);
+      color: var(--selection-fg);
+    }
+    .wm-menu-shortcut {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      opacity: 0.75;
+      margin-left: 12px;
+    }
+    .wm-menu-separator {
+      height: 1px;
+      background: var(--bevel-dark);
+      margin: 2px 4px;
+      border-bottom: 1px solid var(--bevel-light);
+    }
+
+    /* Iframe Loader & Fallback */
+    .wm-iframe-loader {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: #111815;
+      color: #33ff66;
+      font-family: var(--font-mono);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      z-index: 10;
+      transition: opacity 0.3s ease;
+      font-size: 12px;
+      padding: 20px;
+      text-align: center;
+    }
+    .wm-iframe-loader.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    .retro-spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid #224422;
+      border-top-color: #33ff66;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Front Panel Collapse Toggle Handle */
+    #fp-toggle-tab {
+      position: absolute;
+      top: -14px;
+      left: 16px;
+      background: var(--panel-bg);
+      border-top: 2px solid var(--bevel-light);
+      border-left: 2px solid var(--bevel-light);
+      border-right: 2px solid var(--bevel-dark);
+      font-size: 9px;
+      padding: 0 8px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #000;
+      height: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 550;
+      user-select: none;
+    }
+    #fp-toggle-tab:hover {
+      background: var(--bevel-light);
+    }
+    #front-panel-container.collapsed #front-panel {
+      transform: translateY(70px);
+      transition: transform 0.25s ease;
+    }
+    #front-panel-container:not(.collapsed) #front-panel {
+      transition: transform 0.25s ease;
+    }
+
+
+    /* Modal Dialog (Alert / About) */
+    .wm-modal-backdrop {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.4);
+      z-index: 20000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Mobile Responsive Tweaks */
+    @media (max-width: 768px) {
+      #top-bar .sys-info { display: none; }
+      #desktop-icons { gap: 8px 12px; }
+      .desktop-icon { width: 64px; }
+      .desktop-icon-img-box { width: 36px; height: 36px; }
+      #front-panel { height: 60px; }
+      .fp-slot { width: 38px; height: 50px; }
+      .fp-icon-btn { width: 34px; height: 34px; }
+      .fp-icon-btn img, .fp-icon-btn svg { width: 18px; height: 18px; }
+      .fp-icon-label { display: none; }
+      .fp-workspace-switch { width: 70px; height: 44px; }
+      .fp-gauges { width: 60px; }
+    }
+  </style>
+</head>
+<body data-theme="cde-classic">
+
+  <!-- TOP WORKSTATION MENU BAR -->
+  <header id="top-bar">
+    <div class="brand">
+      <svg class="brand-icon" viewBox="0 0 24 24" fill="currentColor">
+        <rect x="2" y="3" width="20" height="14" rx="1" fill="none" stroke="currentColor" stroke-width="2"/>
+        <line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" stroke-width="2"/>
+        <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" stroke-width="2"/>
+        <rect x="5" y="6" width="6" height="4" fill="currentColor"/>
+      </svg>
+      <span>c1t0d0s0 Common Desktop Environment (CDE 1.4)</span>
+    </div>
+    <div class="menus">
+      <div class="top-menu-item" onclick="openContextMenu(event, 10, 24)">Workspace Menu ▾</div>
+      <div class="top-menu-item" onclick="WindowManager.cascadeWindows()">Cascade</div>
+      <div class="top-menu-item" onclick="WindowManager.tileWindows()">Tile</div>
+      <div class="top-menu-item" onclick="AppLauncher.open('about')">About...</div>
+    </div>
+    <div class="sys-info">
+      <span>SunOS 5.8 Generic_108528-29 sun4u</span>
+      <span id="top-clock">00:00:00</span>
+    </div>
+  </header>
+
+  <!-- DESKTOP WORKSPACE -->
+  <main id="desktop">
+    <!-- Desktop Icons -->
+    <div id="desktop-icons">
+      <!-- Generated by JS -->
+    </div>
+
+    <!-- Minimized Windows Tray -->
+    <div class="minimized-icons-bar" id="minimized-icons-bar">
+      <!-- Minimized items appear here -->
+    </div>
+
+    <!-- Window Layer Container -->
+    <div id="windows-layer"></div>
+  </main>
+
+  <!-- CDE FRONT PANEL -->
+  <div id="front-panel-container">
+    <div id="fp-toggle-tab" onclick="toggleFrontPanelCollapse()">▼ Hide Panel</div>
+    <div id="front-panel">
+      
+      <!-- LEFT BANK -->
+      <div class="fp-bank">
+        <!-- 1. Text Editor (dtpad) -->
+        <div class="fp-slot">
+          <div class="fp-drawer-arrow" onclick="toggleSubpanel('subpanel-editor', event)">▲</div>
+          <div class="fp-icon-btn" title="Text Editor (dtpad)" onclick="AppLauncher.open('notes')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M14 2H6c-1.1 0-1.99.9-1.99 2L4 20c0 1.1.89 2 1.99 2H18c1.1 0 2-.9 2-2V8l-6-6zm2 16H8v-2h8v2zm0-4H8v-2h8v2zm-3-5V3.5L18.5 9H13z"/></svg>
+            <span class="fp-icon-label">Editor</span>
+          </div>
+          <!-- Subpanel -->
+          <div class="fp-subpanel" id="subpanel-editor">
+            <div class="fp-subpanel-title">Productivity</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('notes')">📝 Text Editor</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('calc')">🧮 Calculator</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('calendar')">📅 Calendar</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('unit-converter')">📏 Unit Converter</div>
+          </div>
+        </div>
+
+        <!-- 2. Terminal (dtterm) -->
+        <div class="fp-slot">
+          <div class="fp-drawer-arrow" onclick="toggleSubpanel('subpanel-terminal', event)">▲</div>
+          <div class="fp-icon-btn" title="Terminal (dtterm)" onclick="AppLauncher.open('terminal')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8h16v10zm-2-1h-6v-2h6v2zm-9.7-4.3L5.6 16 4.2 14.6l2.9-2.9-2.9-2.9L5.6 7.4l4.3 4.3c.4.4.4 1 0 1.4z"/></svg>
+            <span class="fp-icon-label">Term</span>
+          </div>
+          <!-- Subpanel -->
+          <div class="fp-subpanel" id="subpanel-terminal">
+            <div class="fp-subpanel-title">Terminals & Shell</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('terminal')">📟 dtterm (tcsh)</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('sysmon')">📊 System Monitor</div>
+          </div>
+        </div>
+
+        <!-- 3. Web Applications Portal -->
+        <div class="fp-slot">
+          <div class="fp-drawer-arrow" onclick="toggleSubpanel('subpanel-apps', event)">▲</div>
+          <div class="fp-icon-btn" title="App Manager (dtfile)" onclick="AppLauncher.open('appmgr')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 8h4V4H4v4zm6 12h4v-4h-4v4zm-6 0h4v-4H4v4zm0-6h4v-4H4v4zm6 0h4v-4h-4v4zm6-10v4h4V4h-4zm-6 4h4V4h-4v4zm6 6h4v-4h-4v4zm0 6h4v-4h-4v4z"/></svg>
+            <span class="fp-icon-label">Apps</span>
+          </div>
+          <!-- Subpanel with Apps -->
+          <div class="fp-subpanel" id="subpanel-apps" style="min-width: 220px; max-height: 380px; overflow-y: auto;">
+            <div class="fp-subpanel-title">Installed Web Applications</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('area-mazes')">📐 面積迷路 (Area Mazes)</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('noxmind')">🧠 NoxMind (Mind Map)</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('classic-solo-games')">🃏 ソロゲームズ (Solitaire/Mine)</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('conway-life')">🧬 ライフゲーム (Life Game)</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('sumris')">🔟 Sumris (Math Falling Blocks)</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('planet-game')">🪐 Planet Merge</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('lexidrop')">🔤 LexiDrop (Typing)</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('element-lab')">🧪 元素ラボ (Element Lab)</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('world-heritage-quiz')">🏛️ 世界遺産マスター</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('manhole')">🕳️ マンホールカード</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('fishing-info')">🎣 釣行ナビ (Fishing Info)</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('qr-generator')">📱 QRコード生成</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('morse-master')">📻 モールスマスター</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('leaders-archive')">📜 歴代指導者アーカイブ</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('native-ear')">🎧 NativeEar</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('votica')">🗳️ Votica</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CENTER CONTROL BANK (WORKSPACES & MONITORS) -->
+      <div class="fp-center">
+        <!-- 4 Workspaces -->
+        <div class="fp-workspace-switch">
+          <div class="fp-ws-btn active" data-ws="1" onclick="WorkspaceManager.switchWorkspace(1)">One</div>
+          <div class="fp-ws-btn" data-ws="2" onclick="WorkspaceManager.switchWorkspace(2)">Two</div>
+          <div class="fp-ws-btn" data-ws="3" onclick="WorkspaceManager.switchWorkspace(3)">Three</div>
+          <div class="fp-ws-btn" data-ws="4" onclick="WorkspaceManager.switchWorkspace(4)">Four</div>
+        </div>
+
+        <!-- Gauges / Clock -->
+        <div class="fp-gauges">
+          <div class="fp-clock-box" id="fp-clock-display" title="Clock (Click to open dtclock)" onclick="AppLauncher.open('clock')">
+            12:00:00
+          </div>
+          <div class="fp-perf-box" title="CPU Load / Perfmeter (Click to open xload)" onclick="AppLauncher.open('sysmon')">
+            <canvas id="fp-perf-canvas" class="fp-perf-canvas" width="76" height="24"></canvas>
+          </div>
+        </div>
+
+        <!-- Mini power & Lock -->
+        <div class="fp-quick-keys">
+          <button class="bevel-button fp-tiny-btn" title="Toggle Sound / Beeps" id="sound-toggle-btn" onclick="SoundManager.toggleMute()">
+            🔊
+          </button>
+          <button class="bevel-button fp-tiny-btn" title="Theme Selector" onclick="openThemeMenu(event)">
+            🎨
+          </button>
+        </div>
+      </div>
+
+      <!-- RIGHT BANK -->
+      <div class="fp-bank">
+        <!-- 4. Calculator (dtcalc) -->
+        <div class="fp-slot">
+          <div class="fp-drawer-arrow" onclick="toggleSubpanel('subpanel-calc', event)">▲</div>
+          <div class="fp-icon-btn" title="Calculator (dtcalc)" onclick="AppLauncher.open('calc')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-6 2h5v3h-5V5zm-6 0h4v3H7V5zm0 5h4v3H7v-3zm0 5h4v3H7v-3zm10 3h-4v-3h4v3zm0-5h-4v-3h4v3z"/></svg>
+            <span class="fp-icon-label">Calc</span>
+          </div>
+          <!-- Subpanel -->
+          <div class="fp-subpanel" id="subpanel-calc">
+            <div class="fp-subpanel-title">Utilities</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('calc')">🧮 Calculator</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('clock')">⏱️ Clock / Timer</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('unit-converter')">📐 Unit Converter</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('qr-generator')">📱 QR Generator</div>
+          </div>
+        </div>
+
+        <!-- 5. System Monitor (xload) -->
+        <div class="fp-slot">
+          <div class="fp-drawer-arrow" onclick="toggleSubpanel('subpanel-sys', event)">▲</div>
+          <div class="fp-icon-btn" title="System Monitor (xload)" onclick="AppLauncher.open('sysmon')">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3.5 18.49l6-6.01 4 4L22 6.92l-1.41-1.41-7.09 7.97-4-4L2 16.99z"/></svg>
+            <span class="fp-icon-label">Perf</span>
+          </div>
+          <!-- Subpanel -->
+          <div class="fp-subpanel" id="subpanel-sys">
+            <div class="fp-subpanel-title">System Tools</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('sysmon')">📊 Performance Meter</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('terminal')">📟 Shell Terminal</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('about')">ℹ️ Workstation Specs</div>
+          </div>
+        </div>
+
+        <!-- 6. Trash / Recycling -->
+        <div class="fp-slot">
+          <div class="fp-icon-btn" title="Trash Can" onclick="WindowManager.closeAll(); SoundManager.playTrash();">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 4V3H9v1H4v2h1v13c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V6h1V4h-5zm2 15H7V6h10v13zM9 8h2v9H9zm4 0h2v9h-2z"/></svg>
+            <span class="fp-icon-label">Trash</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ROOT CONTEXT MENU (RIGHT CLICK) -->
+  <div id="context-menu">
+    <div class="ctx-header">Workspace Menu</div>
+    
+    <div class="ctx-item ctx-parent">
+      <span>Programs & Apps</span>
+      <span class="ctx-submenu-arrow">▶</span>
+      <div class="ctx-submenu" id="ctx-apps-submenu">
+        <!-- populated dynamically -->
+      </div>
+    </div>
+
+    <div class="ctx-item ctx-parent">
+      <span>Accessories</span>
+      <span class="ctx-submenu-arrow">▶</span>
+      <div class="ctx-submenu">
+        <div class="ctx-item" onclick="AppLauncher.open('terminal')">📟 Terminal</div>
+        <div class="ctx-item" onclick="AppLauncher.open('notes')">📝 Text Editor</div>
+        <div class="ctx-item" onclick="AppLauncher.open('calc')">🧮 Calculator</div>
+        <div class="ctx-item" onclick="AppLauncher.open('clock')">⏱️ Clock</div>
+        <div class="ctx-item" onclick="AppLauncher.open('sysmon')">📊 System Monitor</div>
+        <div class="ctx-item" onclick="AppLauncher.open('appmgr')">📁 App Manager</div>
+      </div>
+    </div>
+
+    <div class="ctx-item ctx-parent">
+      <span>Workstation Theme</span>
+      <span class="ctx-submenu-arrow">▶</span>
+      <div class="ctx-submenu">
+        <div class="ctx-item" onclick="ThemeManager.setTheme('cde-classic')">CDE Classic (Wheat/Teal)</div>
+        <div class="ctx-item" onclick="ThemeManager.setTheme('solaris')">Solaris CDE (Slate Blue)</div>
+        <div class="ctx-item" onclick="ThemeManager.setTheme('sgi')">SGI IRIX 4Dwm (Indigo)</div>
+        <div class="ctx-item" onclick="ThemeManager.setTheme('nextstep')">NeXTSTEP 3.3 (Dark Gray)</div>
+        <div class="ctx-item" onclick="ThemeManager.setTheme('x11')">MIT X11 Athena / twm</div>
+      </div>
+    </div>
+
+    <div class="ctx-separator"></div>
+
+    <div class="ctx-item" onclick="WindowManager.cascadeWindows()">Cascade Windows</div>
+    <div class="ctx-item" onclick="WindowManager.tileWindows()">Tile Windows</div>
+    <div class="ctx-item" onclick="WindowManager.minimizeAll()">Minimize All</div>
+    <div class="ctx-item" onclick="WindowManager.restoreAll()">Restore All</div>
+
+    <div class="ctx-separator"></div>
+
+    <div class="ctx-item" onclick="AppLauncher.open('about')">About CDE Workstation...</div>
+    <div class="ctx-item" onclick="location.href='https://c1t0d0s0.y8n.org/'">Return to Standard Portal</div>
+  </div>
+
+  <!-- MOTIF WINDOW MENU (mwm DROPDOWN) -->
+  <div id="window-menu">
+    <div class="wm-menu-header" id="win-menu-header">Window Menu</div>
+    <div class="wm-menu-item" onclick="WindowManager.execMenuAction('restore')">
+      <span>Restore</span>
+      <span class="wm-menu-shortcut">Alt+F5</span>
+    </div>
+    <div class="wm-menu-item" onclick="WindowManager.execMenuAction('minimize')">
+      <span>Minimize</span>
+      <span class="wm-menu-shortcut">Alt+F9</span>
+    </div>
+    <div class="wm-menu-item" onclick="WindowManager.execMenuAction('maximize')">
+      <span>Maximize</span>
+      <span class="wm-menu-shortcut">Alt+F10</span>
+    </div>
+    <div class="wm-menu-item" onclick="WindowManager.execMenuAction('lower')">
+      <span>Lower</span>
+      <span class="wm-menu-shortcut">Alt+F3</span>
+    </div>
+    <div class="wm-menu-separator"></div>
+    <div class="wm-menu-item ctx-parent">
+      <span>Move to Workspace</span>
+      <span class="ctx-submenu-arrow">▶</span>
+      <div class="ctx-submenu">
+        <div class="ctx-item" onclick="WindowManager.moveActiveToWS(1)">Workspace 1 (One)</div>
+        <div class="ctx-item" onclick="WindowManager.moveActiveToWS(2)">Workspace 2 (Two)</div>
+        <div class="ctx-item" onclick="WindowManager.moveActiveToWS(3)">Workspace 3 (Three)</div>
+        <div class="ctx-item" onclick="WindowManager.moveActiveToWS(4)">Workspace 4 (Four)</div>
+        <div class="ctx-item" onclick="WindowManager.moveActiveToWS('all')">📌 All Workspaces (Sticky)</div>
+      </div>
+    </div>
+    <div class="wm-menu-separator"></div>
+    <div class="wm-menu-item" onclick="WindowManager.execMenuAction('close')">
+      <span>Close</span>
+      <span class="wm-menu-shortcut">Alt+F4</span>
+    </div>
+  </div>
+
+  <!-- THEME SELECTOR POPUP -->
+  <div id="theme-menu" class="fp-subpanel" style="bottom: 74px; left: 50%; transform: translateX(-50%);">
+    <div class="fp-subpanel-title">Select Workstation Theme</div>
+    <div class="fp-subpanel-item" onclick="ThemeManager.setTheme('cde-classic'); closeSubpanels();">🏛️ CDE Classic (Brokat/Teal)</div>
+    <div class="fp-subpanel-item" onclick="ThemeManager.setTheme('solaris'); closeSubpanels();">☀️ Solaris CDE (Slate Blue)</div>
+    <div class="fp-subpanel-item" onclick="ThemeManager.setTheme('sgi'); closeSubpanels();">🌌 SGI IRIX 4Dwm (Indigo/Teal)</div>
+    <div class="fp-subpanel-item" onclick="ThemeManager.setTheme('nextstep'); closeSubpanels();">⬛ NeXTSTEP 3.3 (Dark Titanium)</div>
+    <div class="fp-subpanel-item" onclick="ThemeManager.setTheme('x11'); closeSubpanels();">🖥️ MIT X11 Athena / twm (1993)</div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC -->
+  <script>
+    /* ==========================================================================
+       1. DATA DEFINITIONS (18 PORTAL APPLICATIONS + SYSTEM TOOLS)
+       ========================================================================== */
+    const APPS = [
+      {
+        id: 'area-mazes',
+        title: '面積迷路',
+        titleEn: 'Area Mazes',
+        url: 'https://area-mazes.y8n.org/',
+        icon: 'assets/images/area-maze.webp',
+        category: 'puzzle',
+        categoryName: 'パズル・ゲーム',
+        desc: 'ひらめきと論理的思考力を鍛えるロジックパズル。長方形の面積比から未知の長さを解き明かす。',
+        width: 960, height: 680, desktop: true
+      },
+      {
+        id: 'manhole',
+        title: 'マンホールカード',
+        titleEn: 'Manhole Cards',
+        url: 'https://manhole.y8n.org/',
+        icon: 'assets/images/manhole.webp',
+        category: 'collection',
+        categoryName: 'コレクション',
+        desc: '全国各地のデザインマンホールカードのコレクションビューア＆マップ。',
+        width: 1000, height: 700, desktop: false
+      },
+      {
+        id: 'noxmind',
+        title: 'NoxMind',
+        titleEn: 'NoxMind',
+        url: 'https://noxmind.y8n.org/',
+        icon: 'assets/images/noxmind.webp',
+        category: 'tool',
+        categoryName: 'ツール',
+        desc: '思考を自由に広げて明快に整理するグラフィカルマインドマップ。',
+        width: 1000, height: 700, desktop: true
+      },
+      {
+        id: 'world-heritage-quiz',
+        title: '世界遺産マスター',
+        titleEn: 'World Heritage Master',
+        url: 'https://world-heritage.y8n.org/',
+        icon: 'assets/images/world-heritage.webp',
+        category: 'education',
+        categoryName: 'クイズ・学習',
+        desc: '世界中の文化遺産・自然遺産をめぐる知識クイズ＆ガイド。',
+        width: 960, height: 680, desktop: false
+      },
+      {
+        id: 'lexidrop',
+        title: 'LexiDrop',
+        titleEn: 'LexiDrop',
+        url: 'https://lexidrop.y8n.org/',
+        icon: 'assets/images/lexidrop.webp',
+        category: 'puzzle',
+        categoryName: 'パズル・ゲーム',
+        desc: '落下してくる英単語をキーボードで爽快タイピング消去。',
+        width: 920, height: 660, desktop: false
+      },
+      {
+        id: 'unit-converter',
+        title: 'Unit Converter',
+        titleEn: 'Unit Converter',
+        url: 'https://unit-converter.y8n.org/',
+        icon: 'assets/images/unit-converter.webp',
+        category: 'tool',
+        categoryName: 'ツール',
+        desc: '米国慣用単位とメートル法をスマート相互変換。',
+        width: 820, height: 620, desktop: false
+      },
+      {
+        id: 'element-lab',
+        title: '元素ラボ',
+        titleEn: 'Element Lab',
+        url: 'https://element-lab.y8n.org/',
+        icon: 'assets/images/element-lab.webp',
+        category: 'education',
+        categoryName: 'クイズ・学習',
+        desc: '全118元素の周期表とリアルタイム化学反応シミュレータ。',
+        width: 1020, height: 720, desktop: true
+      },
+      {
+        id: 'conway-life',
+        title: 'ライフゲーム',
+        titleEn: "Conway's Life",
+        url: 'https://life.y8n.org/',
+        icon: 'assets/images/conway-life.webp',
+        category: 'puzzle',
+        categoryName: 'パズル・ゲーム',
+        desc: '生き残りと死滅のシンプルなルールから生まれる驚異の生命シミュレーション。',
+        width: 940, height: 680, desktop: true
+      },
+      {
+        id: 'morse-master',
+        title: 'モールスマスター',
+        titleEn: 'Morse Master',
+        url: 'https://morse.y8n.org/',
+        icon: 'assets/images/morse-master.webp',
+        category: 'education',
+        categoryName: 'クイズ・学習',
+        desc: '音・光・タップで直感的にマスターできるモールス信号学習アプリ。',
+        width: 920, height: 680, desktop: false
+      },
+      {
+        id: 'votica',
+        title: 'Votica',
+        titleEn: 'Votica',
+        url: 'https://votica.y8n.org/',
+        icon: 'assets/images/votica.webp',
+        category: 'tool',
+        categoryName: 'ツール',
+        desc: '多人数決選投票・自動再投票対応のGoogle認証投票ツール。',
+        width: 900, height: 650, desktop: false
+      },
+      {
+        id: 'classic-solo-games',
+        title: 'ソロゲームズ',
+        titleEn: 'Solo Games',
+        url: 'https://sologames.y8n.org/',
+        icon: 'assets/images/classic-solo-games.webp',
+        category: 'puzzle',
+        categoryName: 'パズル・ゲーム',
+        desc: 'ソリティア・マインスイーパー・上海の一人遊びクラシック集。',
+        width: 1000, height: 700, desktop: true
+      },
+      {
+        id: 'planet-game',
+        title: 'Planet Merge',
+        titleEn: 'Planet Merge',
+        url: 'https://planet-merge.y8n.org/',
+        icon: 'assets/images/planet-game.webp',
+        category: 'puzzle',
+        categoryName: 'パズル・ゲーム',
+        desc: '惑星同士を合体・進化させて太陽を目指す物理演算落ち物パズル。',
+        width: 680, height: 760, desktop: false
+      },
+      {
+        id: 'native-ear',
+        title: 'NativeEar',
+        titleEn: 'NativeEar',
+        url: 'https://native-ear.y8n.org/',
+        icon: 'assets/images/native-ear.webp',
+        category: 'education',
+        categoryName: 'クイズ・学習',
+        desc: 'TOEICリスニング強化ディクテーション＆シャドーイング特訓アプリ。',
+        width: 960, height: 700, desktop: false
+      },
+      {
+        id: 'fishing-info',
+        title: '釣行ナビ',
+        titleEn: 'Fishing Info',
+        url: 'https://fishing.y8n.org/',
+        icon: 'assets/images/fishing-info.webp',
+        category: 'tool',
+        categoryName: 'ツール',
+        desc: '潮汐表、波高、風速、海水温、魚種図鑑を完備した釣りダッシュボード。',
+        width: 1020, height: 720, desktop: false
+      },
+      {
+        id: 'qr-generator',
+        title: 'QRコード生成',
+        titleEn: 'QR Generator',
+        url: 'https://qr.y8n.org/',
+        icon: 'assets/images/qr-generator.webp',
+        category: 'tool',
+        categoryName: 'ツール',
+        desc: 'URL、テキスト、Wi-Fi接続用QRコードを瞬時に作成・保存。',
+        width: 820, height: 640, desktop: false
+      },
+      {
+        id: 'leaders-archive',
+        title: '歴代指導者',
+        titleEn: 'Leaders Archive',
+        url: 'https://leaders.y8n.org/',
+        icon: 'assets/images/leaders.webp',
+        category: 'education',
+        categoryName: 'クイズ・学習',
+        desc: '歴代首相、米大統領、徳川将軍の歴史アーカイブとクイズ。',
+        width: 980, height: 700, desktop: false
+      },
+      {
+        id: 'calendar',
+        title: 'カレンダー',
+        titleEn: 'Calendar',
+        url: 'https://calendar.y8n.org/',
+        icon: 'assets/images/calendar.webp',
+        category: 'tool',
+        categoryName: 'ツール',
+        desc: '日米英の祝日、和暦、干支に対応した年間カレンダー。',
+        width: 920, height: 680, desktop: false
+      },
+      {
+        id: 'sumris',
+        title: 'Sumris',
+        titleEn: 'Sumris',
+        url: 'https://sumris.y8n.org/',
+        icon: 'assets/images/sumris.webp',
+        category: 'puzzle',
+        categoryName: 'パズル・ゲーム',
+        desc: '縦横の合計を「10の倍数」にして爽快コンボ消去する暗算落ち物パズル。',
+        width: 720, height: 780, desktop: true
+      }
+    ];
+
+    /* ==========================================================================
+       2. RETRO SOUND EFFECTS (WEB AUDIO API SYNTHESIZER)
+       ========================================================================== */
+    const SoundManager = {
+      ctx: null,
+      muted: false,
+
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) {
+            this.ctx = new AudioContext();
+          }
+        }
+      },
+
+      toggleMute() {
+        this.muted = !this.muted;
+        const btn = document.getElementById('sound-toggle-btn');
+        if (btn) btn.textContent = this.muted ? '🔇' : '🔊';
+        if (!this.muted) this.playTone(800, 0.05);
+      },
+
+      playTone(freq, duration = 0.08, type = 'square', gainVal = 0.08) {
+        if (this.muted) return;
+        try {
+          this.init();
+          if (!this.ctx) return;
+          if (this.ctx.state === 'suspended') {
+            this.ctx.resume();
+          }
+          const osc = this.ctx.createOscillator();
+          const gain = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          gain.gain.setValueAtTime(gainVal, this.ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.0001, this.ctx.currentTime + duration);
+          osc.connect(gain);
+          gain.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch (e) {}
+      },
+
+      playOpen() {
+        this.playTone(440, 0.06);
+        setTimeout(() => this.playTone(880, 0.08), 50);
+      },
+      playClose() {
+        this.playTone(660, 0.05);
+        setTimeout(() => this.playTone(330, 0.07), 40);
+      },
+      playMinimize() {
+        this.playTone(550, 0.04);
+        setTimeout(() => this.playTone(440, 0.04), 30);
+      },
+      playMaximize() {
+        this.playTone(440, 0.04);
+        setTimeout(() => this.playTone(770, 0.06), 30);
+      },
+      playTrash() {
+        this.playTone(220, 0.12, 'sawtooth');
+      },
+      playBeep() {
+        this.playTone(980, 0.1, 'sine', 0.12);
+      }
+    };
+
+    /* ==========================================================================
+       3. THEME MANAGER
+       ========================================================================== */
+    const ThemeManager = {
+      themes: ['cde-classic', 'solaris', 'sgi', 'nextstep', 'x11'],
+      current: 'cde-classic',
+
+      init() {
+        const saved = localStorage.getItem('cde_theme');
+        if (saved && this.themes.includes(saved)) {
+          this.setTheme(saved, false);
+        }
+      },
+
+      setTheme(name, save = true) {
+        this.current = name;
+        document.body.setAttribute('data-theme', name);
+        if (save) {
+          localStorage.setItem('cde_theme', name);
+          SoundManager.playTone(600, 0.06);
+        }
+      }
+    };
+
+    /* ==========================================================================
+       4. WORKSPACE MANAGER (ONE, TWO, THREE, FOUR)
+       ========================================================================== */
+    const WorkspaceManager = {
+      current: 1,
+
+      switchWorkspace(wsNumber) {
+        if (this.current === wsNumber) return;
+        this.current = wsNumber;
+        SoundManager.playTone(520, 0.04);
+
+        // Update front panel buttons
+        document.querySelectorAll('.fp-ws-btn').forEach(btn => {
+          btn.classList.toggle('active', parseInt(btn.dataset.ws) === wsNumber);
+        });
+
+        // Filter windows
+        WindowManager.windows.forEach(win => {
+          if (win.ws === this.current || win.ws === 'all') {
+            if (!win.minimized) win.el.style.display = 'flex';
+          } else {
+            win.el.style.display = 'none';
+          }
+        });
+      }
+    };
+
+    /* ==========================================================================
+       5. WINDOW MANAGER (MWM / CDE ENGINE)
+       ========================================================================== */
+    const WindowManager = {
+      windows: [],
+      activeWin: null,
+      topZIndex: 100,
+      cascadeOffset: 30,
+
+      createWindow(options) {
+        SoundManager.playOpen();
+        const id = 'win-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
+        
+        // Cascade coordinates
+        const activeCount = this.windows.length % 10;
+        const defaultLeft = Math.max(20, Math.min(window.innerWidth - 600, 60 + activeCount * this.cascadeOffset));
+        const defaultTop = Math.max(30, Math.min(window.innerHeight - 500, 40 + activeCount * this.cascadeOffset));
+        
+        const winObj = {
+          id: id,
+          title: options.title || 'Untitled Application',
+          appId: options.appId || '',
+          url: options.url || '',
+          icon: options.icon || '',
+          ws: WorkspaceManager.current,
+          x: options.x || defaultLeft,
+          y: options.y || defaultTop,
+          width: options.width || 680,
+          height: options.height || 500,
+          minimized: false,
+          maximized: false,
+          prevBounds: null,
+          el: null,
+          bodyEl: null
+        };
+
+        // Window element container
+        const winEl = document.createElement('div');
+        winEl.className = 'wm-window';
+        winEl.id = id;
+        winEl.style.left = winObj.x + 'px';
+        winEl.style.top = winObj.y + 'px';
+        winEl.style.width = winObj.width + 'px';
+        winEl.style.height = winObj.height + 'px';
+        winEl.style.zIndex = ++this.topZIndex;
+
+        // Build Titlebar
+        const titleBar = document.createElement('div');
+        titleBar.className = 'wm-titlebar';
+        titleBar.innerHTML = `
+          <div class="wm-title-left">
+            <button class="wm-btn" title="Window Menu (Click: Menu, Double click: Close)" onclick="WindowManager.showWindowMenu('${id}', event)" ondblclick="WindowManager.closeWindow('${id}')">━</button>
+          </div>
+          <div class="wm-title-text">${winObj.title}</div>
+          <div class="wm-title-right">
+            <button class="wm-btn" title="Minimize" onclick="WindowManager.minimizeWindow('${id}', event)">_</button>
+            <button class="wm-btn" title="Maximize" onclick="WindowManager.toggleMaximize('${id}', event)">□</button>
+          </div>
+        `;
+        winEl.appendChild(titleBar);
+
+        // Optional Web Browser bar if it's an iframe app
+        if (winObj.url) {
+          const urlBar = document.createElement('div');
+          urlBar.className = 'wm-urlbar';
+          urlBar.innerHTML = `
+            <button class="bevel-button wm-tool-btn" title="Reload Frame" onclick="WindowManager.reloadIframe('${id}')">↻</button>
+            <input class="wm-url-input" type="text" value="${winObj.url}" readonly>
+            <button class="bevel-button wm-tool-btn" title="Open in New Tab" onclick="window.open('${winObj.url}', '_blank')">↗ Popout</button>
+          `;
+          winEl.appendChild(urlBar);
+        }
+
+        // Window Body
+        const bodyEl = document.createElement('div');
+        bodyEl.className = 'wm-body';
+        
+        // Transparent Drag Shield
+        const shim = document.createElement('div');
+        shim.className = 'wm-shim';
+        bodyEl.appendChild(shim);
+
+        if (winObj.url) {
+          const loader = document.createElement('div');
+          loader.className = 'wm-iframe-loader';
+          let hostName = 'SERVER';
+          try { hostName = new URL(winObj.url).host.toUpperCase(); } catch (e) {}
+          loader.innerHTML = `
+            <div class="retro-spinner"></div>
+            <div>CONNECTING TO ${hostName}...</div>
+            <div style="font-size:10px; color:#888;">If blocked by browser security, <a href="${winObj.url}" target="_blank" style="color:#64b5f6; text-decoration:underline;">click here to open in new tab</a></div>
+          `;
+          bodyEl.appendChild(loader);
+
+          const iframe = document.createElement('iframe');
+          iframe.src = winObj.url;
+          iframe.setAttribute('allow', 'fullscreen; clipboard-read; clipboard-write');
+          iframe.onload = () => {
+            loader.classList.add('hidden');
+          };
+          setTimeout(() => loader.classList.add('hidden'), 4000);
+          bodyEl.appendChild(iframe);
+        } else if (options.content) {
+          if (typeof options.content === 'string') {
+            bodyEl.innerHTML += options.content;
+          } else {
+            bodyEl.appendChild(options.content);
+          }
+        }
+        winEl.appendChild(bodyEl);
+
+        // Window Status Bar
+        const statusBar = document.createElement('div');
+        statusBar.className = 'wm-statusbar';
+        statusBar.innerHTML = `
+          <span>Status: Ready</span>
+          <span>WS: ${winObj.ws}</span>
+        `;
+        winEl.appendChild(statusBar);
+
+        // 8-way Resize Handles
+        const handles = ['n', 's', 'w', 'e', 'nw', 'ne', 'sw', 'se'];
+        handles.forEach(dir => {
+          const h = document.createElement('div');
+          h.className = `wm-resize-handle wm-resize-${dir}`;
+          h.dataset.dir = dir;
+          winEl.appendChild(h);
+        });
+
+        document.getElementById('windows-layer').appendChild(winEl);
+
+        winObj.el = winEl;
+        winObj.bodyEl = bodyEl;
+        this.windows.push(winObj);
+
+        // Attach Interactions (Drag & Resize)
+        this.setupWindowInteractions(winObj);
+        this.focusWindow(winObj);
+
+        return winObj;
+      },
+
+      setupWindowInteractions(winObj) {
+        const el = winObj.el;
+        const titleBar = el.querySelector('.wm-titlebar');
+
+        // Focus on click anywhere
+        el.addEventListener('mousedown', () => {
+          this.focusWindow(winObj);
+        });
+
+        // Double click titlebar to toggle maximize
+        titleBar.addEventListener('dblclick', (e) => {
+          if (e.target.closest('.wm-btn')) return;
+          this.toggleMaximize(winObj.id);
+        });
+
+        // Window Dragging
+        let isDragging = false;
+        let startX, startY, origX, origY;
+
+        const onDragStart = (clientX, clientY) => {
+          this.focusWindow(winObj);
+          if (winObj.maximized) return;
+          isDragging = true;
+          startX = clientX;
+          startY = clientY;
+          origX = winObj.x;
+          origY = winObj.y;
+          document.body.classList.add('dragging-or-resizing');
+        };
+
+        titleBar.addEventListener('mousedown', (e) => {
+          if (e.target.closest('.wm-btn')) return;
+          onDragStart(e.clientX, e.clientY);
+          e.preventDefault();
+        });
+
+        // Touch drag support
+        titleBar.addEventListener('touchstart', (e) => {
+          if (e.target.closest('.wm-btn')) return;
+          const touch = e.touches[0];
+          onDragStart(touch.clientX, touch.clientY);
+        }, { passive: true });
+
+        // Window Resizing
+        let isResizing = false;
+        let resizeDir = '';
+        let origW, origH;
+
+        const onResizeStart = (clientX, clientY, dir) => {
+          this.focusWindow(winObj);
+          if (winObj.maximized) return;
+          isResizing = true;
+          resizeDir = dir;
+          startX = clientX;
+          startY = clientY;
+          origX = winObj.x;
+          origY = winObj.y;
+          origW = winObj.width;
+          origH = winObj.height;
+          document.body.classList.add('dragging-or-resizing');
+        };
+
+        el.querySelectorAll('.wm-resize-handle').forEach(h => {
+          h.addEventListener('mousedown', (e) => {
+            onResizeStart(e.clientX, e.clientY, h.dataset.dir);
+            e.preventDefault();
+            e.stopPropagation();
+          });
+          h.addEventListener('touchstart', (e) => {
+            const touch = e.touches[0];
+            onResizeStart(touch.clientX, touch.clientY, h.dataset.dir);
+            e.stopPropagation();
+          }, { passive: true });
+        });
+
+        // Global Move & Up
+        const onPointerMove = (clientX, clientY) => {
+          if (isDragging) {
+            const dx = clientX - startX;
+            const dy = clientY - startY;
+            winObj.x = Math.max(-winObj.width + 80, Math.min(window.innerWidth - 80, origX + dx));
+            winObj.y = Math.max(24, Math.min(window.innerHeight - 60, origY + dy));
+            el.style.left = winObj.x + 'px';
+            el.style.top = winObj.y + 'px';
+          } else if (isResizing) {
+            const dx = clientX - startX;
+            const dy = clientY - startY;
+            let newW = origW;
+            let newH = origH;
+            let newX = origX;
+            let newY = origY;
+
+            if (resizeDir.includes('e')) newW = Math.max(260, origW + dx);
+            if (resizeDir.includes('s')) newH = Math.max(160, origH + dy);
+            if (resizeDir.includes('w')) {
+              const proposedW = origW - dx;
+              if (proposedW >= 260) {
+                newW = proposedW;
+                newX = origX + dx;
+              }
+            }
+            if (resizeDir.includes('n')) {
+              const proposedH = origH - dy;
+              if (proposedH >= 160) {
+                newH = proposedH;
+                newY = origY + dy;
+              }
+            }
+
+            winObj.width = newW;
+            winObj.height = newH;
+            winObj.x = newX;
+            winObj.y = newY;
+
+            el.style.width = newW + 'px';
+            el.style.height = newH + 'px';
+            el.style.left = newX + 'px';
+            el.style.top = newY + 'px';
+          }
+        };
+
+        const onPointerUp = () => {
+          if (isDragging || isResizing) {
+            isDragging = false;
+            isResizing = false;
+            document.body.classList.remove('dragging-or-resizing');
+          }
+        };
+
+        window.addEventListener('mousemove', (e) => onPointerMove(e.clientX, e.clientY));
+        window.addEventListener('mouseup', onPointerUp);
+        window.addEventListener('touchmove', (e) => {
+          if (isDragging || isResizing) {
+            const touch = e.touches[0];
+            onPointerMove(touch.clientX, touch.clientY);
+          }
+        }, { passive: true });
+        window.addEventListener('touchend', onPointerUp);
+      },
+
+      focusWindow(winObj) {
+        if (this.activeWin === winObj) return;
+        
+        // Remove active class from previous
+        this.windows.forEach(w => {
+          w.el.classList.remove('active');
+        });
+
+        this.activeWin = winObj;
+        winObj.el.classList.add('active');
+        winObj.el.style.zIndex = ++this.topZIndex;
+      },
+
+      closeWindow(id) {
+        SoundManager.playClose();
+        const index = this.windows.findIndex(w => w.id === id);
+        if (index !== -1) {
+          const winObj = this.windows[index];
+          winObj.el.remove();
+          this.windows.splice(index, 1);
+          this.updateMinimizedTray();
+
+          // Focus next available window
+          const remaining = this.windows.filter(w => w.ws === WorkspaceManager.current && !w.minimized);
+          if (remaining.length > 0) {
+            this.focusWindow(remaining[remaining.length - 1]);
+          } else {
+            this.activeWin = null;
+          }
+        }
+      },
+
+      minimizeWindow(id, e) {
+        if (e) e.stopPropagation();
+        SoundManager.playMinimize();
+        const winObj = this.windows.find(w => w.id === id);
+        if (!winObj) return;
+
+        winObj.minimized = true;
+        winObj.el.style.display = 'none';
+        this.updateMinimizedTray();
+      },
+
+      restoreWindow(id) {
+        SoundManager.playMaximize();
+        const winObj = this.windows.find(w => w.id === id);
+        if (!winObj) return;
+
+        winObj.minimized = false;
+        winObj.el.style.display = 'flex';
+        this.focusWindow(winObj);
+        this.updateMinimizedTray();
+      },
+
+      toggleMaximize(id, e) {
+        if (e) e.stopPropagation();
+        const winObj = this.windows.find(w => w.id === id);
+        if (!winObj) return;
+
+        if (!winObj.maximized) {
+          SoundManager.playMaximize();
+          winObj.prevBounds = {
+            x: winObj.x,
+            y: winObj.y,
+            width: winObj.width,
+            height: winObj.height
+          };
+          winObj.maximized = true;
+          winObj.x = 0;
+          winObj.y = 24;
+          winObj.width = window.innerWidth;
+          winObj.height = window.innerHeight - 74 - 24; // avoid top bar and front panel
+          
+          winObj.el.style.left = '0px';
+          winObj.el.style.top = '24px';
+          winObj.el.style.width = winObj.width + 'px';
+          winObj.el.style.height = winObj.height + 'px';
+        } else {
+          SoundManager.playMinimize();
+          winObj.maximized = false;
+          if (winObj.prevBounds) {
+            winObj.x = winObj.prevBounds.x;
+            winObj.y = winObj.prevBounds.y;
+            winObj.width = winObj.prevBounds.width;
+            winObj.height = winObj.prevBounds.height;
+            winObj.el.style.left = winObj.x + 'px';
+            winObj.el.style.top = winObj.y + 'px';
+            winObj.el.style.width = winObj.width + 'px';
+            winObj.el.style.height = winObj.height + 'px';
+          }
+        }
+        this.focusWindow(winObj);
+      },
+
+      reloadIframe(id) {
+        const winObj = this.windows.find(w => w.id === id);
+        if (winObj && winObj.el) {
+          const iframe = winObj.el.querySelector('iframe');
+          if (iframe) iframe.src = iframe.src;
+        }
+      },
+
+      activeMenuWinId: null,
+
+      showWindowMenu(id, e) {
+        e.stopPropagation();
+        closeContextMenu();
+        closeSubpanels();
+        this.activeMenuWinId = id;
+        const winObj = this.windows.find(w => w.id === id);
+        if (winObj) this.focusWindow(winObj);
+
+        const menu = document.getElementById('window-menu');
+        const header = document.getElementById('win-menu-header');
+        if (header && winObj) header.textContent = winObj.title.substring(0, 20);
+
+        const rect = e.target.getBoundingClientRect();
+        menu.style.display = 'flex';
+        menu.style.left = Math.min(window.innerWidth - 200, rect.left) + 'px';
+        menu.style.top = Math.min(window.innerHeight - 230, rect.bottom + 2) + 'px';
+        SoundManager.playTone(550, 0.02);
+      },
+
+      closeWindowMenu() {
+        const menu = document.getElementById('window-menu');
+        if (menu) menu.style.display = 'none';
+        this.activeMenuWinId = null;
+      },
+
+      execMenuAction(action) {
+        const id = this.activeMenuWinId;
+        this.closeWindowMenu();
+        if (!id) return;
+
+        switch (action) {
+          case 'restore':
+            const win = this.windows.find(w => w.id === id);
+            if (win && win.maximized) this.toggleMaximize(id);
+            else if (win && win.minimized) this.restoreWindow(id);
+            break;
+          case 'minimize':
+            this.minimizeWindow(id);
+            break;
+          case 'maximize':
+            this.toggleMaximize(id);
+            break;
+          case 'lower':
+            this.lowerWindow(id);
+            break;
+          case 'close':
+            this.closeWindow(id);
+            break;
+        }
+      },
+
+      lowerWindow(id) {
+        const winObj = this.windows.find(w => w.id === id);
+        if (winObj) {
+          winObj.el.style.zIndex = 40;
+          winObj.el.classList.remove('active');
+          const remaining = this.windows.filter(w => (w.ws === WorkspaceManager.current || w.ws === 'all') && !w.minimized && w.id !== id);
+          if (remaining.length > 0) {
+            this.focusWindow(remaining[remaining.length - 1]);
+          }
+          SoundManager.playTone(300, 0.04);
+        }
+      },
+
+      moveActiveToWS(ws) {
+        const id = this.activeMenuWinId;
+        this.closeWindowMenu();
+        if (!id) return;
+        const winObj = this.windows.find(w => w.id === id);
+        if (!winObj) return;
+
+        winObj.ws = ws;
+        const statusWs = winObj.el.querySelector('.wm-statusbar span:last-child');
+        if (statusWs) statusWs.textContent = `WS: ${ws === 'all' ? 'All' : ws}`;
+
+        if (ws !== 'all' && ws !== WorkspaceManager.current) {
+          winObj.el.style.display = 'none';
+        } else {
+          winObj.el.style.display = 'flex';
+          this.focusWindow(winObj);
+        }
+        SoundManager.playTone(600, 0.04);
+      },
+
+      updateMinimizedTray() {
+        const bar = document.getElementById('minimized-icons-bar');
+        bar.innerHTML = '';
+        this.windows.filter(w => w.minimized).forEach(w => {
+          const box = document.createElement('div');
+          box.className = 'minimized-win-box';
+          box.title = w.title + ' (Click to restore)';
+          box.innerHTML = `
+            ${w.icon ? `<img src="${w.icon}" alt="">` : '🗔'}
+            <span>${w.title}</span>
+          `;
+          box.onclick = () => this.restoreWindow(w.id);
+          bar.appendChild(box);
+        });
+      },
+
+      cascadeWindows() {
+        const wins = this.windows.filter(w => w.ws === WorkspaceManager.current && !w.minimized);
+        wins.forEach((w, i) => {
+          w.maximized = false;
+          w.x = 40 + i * 30;
+          w.y = 40 + i * 30;
+          w.el.style.left = w.x + 'px';
+          w.el.style.top = w.y + 'px';
+          this.focusWindow(w);
+        });
+      },
+
+      tileWindows() {
+        const wins = this.windows.filter(w => w.ws === WorkspaceManager.current && !w.minimized);
+        if (wins.length === 0) return;
+
+        const areaW = window.innerWidth;
+        const areaH = window.innerHeight - 74 - 24;
+        const count = wins.length;
+
+        let cols = Math.ceil(Math.sqrt(count));
+        let rows = Math.ceil(count / cols);
+
+        const tileW = Math.floor(areaW / cols);
+        const tileH = Math.floor(areaH / rows);
+
+        wins.forEach((w, i) => {
+          const col = i % cols;
+          const row = Math.floor(i / cols);
+          w.maximized = false;
+          w.x = col * tileW;
+          w.y = 24 + row * tileH;
+          w.width = tileW;
+          w.height = tileH;
+          w.el.style.left = w.x + 'px';
+          w.el.style.top = w.y + 'px';
+          w.el.style.width = tileW + 'px';
+          w.el.style.height = tileH + 'px';
+          this.focusWindow(w);
+        });
+      },
+
+      minimizeAll() {
+        this.windows.filter(w => w.ws === WorkspaceManager.current).forEach(w => {
+          this.minimizeWindow(w.id);
+        });
+      },
+
+      restoreAll() {
+        this.windows.filter(w => w.ws === WorkspaceManager.current).forEach(w => {
+          this.restoreWindow(w.id);
+        });
+      },
+
+      closeAll() {
+        [...this.windows].forEach(w => {
+          this.closeWindow(w.id);
+        });
+      }
+    };
+
+    /* ==========================================================================
+       6. APP LAUNCHER & ACCESSORY FACTORIES
+       ========================================================================== */
+    const AppLauncher = {
+      open(appKey) {
+        closeSubpanels();
+        closeContextMenu();
+
+        // Check if it's an accessory
+        switch (appKey) {
+          case 'terminal':
+            this.openTerminal();
+            return;
+          case 'sysmon':
+            this.openSysMonitor();
+            return;
+          case 'notes':
+            this.openNotes();
+            return;
+          case 'calc':
+            this.openCalculator();
+            return;
+          case 'clock':
+            this.openClock();
+            return;
+          case 'appmgr':
+            this.openAppManager();
+            return;
+          case 'about':
+            this.openAbout();
+            return;
+        }
+
+        // Web Application from APPS array
+        const app = APPS.find(a => a.id === appKey);
+        if (app) {
+          WindowManager.createWindow({
+            title: `${app.title} - [${app.url}]`,
+            appId: app.id,
+            url: app.url,
+            icon: app.icon,
+            width: Math.min(window.innerWidth - 40, app.width),
+            height: Math.min(window.innerHeight - 100, app.height)
+          });
+        }
+      },
+
+      openTerminal() {
+        const termContainer = document.createElement('div');
+        termContainer.className = 'app-terminal';
+        termContainer.innerHTML = `
+          <div class="term-output">c1t0d0s0 SunOS Release 5.8 Generic_108528-29 sun4u sparc
+Copyright 2026 c1t0d0s0. All rights reserved.
+
+Type 'help' for commands, 'ls' for applications, 'cde-fetch' for system info.
+</div>
+          <div class="term-input-line">
+            <span class="term-prompt">c1t0d0s0@ultra60:~%</span>
+            <input type="text" class="term-input" spellcheck="false" autocomplete="off">
+          </div>
+        `;
+
+        const win = WindowManager.createWindow({
+          title: 'dtterm - /bin/tcsh (80x24)',
+          appId: 'terminal',
+          width: 680,
+          height: 440,
+          content: termContainer
+        });
+
+        // Terminal command handling
+        const input = termContainer.querySelector('.term-input');
+        const output = termContainer.querySelector('.term-output');
+
+        input.focus();
+        win.el.addEventListener('click', () => input.focus());
+
+        input.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter') {
+            const cmd = input.value.trim();
+            input.value = '';
+            output.textContent += `c1t0d0s0@ultra60:~% ${cmd}\n`;
+            this.execTerminalCommand(cmd, output, win);
+            termContainer.scrollTop = termContainer.scrollHeight;
+          }
+        });
+      },
+
+      execTerminalCommand(cmdStr, output, win) {
+        const parts = cmdStr.split(/\s+/);
+        const cmd = (parts[0] || '').toLowerCase();
+        const arg = parts.slice(1).join(' ');
+
+        switch (cmd) {
+          case '':
+            break;
+          case 'help':
+            output.textContent += `Available commands:
+  help               Show this help message
+  ls, dir            List installed applications and directories
+  open <app>         Launch a web application (e.g. 'open sumris')
+  ps                 List currently running window processes
+  kill <id>          Close a window by process ID
+  uname -a           Print system and workstation architecture
+  uptime             Display system load and uptime
+  whoami             Show logged in user
+  date               Print current date and time
+  cde-fetch          Show ASCII workstation specs
+  matrix             Run green digital rain (press any key to stop)
+  fortune            Display a retro UNIX aphorism
+  theme <name>       Change desktop theme (cde, solaris, sgi, next, x11)
+  clear, cls         Clear terminal screen
+  exit               Close this terminal window\n\n`;
+            break;
+
+          case 'ls':
+          case 'dir':
+            output.textContent += `total 18 applications (in /opt/c1t0d0s0/apps):
+drwxr-xr-x   2 root     sys          512 Sep 18 10:49 .
+drwxr-xr-x   4 root     sys          512 Sep 18 10:49 ..
+`;
+            APPS.forEach(a => {
+              output.textContent += `-rwxr-xr-x   1 c1t0d0s0 staff       4096 Sep 18  ${a.id.padEnd(20)} [${a.title}]\n`;
+            });
+            output.textContent += '\n';
+            break;
+
+          case 'open':
+            if (!arg) {
+              output.textContent += "usage: open <app-name>\nExample: open sumris\n\n";
+              return;
+            }
+            const matched = APPS.find(a => a.id.toLowerCase() === arg.toLowerCase() || a.title.toLowerCase().includes(arg.toLowerCase()));
+            if (matched) {
+              output.textContent += `Launching '${matched.title}'...\n\n`;
+              AppLauncher.open(matched.id);
+            } else {
+              output.textContent += `open: command not found: '${arg}'. Type 'ls' to see applications.\n\n`;
+            }
+            break;
+
+          case 'ps':
+            output.textContent += `  PID TTY         TIME CMD\n`;
+            WindowManager.windows.forEach(w => {
+              output.textContent += ` ${w.id.padEnd(16)} ??        0:01 ${w.title.substring(0, 30)}\n`;
+            });
+            output.textContent += '\n';
+            break;
+
+          case 'kill':
+            if (!arg) {
+              output.textContent += "usage: kill <win-id>\n";
+              return;
+            }
+            const target = WindowManager.windows.find(w => w.id === arg || w.title.includes(arg));
+            if (target) {
+              WindowManager.closeWindow(target.id);
+              output.textContent += `Process [${target.id}] terminated.\n\n`;
+            } else {
+              output.textContent += `kill: No such process: ${arg}\n\n`;
+            }
+            break;
+
+          case 'uname':
+            output.textContent += "SunOS c1t0d0s0 5.8 Generic_108528-29 sun4u sparc SUNW,Ultra-60\n\n";
+            break;
+
+          case 'uptime':
+            output.textContent += " 10:49am  up 42 day(s), 13:37,  1 user,  load average: 0.12, 0.08, 0.05\n\n";
+            break;
+
+          case 'whoami':
+            output.textContent += "c1t0d0s0 (UID: 1000, GID: 100 staff)\n\n";
+            break;
+
+          case 'date':
+            output.textContent += new Date().toString() + "\n\n";
+            break;
+
+          case 'cde-fetch':
+          case 'neofetch':
+            output.textContent += `
+       .---.          c1t0d0s0@ultra60
+      /     \\         ----------------
+     | () () |        OS: SunOS 5.8 (Solaris 8 SPARC)
+      \\  _  /         Host: Sun Ultra 60 (2x UltraSPARC-II @ 450MHz)
+       \`---\`          Kernel: 5.8 Generic_108528-29
+      /     \\         Uptime: 42 days, 13 hours, 37 mins
+     /|     |\\        Shell: /bin/tcsh
+    / |     | \\       WM: CDE 1.4 / Motif mwm
+   *  |  _  |  *      Terminal: dtterm
+      \`-\` \`-\`         CPU: Dual UltraSPARC-II 450MHz
+                      Memory: 512 MB / 2048 MB RAM
+                      Resolution: ${window.innerWidth}x${window.innerHeight} 24-bit TrueColor
+\n`;
+            break;
+
+          case 'fortune':
+            const fortunes = [
+              "\"UNIX is simple. It just takes a genius to understand its simplicity.\" - Dennis Ritchie",
+              "\"The only way to go fast is to go well.\" - Robert C. Martin",
+              "\"Never trust an operating system you don't have sources for.\" - Retro Hacker",
+              "\"Real programmers don't write specs, they write code.\" - Workstation Wisdom",
+              "\"Keep it simple, stupid (KISS).\" - UNIX Philosophy"
+            ];
+            output.textContent += fortunes[Math.floor(Math.random() * fortunes.length)] + "\n\n";
+            break;
+
+          case 'theme':
+            const t = arg.toLowerCase();
+            if (t.includes('sol')) ThemeManager.setTheme('solaris');
+            else if (t.includes('sgi') || t.includes('iri')) ThemeManager.setTheme('sgi');
+            else if (t.includes('next')) ThemeManager.setTheme('nextstep');
+            else if (t.includes('x11') || t.includes('twm')) ThemeManager.setTheme('x11');
+            else ThemeManager.setTheme('cde-classic');
+            output.textContent += `Theme set to: ${ThemeManager.current}\n\n`;
+            break;
+
+          case 'clear':
+          case 'cls':
+            output.textContent = '';
+            break;
+
+          case 'exit':
+            WindowManager.closeWindow(win.id);
+            break;
+
+          default:
+            output.textContent += `${cmd}: command not found. Type 'help' for available commands.\n\n`;
+            break;
+        }
+      },
+
+      openSysMonitor() {
+        const container = document.createElement('div');
+        container.className = 'app-sysmon';
+        container.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <b>Performance Meter (xload) - UltraSPARC 450MHz</b>
+            <span id="sysmon-load-text">Load: 0.14</span>
+          </div>
+          <div class="sysmon-graph-box">
+            <canvas id="sysmon-canvas-full" class="sysmon-canvas" width="460" height="110"></canvas>
+          </div>
+          <div class="sysmon-stats-grid">
+            <div>CPU: <span id="sysmon-cpu-pct">18%</span> (Dual SPARC)</div>
+            <div>Memory: <span>248 MB / 512 MB (48%)</span></div>
+            <div>Active Windows: <span id="sysmon-win-count">0</span></div>
+            <div>Disk /: <span>14.2 GB / 36 GB (Free)</span></div>
+          </div>
+          <div style="font-weight:bold; margin-top:4px;">Window Processes:</div>
+          <div class="sysmon-proc-list">
+            <table class="sysmon-proc-table" id="sysmon-table">
+              <thead><tr><th>ID</th><th>TITLE</th><th>WS</th><th>ACTION</th></tr></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        `;
+
+        const win = WindowManager.createWindow({
+          title: 'Performance Meter (xload)',
+          appId: 'sysmon',
+          width: 500,
+          height: 380,
+          content: container
+        });
+
+        // Setup real-time graphing
+        const canvas = container.querySelector('#sysmon-canvas-full');
+        const ctx = canvas.getContext('2d');
+        const history = new Array(80).fill(15);
+
+        const updateTable = () => {
+          const tbody = container.querySelector('#sysmon-table tbody');
+          const winCount = container.querySelector('#sysmon-win-count');
+          if (winCount) winCount.textContent = WindowManager.windows.length;
+          if (!tbody) return;
+          tbody.innerHTML = '';
+          WindowManager.windows.forEach(w => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+              <td>${w.id.substring(0, 10)}</td>
+              <td>${w.title.substring(0, 22)}</td>
+              <td>${w.ws}</td>
+              <td><button class="bevel-button" style="padding:1px 4px; font-size:9px;" onclick="WindowManager.closeWindow('${w.id}')">Kill</button></td>
+            `;
+            tbody.appendChild(tr);
+          });
+        };
+
+        const timer = setInterval(() => {
+          if (!document.getElementById(win.id)) {
+            clearInterval(timer);
+            return;
+          }
+
+          // Random load calculation
+          const base = 15 + WindowManager.windows.length * 6;
+          const val = Math.min(95, Math.max(5, base + (Math.random() * 18 - 9)));
+          history.shift();
+          history.push(val);
+
+          const cpuPct = container.querySelector('#sysmon-cpu-pct');
+          if (cpuPct) cpuPct.textContent = Math.round(val) + '%';
+
+          // Draw Canvas
+          ctx.fillStyle = '#000000';
+          ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+          // Grid lines
+          ctx.strokeStyle = '#223322';
+          ctx.lineWidth = 1;
+          for (let y = 0; y < canvas.height; y += 20) {
+            ctx.beginPath();
+            ctx.moveTo(0, y);
+            ctx.lineTo(canvas.width, y);
+            ctx.stroke();
+          }
+          for (let x = 0; x < canvas.width; x += 30) {
+            ctx.beginPath();
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x, canvas.height);
+            ctx.stroke();
+          }
+
+          // Waveform
+          ctx.strokeStyle = '#00ff66';
+          ctx.fillStyle = 'rgba(0, 255, 100, 0.18)';
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          const step = canvas.width / (history.length - 1);
+          history.forEach((hVal, idx) => {
+            const px = idx * step;
+            const py = canvas.height - (hVal / 100) * canvas.height;
+            if (idx === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          });
+          ctx.stroke();
+          ctx.lineTo(canvas.width, canvas.height);
+          ctx.lineTo(0, canvas.height);
+          ctx.fill();
+
+          updateTable();
+        }, 800);
+      },
+
+      openNotes() {
+        const container = document.createElement('div');
+        container.className = 'app-editor';
+        container.innerHTML = `
+          <div class="wm-menubar">
+            <div class="wm-menubar-item" id="note-save">Save</div>
+            <div class="wm-menubar-item" id="note-clear">Clear</div>
+            <div class="wm-menubar-item" id="note-dl">Download .txt</div>
+            <div style="flex:1;"></div>
+            <span style="font-size:10px; color:#555;" id="note-count">0 chars</span>
+          </div>
+          <textarea placeholder="Write scratchpad notes here... Auto-saved to localStorage."></textarea>
+        `;
+
+        const textarea = container.querySelector('textarea');
+        const countSpan = container.querySelector('#note-count');
+        const savedText = localStorage.getItem('cde_notes') || '';
+        textarea.value = savedText;
+        countSpan.textContent = textarea.value.length + ' chars';
+
+        textarea.addEventListener('input', () => {
+          localStorage.setItem('cde_notes', textarea.value);
+          countSpan.textContent = textarea.value.length + ' chars';
+        });
+
+        container.querySelector('#note-save').onclick = () => {
+          localStorage.setItem('cde_notes', textarea.value);
+          SoundManager.playTone(880, 0.05);
+          alert('Note saved to localStorage!');
+        };
+        container.querySelector('#note-clear').onclick = () => {
+          if (confirm('Clear note content?')) {
+            textarea.value = '';
+            localStorage.removeItem('cde_notes');
+            countSpan.textContent = '0 chars';
+          }
+        };
+        container.querySelector('#note-dl').onclick = () => {
+          const blob = new Blob([textarea.value], { type: 'text/plain' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'cde_scratchpad.txt';
+          a.click();
+          URL.revokeObjectURL(url);
+        };
+
+        WindowManager.createWindow({
+          title: 'Text Editor (dtpad) - scratchpad.txt',
+          appId: 'notes',
+          width: 560,
+          height: 420,
+          content: container
+        });
+      },
+
+      openCalculator() {
+        const container = document.createElement('div');
+        container.className = 'app-calc';
+        container.innerHTML = `
+          <div class="calc-screen" id="calc-display">0</div>
+          <div class="calc-grid">
+            <button class="bevel-button calc-btn" data-val="C">C</button>
+            <button class="bevel-button calc-btn" data-val="CE">CE</button>
+            <button class="bevel-button calc-btn" data-val="sqrt">√</button>
+            <button class="bevel-button calc-btn" data-val="/">/</button>
+
+            <button class="bevel-button calc-btn" data-val="7">7</button>
+            <button class="bevel-button calc-btn" data-val="8">8</button>
+            <button class="bevel-button calc-btn" data-val="9">9</button>
+            <button class="bevel-button calc-btn" data-val="*">×</button>
+
+            <button class="bevel-button calc-btn" data-val="4">4</button>
+            <button class="bevel-button calc-btn" data-val="5">5</button>
+            <button class="bevel-button calc-btn" data-val="6">6</button>
+            <button class="bevel-button calc-btn" data-val="-">-</button>
+
+            <button class="bevel-button calc-btn" data-val="1">1</button>
+            <button class="bevel-button calc-btn" data-val="2">2</button>
+            <button class="bevel-button calc-btn" data-val="3">3</button>
+            <button class="bevel-button calc-btn" data-val="+">+</button>
+
+            <button class="bevel-button calc-btn" data-val="0">0</button>
+            <button class="bevel-button calc-btn" data-val=".">.</button>
+            <button class="bevel-button calc-btn" data-val="+/-">±</button>
+            <button class="bevel-button calc-btn" data-val="=" style="background:var(--titlebar-active-bg); color:#fff;">=</button>
+          </div>
+        `;
+
+        let currentVal = '0';
+        let prevVal = null;
+        let pendingOp = null;
+
+        const screen = container.querySelector('#calc-display');
+
+        container.querySelectorAll('.calc-btn').forEach(b => {
+          b.addEventListener('click', () => {
+            const v = b.dataset.val;
+            SoundManager.playTone(700, 0.02);
+
+            if (!isNaN(v) || v === '.') {
+              if (currentVal === '0' && v !== '.') currentVal = v;
+              else if (v === '.' && currentVal.includes('.')) return;
+              else currentVal += v;
+              screen.textContent = currentVal;
+            } else if (v === 'C') {
+              currentVal = '0';
+              prevVal = null;
+              pendingOp = null;
+              screen.textContent = '0';
+            } else if (v === 'CE') {
+              currentVal = '0';
+              screen.textContent = '0';
+            } else if (v === '+/-') {
+              currentVal = (parseFloat(currentVal) * -1).toString();
+              screen.textContent = currentVal;
+            } else if (v === 'sqrt') {
+              currentVal = Math.sqrt(parseFloat(currentVal)).toString();
+              screen.textContent = currentVal;
+            } else if (['+', '-', '*', '/'].includes(v)) {
+              prevVal = parseFloat(currentVal);
+              pendingOp = v;
+              currentVal = '0';
+            } else if (v === '=') {
+              if (pendingOp && prevVal !== null) {
+                const cur = parseFloat(currentVal);
+                let res = 0;
+                if (pendingOp === '+') res = prevVal + cur;
+                if (pendingOp === '-') res = prevVal - cur;
+                if (pendingOp === '*') res = prevVal * cur;
+                if (pendingOp === '/') res = cur !== 0 ? prevVal / cur : 'Error';
+                currentVal = res.toString();
+                screen.textContent = currentVal;
+                pendingOp = null;
+                prevVal = null;
+              }
+            }
+          });
+        });
+
+        WindowManager.createWindow({
+          title: 'Calculator (dtcalc)',
+          appId: 'calc',
+          width: 320,
+          height: 380,
+          content: container
+        });
+      },
+
+      openClock() {
+        const container = document.createElement('div');
+        container.className = 'app-clock';
+        container.innerHTML = `
+          <div class="clock-face">
+            <canvas class="clock-face-canvas" id="clock-canvas" width="160" height="160"></canvas>
+          </div>
+          <div class="clock-digital" id="clock-digital-text">00:00:00</div>
+          <div style="font-size:11px; color:#333;" id="clock-date-text">2026-09-18</div>
+        `;
+
+        const win = WindowManager.createWindow({
+          title: 'Clock (xclock)',
+          appId: 'clock',
+          width: 280,
+          height: 300,
+          content: container
+        });
+
+        const canvas = container.querySelector('#clock-canvas');
+        const ctx = canvas.getContext('2d');
+        const digi = container.querySelector('#clock-digital-text');
+        const dateEl = container.querySelector('#clock-date-text');
+
+        const drawClock = () => {
+          if (!document.getElementById(win.id)) return;
+          const now = new Date();
+          const hrs = now.getHours();
+          const mins = now.getMinutes();
+          const secs = now.getSeconds();
+
+          digi.textContent = [hrs, mins, secs].map(n => String(n).padStart(2, '0')).join(':');
+          dateEl.textContent = now.toLocaleDateString(undefined, { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' });
+
+          // Analog Face
+          ctx.clearRect(0, 0, 160, 160);
+          const cx = 80, cy = 80, r = 70;
+
+          // Hour ticks
+          ctx.strokeStyle = '#222';
+          ctx.lineWidth = 2;
+          for (let i = 0; i < 12; i++) {
+            const angle = (i * Math.PI) / 6;
+            ctx.beginPath();
+            ctx.moveTo(cx + Math.cos(angle) * (r - 8), cy + Math.sin(angle) * (r - 8));
+            ctx.lineTo(cx + Math.cos(angle) * r, cy + Math.sin(angle) * r);
+            ctx.stroke();
+          }
+
+          // Hour hand
+          const hrAngle = ((hrs % 12) + mins / 60) * (Math.PI / 6) - Math.PI / 2;
+          ctx.strokeStyle = '#000';
+          ctx.lineWidth = 5;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(cx + Math.cos(hrAngle) * 42, cy + Math.sin(hrAngle) * 42);
+          ctx.stroke();
+
+          // Minute hand
+          const minAngle = (mins + secs / 60) * (Math.PI / 30) - Math.PI / 2;
+          ctx.strokeStyle = '#222';
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(cx + Math.cos(minAngle) * 58, cy + Math.sin(minAngle) * 58);
+          ctx.stroke();
+
+          // Second hand
+          const secAngle = secs * (Math.PI / 30) - Math.PI / 2;
+          ctx.strokeStyle = '#c00';
+          ctx.lineWidth = 1.5;
+          ctx.beginPath();
+          ctx.moveTo(cx, cy);
+          ctx.lineTo(cx + Math.cos(secAngle) * 62, cy + Math.sin(secAngle) * 62);
+          ctx.stroke();
+
+          // Center pin
+          ctx.fillStyle = '#000';
+          ctx.beginPath();
+          ctx.arc(cx, cy, 4, 0, Math.PI * 2);
+          ctx.fill();
+
+          requestAnimationFrame(drawClock);
+        };
+        requestAnimationFrame(drawClock);
+      },
+
+      openAppManager() {
+        const container = document.createElement('div');
+        container.className = 'app-launcher-mgr';
+        container.innerHTML = `
+          <div class="app-mgr-header">
+            <span>Filter:</span>
+            <input type="text" class="app-mgr-search" placeholder="Search application...">
+            <button class="bevel-button" style="padding:2px 8px;" id="mgr-cat-all">All</button>
+            <button class="bevel-button" style="padding:2px 8px;" id="mgr-cat-game">Games</button>
+            <button class="bevel-button" style="padding:2px 8px;" id="mgr-cat-tool">Tools</button>
+          </div>
+          <div class="app-mgr-content" id="app-mgr-list"></div>
+        `;
+
+        const listEl = container.querySelector('#app-mgr-list');
+        const search = container.querySelector('.app-mgr-search');
+
+        let activeCat = 'all';
+
+        const render = () => {
+          const query = search.value.trim().toLowerCase();
+          listEl.innerHTML = '';
+
+          APPS.filter(a => {
+            const matchesCat = activeCat === 'all' || 
+              (activeCat === 'game' && a.category === 'puzzle') ||
+              (activeCat === 'tool' && (a.category === 'tool' || a.category === 'education' || a.category === 'collection'));
+            const matchesQuery = !query || a.title.toLowerCase().includes(query) || a.desc.toLowerCase().includes(query) || a.id.includes(query);
+            return matchesCat && matchesQuery;
+          }).forEach(a => {
+            const card = document.createElement('div');
+            card.className = 'app-mgr-item';
+            card.innerHTML = `
+              <img src="${a.icon}" alt="">
+              <div class="app-mgr-item-title">${a.title}</div>
+              <div class="app-mgr-item-cat">${a.categoryName}</div>
+            `;
+            card.ondblclick = () => AppLauncher.open(a.id);
+            card.onclick = () => {
+              container.querySelectorAll('.app-mgr-item').forEach(i => i.style.background = '');
+              card.style.background = 'var(--selection-bg)';
+              card.querySelector('.app-mgr-item-title').style.color = '#fff';
+            };
+            listEl.appendChild(card);
+          });
+        };
+
+        search.addEventListener('input', render);
+        container.querySelector('#mgr-cat-all').onclick = () => { activeCat = 'all'; render(); };
+        container.querySelector('#mgr-cat-game').onclick = () => { activeCat = 'game'; render(); };
+        container.querySelector('#mgr-cat-tool').onclick = () => { activeCat = 'tool'; render(); };
+
+        render();
+
+        WindowManager.createWindow({
+          title: 'Application Manager (dtfile) - /opt/c1t0d0s0/apps',
+          appId: 'appmgr',
+          width: 720,
+          height: 480,
+          content: container
+        });
+      },
+
+      openAbout() {
+        const container = document.createElement('div');
+        container.style.padding = '16px';
+        container.style.lineHeight = '1.5';
+        container.innerHTML = `
+          <div style="display:flex; gap:16px; align-items:center; margin-bottom:12px;">
+            <div style="width:54px; height:54px; background:var(--panel-bg); border:2px solid var(--bevel-dark); display:flex; align-items:center; justify-content:center;">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="currentColor">
+                <rect x="2" y="3" width="20" height="14" rx="1" fill="none" stroke="currentColor" stroke-width="2"/>
+                <line x1="8" y1="21" x2="16" y2="21" stroke="currentColor" stroke-width="2"/>
+                <line x1="12" y1="17" x2="12" y2="21" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </div>
+            <div>
+              <h3 style="margin:0;">c1t0d0s0 Workstation CDE</h3>
+              <div style="font-size:11px; color:#555;">Common Desktop Environment 1.4 for Web</div>
+            </div>
+          </div>
+          <div class="bevel-sunken" style="padding:10px; font-family:var(--font-mono); font-size:11px; color:#fff; margin-bottom:12px;">
+            Workstation: Sun Ultra 60 (Dual UltraSPARC-II @ 450MHz)<br>
+            Operating System: SunOS 5.8 / Solaris 8 (Generic_108528-29)<br>
+            Window Manager: Motif mwm / CDE Front Panel<br>
+            Installed Apps: 18 Web Applications & 6 Built-in Accessories<br>
+            Portal URL: <a href="https://c1t0d0s0.y8n.org" target="_blank" style="color:#64b5f6;">https://c1t0d0s0.y8n.org</a>
+          </div>
+          <p style="font-size:11px; color:#333;">
+            This desktop application is a retro workstation environment reproducing 90s UNIX (CDE, Solaris, NeXTSTEP, SGI IRIX) on the browser, allowing you to run multiple c1t0d0s0 web applications simultaneously in floating windows.
+          </p>
+          <div style="text-align:right; margin-top:14px;">
+            <button class="bevel-button" style="padding:4px 16px;" onclick="WindowManager.closeWindow(this.closest('.wm-window').id)">Close</button>
+          </div>
+        `;
+
+        WindowManager.createWindow({
+          title: 'About c1t0d0s0 CDE Workstation',
+          appId: 'about',
+          width: 460,
+          height: 320,
+          content: container
+        });
+      }
+    };
+
+    /* ==========================================================================
+       7. DESKTOP INITIALIZATION & CLOCK TICKER
+       ========================================================================== */
+    function initDesktop() {
+      // 1. Populate Desktop Icons
+      const iconsContainer = document.getElementById('desktop-icons');
+      
+      // Standard desktop items
+      const desktopApps = APPS.filter(a => a.desktop);
+      
+      desktopApps.forEach(app => {
+        const iconEl = document.createElement('div');
+        iconEl.className = 'desktop-icon';
+        iconEl.dataset.appId = app.id;
+        iconEl.innerHTML = `
+          <div class="desktop-icon-img-box">
+            <img src="${app.icon}" alt="${app.title}" loading="lazy">
+          </div>
+          <div class="desktop-icon-label">${app.title}</div>
+        `;
+        
+        iconEl.addEventListener('click', (e) => {
+          e.stopPropagation();
+          document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+          iconEl.classList.add('selected');
+        });
+
+        iconEl.addEventListener('dblclick', () => {
+          AppLauncher.open(app.id);
+        });
+
+        iconsContainer.appendChild(iconEl);
+      });
+
+      // System Terminal icon on desktop
+      const termIcon = document.createElement('div');
+      termIcon.className = 'desktop-icon';
+      termIcon.innerHTML = `
+        <div class="desktop-icon-img-box">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8h16v10zm-2-1h-6v-2h6v2zm-9.7-4.3L5.6 16 4.2 14.6l2.9-2.9-2.9-2.9L5.6 7.4l4.3 4.3c.4.4.4 1 0 1.4z"/></svg>
+        </div>
+        <div class="desktop-icon-label">Terminal</div>
+      `;
+      termIcon.ondblclick = () => AppLauncher.open('terminal');
+      termIcon.onclick = (e) => {
+        e.stopPropagation();
+        document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+        termIcon.classList.add('selected');
+      };
+      iconsContainer.appendChild(termIcon);
+
+      // Deselect desktop icons when clicking background
+      document.getElementById('desktop').addEventListener('click', () => {
+        document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+        closeContextMenu();
+        closeSubpanels();
+      });
+
+      // 2. Populate Context Menu Apps Submenu
+      const ctxApps = document.getElementById('ctx-apps-submenu');
+      if (ctxApps) {
+        APPS.forEach(a => {
+          const item = document.createElement('div');
+          item.className = 'ctx-item';
+          item.textContent = a.title;
+          item.onclick = () => AppLauncher.open(a.id);
+          ctxApps.appendChild(item);
+        });
+      }
+
+      // 3. Start Clock & Perfmeter
+      startTicker();
+
+      // 4. Restore Theme
+      ThemeManager.init();
+
+      // 5. Open Default Welcome Windows
+      setTimeout(() => {
+        // Open Terminal
+        AppLauncher.open('terminal');
+        // Open one featured Web App (e.g. 面積迷路 or NoxMind)
+        AppLauncher.open('area-mazes');
+      }, 300);
+    }
+
+    /* Start Clock & Canvas Animation */
+    function startTicker() {
+      const topClock = document.getElementById('top-clock');
+      const fpClock = document.getElementById('fp-clock-display');
+      const perfCanvas = document.getElementById('fp-perf-canvas');
+      const perfCtx = perfCanvas ? perfCanvas.getContext('2d') : null;
+      const perfHistory = new Array(25).fill(12);
+
+      setInterval(() => {
+        const now = new Date();
+        const str = now.toTimeString().split(' ')[0];
+        if (topClock) topClock.textContent = str;
+        if (fpClock) fpClock.textContent = str;
+
+        // Animate mini front panel load monitor
+        if (perfCtx) {
+          const load = 10 + WindowManager.windows.length * 8 + (Math.random() * 12 - 6);
+          perfHistory.shift();
+          perfHistory.push(Math.min(95, Math.max(5, load)));
+
+          perfCtx.fillStyle = '#000000';
+          perfCtx.fillRect(0, 0, perfCanvas.width, perfCanvas.height);
+          perfCtx.strokeStyle = '#00ff66';
+          perfCtx.lineWidth = 1.5;
+          perfCtx.beginPath();
+          const step = perfCanvas.width / (perfHistory.length - 1);
+          perfHistory.forEach((v, idx) => {
+            const px = idx * step;
+            const py = perfCanvas.height - (v / 100) * perfCanvas.height;
+            if (idx === 0) perfCtx.moveTo(px, py);
+            else perfCtx.lineTo(px, py);
+          });
+          perfCtx.stroke();
+        }
+      }, 1000);
+    }
+
+    /* ==========================================================================
+       8. CONTEXT MENU & DRAWER SUBPANELS
+       ========================================================================== */
+    function toggleSubpanel(panelId, event) {
+      if (event) event.stopPropagation();
+      const target = document.getElementById(panelId);
+      const isOpen = target && target.classList.contains('open');
+      closeSubpanels();
+      if (!isOpen && target) {
+        target.classList.add('open');
+        SoundManager.playTone(600, 0.03);
+      }
+    }
+
+    function closeSubpanels() {
+      document.querySelectorAll('.fp-subpanel').forEach(p => p.classList.remove('open'));
+    }
+
+    function openThemeMenu(e) {
+      if (e) e.stopPropagation();
+      const menu = document.getElementById('theme-menu');
+      const isOpen = menu.classList.contains('open');
+      closeSubpanels();
+      if (!isOpen) {
+        menu.classList.add('open');
+        SoundManager.playTone(650, 0.03);
+      }
+    }
+
+    function openContextMenu(e, customX, customY, targetWinId = null) {
+      e.preventDefault();
+      closeSubpanels();
+      const menu = document.getElementById('context-menu');
+      const x = customX !== undefined ? customX : e.clientX;
+      const y = customY !== undefined ? customY : e.clientY;
+
+      menu.style.display = 'flex';
+      menu.style.left = Math.min(window.innerWidth - 180, x) + 'px';
+      menu.style.top = Math.min(window.innerHeight - 260, y) + 'px';
+      SoundManager.playTone(500, 0.02);
+    }
+
+    function closeContextMenu() {
+      const menu = document.getElementById('context-menu');
+      if (menu) menu.style.display = 'none';
+    }
+
+    function toggleFrontPanelCollapse() {
+      const container = document.getElementById('front-panel-container');
+      const tab = document.getElementById('fp-toggle-tab');
+      const desktop = document.getElementById('desktop');
+      const isCollapsed = container.classList.toggle('collapsed');
+      
+      if (isCollapsed) {
+        tab.textContent = '▲ Show Panel';
+        desktop.style.bottom = '14px';
+      } else {
+        tab.textContent = '▼ Hide Panel';
+        desktop.style.bottom = '74px';
+      }
+      SoundManager.playTone(isCollapsed ? 350 : 550, 0.05);
+    }
+
+    // Right-click desktop context menu
+    document.getElementById('desktop').addEventListener('contextmenu', (e) => {
+      openContextMenu(e);
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#context-menu') && 
+          !e.target.closest('#window-menu') && 
+          !e.target.closest('.fp-drawer-arrow') && 
+          !e.target.closest('#theme-menu')) {
+        closeContextMenu();
+        WindowManager.closeWindowMenu();
+        closeSubpanels();
+      }
+    });
+
+    // Keyboard Shortcuts (Alt+Tab cycle windows)
+    window.addEventListener('keydown', (e) => {
+      if (e.altKey && e.key === 'Tab') {
+        e.preventDefault();
+        const activeWins = WindowManager.windows.filter(w => w.ws === WorkspaceManager.current && !w.minimized);
+        if (activeWins.length > 1) {
+          const currentIdx = activeWins.indexOf(WindowManager.activeWin);
+          const nextIdx = (currentIdx + 1) % activeWins.length;
+          WindowManager.focusWindow(activeWins[nextIdx]);
+        }
+      }
+      if (e.key === 'Escape') {
+        closeContextMenu();
+        WindowManager.closeWindowMenu();
+        closeSubpanels();
+      }
+    });
+
+    // Run on DOM Ready
+    window.addEventListener('DOMContentLoaded', initDesktop);
+  </script>
+</body>
+</html>
