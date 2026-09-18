@@ -10,6 +10,21 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="icon" href="favicon.ico" sizes="any">
 
+  <!-- Google tag (gtag.js) - Deferred to eliminate mobile bandwidth contention -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-W76HCVTSNX');
+
+    window.addEventListener('load', function() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-W76HCVTSNX';
+      document.head.appendChild(s);
+    });
+  </script>
+
   <!-- Retro / Monospace Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -294,13 +309,16 @@
       top: 12px;
       left: 12px;
       bottom: 12px;
+      right: 12px;
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
-      gap: 16px 20px;
+      gap: 12px 14px;
       align-content: flex-start;
       z-index: 20;
       pointer-events: none;
+      overflow-x: auto;
+      overflow-y: hidden;
     }
     .desktop-icon {
       width: 76px;
@@ -1269,26 +1287,37 @@
     /* Front Panel Collapse Toggle Handle */
     #fp-toggle-tab {
       position: absolute;
-      top: -14px;
+      bottom: 70px;
       left: 16px;
       background: var(--panel-bg);
       border-top: 2px solid var(--bevel-light);
       border-left: 2px solid var(--bevel-light);
       border-right: 2px solid var(--bevel-dark);
-      font-size: 9px;
-      padding: 0 8px;
+      border-bottom: 2px solid var(--bevel-dark);
+      font-size: 10px;
+      padding: 2px 10px;
       cursor: pointer;
       font-weight: bold;
       color: #000;
-      height: 14px;
+      height: 18px;
       display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 550;
+      z-index: 700;
       user-select: none;
+      pointer-events: auto !important;
+      transition: bottom 0.25s ease, background 0.1s;
+      box-shadow: 1px -1px 4px rgba(0,0,0,0.3);
     }
     #fp-toggle-tab:hover {
       background: var(--bevel-light);
+    }
+    #fp-toggle-tab:active {
+      background: var(--panel-dark);
+      color: #fff;
+    }
+    #front-panel-container.collapsed #fp-toggle-tab {
+      bottom: 0px;
     }
     #front-panel-container.collapsed #front-panel {
       transform: translateY(70px);
@@ -1310,19 +1339,220 @@
       justify-content: center;
     }
 
-    /* Mobile Responsive Tweaks */
+    /* Mobile Responsive Optimizations */
     @media (max-width: 768px) {
-      #top-bar .sys-info { display: none; }
-      #desktop-icons { gap: 8px 12px; }
-      .desktop-icon { width: 64px; }
-      .desktop-icon-img-box { width: 36px; height: 36px; }
-      #front-panel { height: 60px; }
-      .fp-slot { width: 38px; height: 50px; }
-      .fp-icon-btn { width: 34px; height: 34px; }
-      .fp-icon-btn img, .fp-icon-btn svg { width: 18px; height: 18px; }
-      .fp-icon-label { display: none; }
-      .fp-workspace-switch { width: 70px; height: 44px; }
-      .fp-gauges { width: 60px; }
+      /* Top Bar */
+      #top-bar {
+        height: 28px;
+        padding: 0 6px;
+      }
+      #top-bar .brand span {
+        display: none;
+      }
+      #top-bar .brand::after {
+        content: "c1t0d0s0 CDE";
+        font-weight: bold;
+        font-size: 11px;
+        letter-spacing: 0.5px;
+      }
+      #top-bar .menus {
+        gap: 4px;
+      }
+      #top-bar .menus .top-btn-desktop-only {
+        display: none;
+      }
+      #top-bar .menus .portal-btn-label {
+        display: none;
+      }
+      #top-bar .menus .top-btn-portal::after {
+        content: "Portal";
+      }
+      #top-bar .menus .top-menu-item {
+        padding: 2px 5px;
+        font-size: 10px;
+      }
+      #top-bar .sys-info {
+        gap: 6px;
+      }
+      #top-bar .sys-info span:first-child {
+        display: none;
+      }
+      #top-clock {
+        font-size: 10px;
+      }
+
+      /* Desktop Workspace */
+      #desktop {
+        top: 28px;
+        bottom: 58px;
+      }
+      #desktop-icons {
+        top: 8px;
+        left: 8px;
+        right: 8px;
+        bottom: 8px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 10px 8px;
+        align-content: flex-start;
+        overflow-y: auto;
+        overflow-x: hidden;
+        -webkit-overflow-scrolling: touch;
+      }
+      .desktop-icon {
+        width: 58px;
+        padding: 2px;
+      }
+      .desktop-icon-img-box {
+        width: 34px;
+        height: 34px;
+        margin-bottom: 3px;
+      }
+      .desktop-icon-label {
+        font-size: 10px;
+      }
+
+      /* Window adjustments on Mobile */
+      .wm-window {
+        min-width: 200px;
+      }
+      .wm-titlebar {
+        height: 28px;
+      }
+      .wm-btn {
+        width: 22px;
+        height: 22px;
+        font-size: 12px;
+      }
+      .wm-title-text {
+        font-size: 11px;
+      }
+
+      /* Front Panel on Mobile */
+      #front-panel-container {
+        height: 60px;
+        padding: 0;
+      }
+      #fp-toggle-tab {
+        bottom: 56px;
+        left: 8px;
+        height: 18px;
+        font-size: 9px;
+        padding: 1px 8px;
+      }
+      #front-panel-container.collapsed #fp-toggle-tab {
+        bottom: 0px;
+      }
+      #front-panel-container.collapsed #front-panel {
+        transform: translateY(56px);
+      }
+      #front-panel-container.collapsed #desktop {
+        bottom: 20px;
+      }
+
+      #front-panel {
+        height: 56px;
+        width: 100%;
+        max-width: 100vw;
+        padding: 0 3px;
+        gap: 2px;
+        justify-content: space-between;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+      }
+      #front-panel::-webkit-scrollbar {
+        display: none;
+      }
+
+      .fp-bank {
+        gap: 2px;
+        flex-shrink: 0;
+      }
+      .fp-slot {
+        width: 32px;
+        height: 48px;
+        padding-bottom: 2px;
+      }
+      .fp-drawer-arrow {
+        top: -9px;
+        width: 18px;
+        height: 9px;
+        font-size: 7px;
+      }
+      .fp-icon-btn {
+        width: 30px;
+        height: 30px;
+        padding: 1px;
+      }
+      .fp-icon-btn img, .fp-icon-btn svg {
+        width: 18px;
+        height: 18px;
+      }
+      .fp-icon-label {
+        display: none;
+      }
+
+      /* Center Switch on Mobile */
+      .fp-center {
+        padding: 2px 3px;
+        gap: 2px;
+        flex-shrink: 0;
+      }
+      .fp-workspace-switch {
+        width: 54px;
+        height: 38px;
+        gap: 2px;
+      }
+      .fp-ws-btn {
+        font-size: 8px;
+      }
+      .fp-gauges {
+        width: 46px;
+        gap: 2px;
+      }
+      .fp-clock-box {
+        font-size: 9px;
+        padding: 1px 2px;
+      }
+      .fp-perf-box {
+        height: 17px;
+      }
+      .fp-quick-keys {
+        gap: 2px;
+      }
+      .fp-tiny-btn {
+        width: 18px;
+        height: 18px;
+        font-size: 9px;
+      }
+
+      /* Subpanels (Drawers) on Mobile: Centered Popups */
+      .fp-subpanel {
+        position: fixed !important;
+        bottom: 60px !important;
+        left: 50% !important;
+        transform: translateX(-50%) !important;
+        width: calc(100vw - 16px) !important;
+        max-width: 320px !important;
+        max-height: 52vh !important;
+        overflow-y: auto !important;
+        z-index: 10000 !important;
+      }
+
+      /* Minimized Icons on Mobile */
+      .minimized-icons-bar {
+        bottom: 66px;
+        left: 6px;
+        gap: 4px;
+      }
+      .minimized-win-box {
+        width: 110px;
+        height: 24px;
+        font-size: 10px;
+        padding: 1px 4px;
+      }
     }
   </style>
 </head>
@@ -1340,10 +1570,13 @@
       <span>c1t0d0s0 Common Desktop Environment (CDE 1.4)</span>
     </div>
     <div class="menus">
+      <a href="index.html" class="top-menu-item top-btn-portal bevel-button" style="text-decoration:none; color:inherit; font-weight:bold; padding:1px 7px; font-size:11px; gap:4px; display:inline-flex; align-items:center;" title="Return to Portal (index.html)">
+        ◀ <span class="portal-btn-label">Back to Portal</span>
+      </a>
       <div class="top-menu-item" onclick="openContextMenu(event, 10, 24)">Workspace Menu ▾</div>
-      <div class="top-menu-item" onclick="WindowManager.cascadeWindows()">Cascade</div>
-      <div class="top-menu-item" onclick="WindowManager.tileWindows()">Tile</div>
-      <div class="top-menu-item" onclick="AppLauncher.open('about')">About...</div>
+      <div class="top-menu-item top-btn-desktop-only" onclick="WindowManager.cascadeWindows()">Cascade</div>
+      <div class="top-menu-item top-btn-desktop-only" onclick="WindowManager.tileWindows()">Tile</div>
+      <div class="top-menu-item top-btn-desktop-only" onclick="AppLauncher.open('about')">About...</div>
     </div>
     <div class="sys-info">
       <span>SunOS 5.8 Generic_108528-29 sun4u</span>
@@ -1369,7 +1602,7 @@
 
   <!-- CDE FRONT PANEL -->
   <div id="front-panel-container">
-    <div id="fp-toggle-tab" onclick="toggleFrontPanelCollapse()">▼ Hide Panel</div>
+    <div id="fp-toggle-tab" onclick="toggleFrontPanelCollapse(event)">▼ Hide Panel</div>
     <div id="front-panel">
       
       <!-- LEFT BANK -->
@@ -1507,6 +1740,14 @@
           <div class="fp-icon-btn" title="Trash Can" onclick="WindowManager.closeAll(); SoundManager.playTrash();">
             <svg viewBox="0 0 24 24" fill="currentColor"><path d="M15 4V3H9v1H4v2h1v13c0 1.1.9 2 2 2h10c1.1 0 2-.9 2-2V6h1V4h-5zm2 15H7V6h10v13zM9 8h2v9H9zm4 0h2v9h-2z"/></svg>
             <span class="fp-icon-label">Trash</span>
+          </div>
+        </div>
+
+        <!-- 7. Return to Portal -->
+        <div class="fp-slot">
+          <div class="fp-icon-btn" title="Exit to Portal (index.html)" onclick="location.href='index.html'">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            <span class="fp-icon-label">Portal</span>
           </div>
         </div>
       </div>
@@ -1950,10 +2191,30 @@
         SoundManager.playOpen();
         const id = 'win-' + Date.now() + '-' + Math.floor(Math.random() * 1000);
         
-        // Cascade coordinates
-        const activeCount = this.windows.length % 10;
-        const defaultLeft = Math.max(20, Math.min(window.innerWidth - 600, 60 + activeCount * this.cascadeOffset));
-        const defaultTop = Math.max(30, Math.min(window.innerHeight - 500, 40 + activeCount * this.cascadeOffset));
+        // Mobile-aware coordinates & dimensions
+        const isMobile = window.innerWidth <= 768;
+        const screenW = window.innerWidth;
+        const screenH = window.innerHeight;
+
+        let initialWidth = options.width || 680;
+        let initialHeight = options.height || 500;
+        let initialX = options.x;
+        let initialY = options.y;
+
+        if (isMobile) {
+          initialWidth = Math.min(initialWidth, screenW - 12);
+          initialHeight = Math.min(initialHeight, screenH - 58 - 28 - 14);
+          if (initialX === undefined) initialX = 6;
+          if (initialY === undefined) initialY = 34;
+        } else {
+          const activeCount = this.windows.length % 10;
+          if (initialX === undefined) {
+            initialX = Math.max(20, Math.min(screenW - 600, 60 + activeCount * this.cascadeOffset));
+          }
+          if (initialY === undefined) {
+            initialY = Math.max(30, Math.min(screenH - 500, 40 + activeCount * this.cascadeOffset));
+          }
+        }
         
         const winObj = {
           id: id,
@@ -1962,10 +2223,10 @@
           url: options.url || '',
           icon: options.icon || '',
           ws: WorkspaceManager.current,
-          x: options.x || defaultLeft,
-          y: options.y || defaultTop,
-          width: options.width || 680,
-          height: options.height || 500,
+          x: initialX,
+          y: initialY,
+          width: initialWidth,
+          height: initialHeight,
           minimized: false,
           maximized: false,
           prevBounds: null,
@@ -3176,16 +3437,46 @@ drwxr-xr-x   4 root     sys          512 Sep 18 10:49 ..
        7. DESKTOP INITIALIZATION & CLOCK TICKER
        ========================================================================== */
     function initDesktop() {
-      // 1. Populate Desktop Icons
+      // 1. Populate Desktop Icons (Portal + All 18 Applications + System Terminal)
       const iconsContainer = document.getElementById('desktop-icons');
+      iconsContainer.innerHTML = '';
       
-      // Standard desktop items
-      const desktopApps = APPS.filter(a => a.desktop);
-      
-      desktopApps.forEach(app => {
+      // Return to Portal Icon
+      const portalIcon = document.createElement('div');
+      portalIcon.className = 'desktop-icon';
+      portalIcon.title = 'Return to Standard Portal (index.html)';
+      portalIcon.innerHTML = `
+        <div class="desktop-icon-img-box" style="background:#274359; color:#ffffff;">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+        </div>
+        <div class="desktop-icon-label">Portal</div>
+      `;
+      let portalLastTap = 0;
+      portalIcon.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const now = Date.now();
+        const isSelected = portalIcon.classList.contains('selected');
+        document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+        portalIcon.classList.add('selected');
+        if (window.innerWidth <= 768) {
+          if (isSelected || (now - portalLastTap < 400)) {
+            location.href = 'index.html';
+          }
+        }
+        portalLastTap = now;
+      });
+      portalIcon.addEventListener('dblclick', (e) => {
+        e.stopPropagation();
+        location.href = 'index.html';
+      });
+      iconsContainer.appendChild(portalIcon);
+
+      // All 18 Web Applications
+      APPS.forEach(app => {
         const iconEl = document.createElement('div');
         iconEl.className = 'desktop-icon';
         iconEl.dataset.appId = app.id;
+        iconEl.title = `${app.title} (${app.categoryName}) - Double click to launch`;
         iconEl.innerHTML = `
           <div class="desktop-icon-img-box">
             <img src="${app.icon}" alt="${app.title}" loading="lazy">
@@ -3193,13 +3484,25 @@ drwxr-xr-x   4 root     sys          512 Sep 18 10:49 ..
           <div class="desktop-icon-label">${app.title}</div>
         `;
         
+        let lastTap = 0;
         iconEl.addEventListener('click', (e) => {
           e.stopPropagation();
+          const now = Date.now();
+          const isSelected = iconEl.classList.contains('selected');
           document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
           iconEl.classList.add('selected');
+
+          // On mobile, tap on selected icon or quick double-tap opens the app
+          if (window.innerWidth <= 768) {
+            if (isSelected || (now - lastTap < 400)) {
+              AppLauncher.open(app.id);
+            }
+          }
+          lastTap = now;
         });
 
-        iconEl.addEventListener('dblclick', () => {
+        iconEl.addEventListener('dblclick', (e) => {
+          e.stopPropagation();
           AppLauncher.open(app.id);
         });
 
@@ -3209,18 +3512,31 @@ drwxr-xr-x   4 root     sys          512 Sep 18 10:49 ..
       // System Terminal icon on desktop
       const termIcon = document.createElement('div');
       termIcon.className = 'desktop-icon';
+      termIcon.title = 'dtterm - /bin/tcsh Terminal Shell';
       termIcon.innerHTML = `
         <div class="desktop-icon-img-box">
           <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H4V8h16v10zm-2-1h-6v-2h6v2zm-9.7-4.3L5.6 16 4.2 14.6l2.9-2.9-2.9-2.9L5.6 7.4l4.3 4.3c.4.4.4 1 0 1.4z"/></svg>
         </div>
         <div class="desktop-icon-label">Terminal</div>
       `;
-      termIcon.ondblclick = () => AppLauncher.open('terminal');
-      termIcon.onclick = (e) => {
+      let termLastTap = 0;
+      termIcon.addEventListener('click', (e) => {
         e.stopPropagation();
+        const now = Date.now();
+        const isSelected = termIcon.classList.contains('selected');
         document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
         termIcon.classList.add('selected');
-      };
+        if (window.innerWidth <= 768) {
+          if (isSelected || (now - termLastTap < 400)) {
+            AppLauncher.open('terminal');
+          }
+        }
+        termLastTap = now;
+      });
+      termIcon.addEventListener('dblclick', (e) => {
+        e.stopPropagation();
+        AppLauncher.open('terminal');
+      });
       iconsContainer.appendChild(termIcon);
 
       // Deselect desktop icons when clicking background
@@ -3248,12 +3564,9 @@ drwxr-xr-x   4 root     sys          512 Sep 18 10:49 ..
       // 4. Restore Theme
       ThemeManager.init();
 
-      // 5. Open Default Welcome Windows
+      // 5. Open Default Welcome Window (Terminal only)
       setTimeout(() => {
-        // Open Terminal
         AppLauncher.open('terminal');
-        // Open one featured Web App (e.g. 面積迷路 or NoxMind)
-        AppLauncher.open('area-mazes');
       }, 300);
     }
 
@@ -3341,18 +3654,24 @@ drwxr-xr-x   4 root     sys          512 Sep 18 10:49 ..
       if (menu) menu.style.display = 'none';
     }
 
-    function toggleFrontPanelCollapse() {
+    function toggleFrontPanelCollapse(event) {
+      if (event) {
+        event.stopPropagation();
+        event.preventDefault();
+      }
       const container = document.getElementById('front-panel-container');
       const tab = document.getElementById('fp-toggle-tab');
       const desktop = document.getElementById('desktop');
       const isCollapsed = container.classList.toggle('collapsed');
       
+      const isMobile = window.innerWidth <= 768;
       if (isCollapsed) {
         tab.textContent = '▲ Show Panel';
-        desktop.style.bottom = '14px';
+        desktop.style.bottom = '20px';
+        closeSubpanels();
       } else {
         tab.textContent = '▼ Hide Panel';
-        desktop.style.bottom = '74px';
+        desktop.style.bottom = isMobile ? '58px' : '74px';
       }
       SoundManager.playTone(isCollapsed ? 350 : 550, 0.05);
     }
