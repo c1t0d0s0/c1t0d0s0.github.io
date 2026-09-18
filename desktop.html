@@ -286,26 +286,7 @@
       color: #004d00;
       font-size: 8px;
     }
-    /* macOS Dock Styling */
-    [data-theme="macos"] #front-panel {
-      border-radius: 14px 14px 0 0;
-      background: rgba(235, 240, 248, 0.82);
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      border: 1px solid rgba(255, 255, 255, 0.5);
-      border-bottom: none;
-      box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.28);
-    }
-    [data-theme="macos"] .fp-icon-btn {
-      border-radius: 8px;
-      border: 1px solid rgba(0, 0, 0, 0.08);
-      background: rgba(255, 255, 255, 0.5);
-    }
-    [data-theme="macos"] .fp-icon-btn:hover {
-      background: rgba(255, 255, 255, 0.9);
-      transform: translateY(-2px);
-      transition: transform 0.15s ease, background 0.15s;
-    }
+    /* macOS Selection Style */
     [data-theme="macos"] .desktop-icon.selected .desktop-icon-label {
       background-color: #007aff;
       border-radius: 4px;
@@ -1479,6 +1460,258 @@
       justify-content: center;
     }
 
+    /* ==========================================================================
+       macOS AQUA DOCK STYLING ([data-theme="macos"])
+       ========================================================================== */
+    [data-theme="macos"] #front-panel-container {
+      bottom: 8px;
+      height: 76px;
+    }
+    [data-theme="macos"] #front-panel {
+      height: 64px !important;
+      background: rgba(255, 255, 255, 0.42) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+      backdrop-filter: blur(28px) saturate(190%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.65) !important;
+      border-top: 1px solid rgba(255, 255, 255, 0.8) !important;
+      border-left: 1px solid rgba(255, 255, 255, 0.65) !important;
+      border-right: 1px solid rgba(255, 255, 255, 0.65) !important;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5) !important;
+      border-radius: 20px !important;
+      border-top-left-radius: 20px !important;
+      border-top-right-radius: 20px !important;
+      border-bottom-left-radius: 20px !important;
+      border-bottom-right-radius: 20px !important;
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.28), 0 1px 2px rgba(255, 255, 255, 0.6) inset !important;
+      padding: 0 12px !important;
+      gap: 8px !important;
+    }
+    /* Front Panel Collapse Tab in macOS */
+    [data-theme="macos"] #fp-toggle-tab {
+      background: rgba(255, 255, 255, 0.6) !important;
+      -webkit-backdrop-filter: blur(14px) !important;
+      backdrop-filter: blur(14px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.7) !important;
+      border-bottom: none !important;
+      border-radius: 8px 8px 0 0 !important;
+      color: #333333 !important;
+      box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.1) !important;
+      bottom: 64px !important;
+      font-size: 9px !important;
+      font-weight: 600 !important;
+    }
+    [data-theme="macos"] #front-panel-container.collapsed #fp-toggle-tab {
+      bottom: 0px !important;
+    }
+    [data-theme="macos"] #front-panel-container.collapsed #front-panel {
+      transform: translateY(80px) !important;
+    }
+
+    /* Slots & Icon Buttons */
+    [data-theme="macos"] .fp-bank {
+      gap: 6px !important;
+      align-items: center !important;
+    }
+    [data-theme="macos"] .fp-slot {
+      width: 48px !important;
+      height: 56px !important;
+      padding-bottom: 0 !important;
+      justify-content: center !important;
+    }
+    [data-theme="macos"] .fp-icon-btn {
+      width: 44px !important;
+      height: 44px !important;
+      background: rgba(255, 255, 255, 0.65) !important;
+      border: 1px solid rgba(255, 255, 255, 0.8) !important;
+      border-radius: 12px !important;
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12), inset 0 1px 1px rgba(255, 255, 255, 0.9) !important;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, background 0.2s ease !important;
+      position: relative !important;
+    }
+    [data-theme="macos"] .fp-icon-btn:hover {
+      background: rgba(255, 255, 255, 0.95) !important;
+      transform: translateY(-8px) scale(1.16) !important;
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.24), inset 0 1px 1px rgba(255, 255, 255, 1) !important;
+      z-index: 50 !important;
+    }
+    [data-theme="macos"] .fp-icon-btn:active {
+      transform: translateY(-2px) scale(1.04) !important;
+      background: rgba(235, 240, 248, 0.95) !important;
+    }
+    [data-theme="macos"] .fp-icon-btn img,
+    [data-theme="macos"] .fp-icon-btn svg {
+      width: 22px !important;
+      height: 22px !important;
+      filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.15));
+    }
+    [data-theme="macos"] .fp-icon-label {
+      font-size: 8px !important;
+      font-weight: 600 !important;
+      text-transform: capitalize !important;
+      color: #2c2c2e !important;
+      margin-top: 1px !important;
+      letter-spacing: 0px !important;
+    }
+
+    /* Drawer Indicator Pills */
+    [data-theme="macos"] .fp-drawer-arrow {
+      top: -6px !important;
+      width: 16px !important;
+      height: 7px !important;
+      background: rgba(255, 255, 255, 0.8) !important;
+      border: 1px solid rgba(0, 0, 0, 0.12) !important;
+      border-radius: 4px !important;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1) !important;
+      font-size: 7px !important;
+      line-height: 1 !important;
+      color: #555555 !important;
+    }
+    [data-theme="macos"] .fp-drawer-arrow:hover {
+      background: #ffffff !important;
+      color: #007aff !important;
+    }
+
+    /* macOS Dock Separator between Apps & Utilities/Trash */
+    [data-theme="macos"] .fp-bank:last-child .fp-slot:nth-last-child(2) {
+      margin-left: 6px !important;
+      position: relative !important;
+    }
+    [data-theme="macos"] .fp-bank:last-child .fp-slot:nth-last-child(2)::before {
+      content: "";
+      position: absolute;
+      left: -5px;
+      top: 15%;
+      height: 70%;
+      width: 1px;
+      background: rgba(0, 0, 0, 0.18);
+      box-shadow: 1px 0 0 rgba(255, 255, 255, 0.4);
+    }
+
+    /* Center Control Box (Capsule / Widget Box) */
+    [data-theme="macos"] .fp-center {
+      background: rgba(0, 0, 0, 0.05) !important;
+      border: 1px solid rgba(255, 255, 255, 0.45) !important;
+      border-radius: 14px !important;
+      padding: 3px 6px !important;
+      gap: 5px !important;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.06) !important;
+    }
+    /* Workspace Switcher as Apple Segmented Control */
+    [data-theme="macos"] .fp-workspace-switch {
+      background: rgba(0, 0, 0, 0.07) !important;
+      border-radius: 8px !important;
+      padding: 2px !important;
+      gap: 2px !important;
+      width: 82px !important;
+      height: 48px !important;
+    }
+    [data-theme="macos"] .fp-ws-btn {
+      border: none !important;
+      border-radius: 6px !important;
+      background: transparent !important;
+      color: #444444 !important;
+      font-size: 8px !important;
+      font-weight: 600 !important;
+      box-shadow: none !important;
+      transition: all 0.15s ease !important;
+    }
+    [data-theme="macos"] .fp-ws-btn:hover {
+      background: rgba(255, 255, 255, 0.45) !important;
+      color: #000000 !important;
+    }
+    [data-theme="macos"] .fp-ws-btn.active {
+      background: #ffffff !important;
+      color: #000000 !important;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18) !important;
+      font-weight: 700 !important;
+    }
+
+    /* Center Gauges (Clock & CPU) */
+    [data-theme="macos"] .fp-gauges {
+      gap: 3px !important;
+      width: 74px !important;
+    }
+    [data-theme="macos"] .fp-clock-box {
+      background: rgba(255, 255, 255, 0.75) !important;
+      border: 1px solid rgba(0, 0, 0, 0.08) !important;
+      border-radius: 6px !important;
+      color: #1c1c1e !important;
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif !important;
+      font-size: 10px !important;
+      font-weight: 600 !important;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+    }
+    [data-theme="macos"] .fp-perf-box {
+      background: rgba(255, 255, 255, 0.75) !important;
+      border: 1px solid rgba(0, 0, 0, 0.08) !important;
+      border-radius: 6px !important;
+      box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.04) !important;
+    }
+
+    /* Quick keys (Sound & Theme Buttons) */
+    [data-theme="macos"] .fp-quick-keys {
+      gap: 3px !important;
+    }
+    [data-theme="macos"] .fp-tiny-btn {
+      width: 22px !important;
+      height: 22px !important;
+      background: rgba(255, 255, 255, 0.75) !important;
+      border: 1px solid rgba(255, 255, 255, 0.9) !important;
+      border-radius: 6px !important;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+    }
+    [data-theme="macos"] .fp-tiny-btn:hover {
+      background: #ffffff !important;
+      transform: scale(1.08) !important;
+    }
+
+    /* Subpanels (Popup Drawer Menus) as macOS Popovers */
+    [data-theme="macos"] .fp-subpanel {
+      background: rgba(255, 255, 255, 0.85) !important;
+      -webkit-backdrop-filter: blur(28px) saturate(180%) !important;
+      backdrop-filter: blur(28px) saturate(180%) !important;
+      border: 1px solid rgba(255, 255, 255, 0.7) !important;
+      border-radius: 12px !important;
+      box-shadow: 0 14px 36px rgba(0, 0, 0, 0.22), 0 2px 6px rgba(0, 0, 0, 0.08) !important;
+      bottom: 74px !important;
+      padding: 6px !important;
+      gap: 3px !important;
+    }
+    [data-theme="macos"] .fp-subpanel-title {
+      color: #8e8e93 !important;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08) !important;
+      font-size: 9px !important;
+      font-weight: 600 !important;
+      padding-bottom: 3px !important;
+      letter-spacing: 0.2px !important;
+    }
+    [data-theme="macos"] .fp-subpanel-item {
+      border: none !important;
+      border-radius: 6px !important;
+      color: #1c1c1e !important;
+      font-size: 11px !important;
+      padding: 4px 8px !important;
+      transition: background 0.12s ease, color 0.12s ease !important;
+    }
+    [data-theme="macos"] .fp-subpanel-item:hover {
+      background: #007aff !important;
+      color: #ffffff !important;
+    }
+
+    /* Minimized Window Box in macOS */
+    [data-theme="macos"] .minimized-win-box {
+      background: rgba(255, 255, 255, 0.75) !important;
+      backdrop-filter: blur(16px) !important;
+      -webkit-backdrop-filter: blur(16px) !important;
+      border: 1px solid rgba(255, 255, 255, 0.8) !important;
+      border-radius: 8px !important;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15) !important;
+      color: #1c1c1e !important;
+    }
+
     /* Mobile Responsive Optimizations */
     @media (max-width: 768px) {
       /* Top Bar */
@@ -1687,11 +1920,57 @@
         left: 6px;
         gap: 4px;
       }
-      .minimized-win-box {
-        width: 110px;
-        height: 24px;
-        font-size: 10px;
-        padding: 1px 4px;
+      /* macOS Dock Adjustments on Mobile */
+      [data-theme="macos"] #front-panel-container {
+        bottom: 4px !important;
+        height: 58px !important;
+      }
+      [data-theme="macos"] #front-panel {
+        height: 52px !important;
+        border-radius: 16px !important;
+        border-top-left-radius: 16px !important;
+        border-top-right-radius: 16px !important;
+        border-bottom-left-radius: 16px !important;
+        border-bottom-right-radius: 16px !important;
+        margin-bottom: 2px !important;
+        padding: 0 6px !important;
+        gap: 3px !important;
+      }
+      [data-theme="macos"] .fp-bank {
+        gap: 3px !important;
+      }
+      [data-theme="macos"] .fp-slot {
+        width: 32px !important;
+        height: 44px !important;
+      }
+      [data-theme="macos"] .fp-icon-btn {
+        width: 30px !important;
+        height: 30px !important;
+        border-radius: 8px !important;
+      }
+      [data-theme="macos"] .fp-icon-btn:hover {
+        transform: none !important;
+      }
+      [data-theme="macos"] .fp-workspace-switch {
+        width: 52px !important;
+        height: 36px !important;
+      }
+      [data-theme="macos"] .fp-ws-btn {
+        font-size: 7px !important;
+      }
+      [data-theme="macos"] .fp-gauges {
+        width: 44px !important;
+      }
+      [data-theme="macos"] .fp-tiny-btn {
+        width: 16px !important;
+        height: 16px !important;
+      }
+      [data-theme="macos"] #fp-toggle-tab {
+        bottom: 54px !important;
+        font-size: 8px !important;
+      }
+      [data-theme="macos"] #front-panel-container.collapsed #front-panel {
+        transform: translateY(60px) !important;
       }
     }
   </style>
