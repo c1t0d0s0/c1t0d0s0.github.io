@@ -3176,9 +3176,20 @@
        6. APP LAUNCHER & ACCESSORY FACTORIES
        ========================================================================== */
     const AppLauncher = {
+      _lastOpenApp: null,
+      _lastOpenTime: 0,
+
       open(appKey) {
         closeSubpanels();
         closeContextMenu();
+
+        const now = Date.now();
+        // Prevent rapid duplicate launch (e.g. within 450ms from multiple event triggers)
+        if (this._lastOpenApp === appKey && (now - this._lastOpenTime < 450)) {
+          return;
+        }
+        this._lastOpenApp = appKey;
+        this._lastOpenTime = now;
 
         // Check if it's an accessory
         switch (appKey) {
@@ -3875,6 +3886,38 @@ drwxr-xr-x   4 root     sys          512 Sep 18 10:49 ..
       const iconsContainer = document.getElementById('desktop-icons');
       iconsContainer.innerHTML = '';
       
+      // Helper to bind single-tap on mobile & double-click on desktop
+      function bindDesktopIcon(iconEl, onOpen) {
+        let lastTapTime = 0;
+
+        iconEl.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window && window.innerWidth <= 1024);
+
+          // Always set selected styling
+          document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
+          iconEl.classList.add('selected');
+
+          if (isMobile) {
+            // On mobile / touch devices: single tap immediately launches the application!
+            const now = Date.now();
+            if (now - lastTapTime > 450) {
+              lastTapTime = now;
+              onOpen();
+            }
+          }
+        });
+
+        iconEl.addEventListener('dblclick', (e) => {
+          e.stopPropagation();
+          const isMobile = window.innerWidth <= 768 || ('ontouchstart' in window && window.innerWidth <= 1024);
+          if (!isMobile) {
+            // On desktop PC: double click launches the application
+            onOpen();
+          }
+        });
+      }
+
       // Return to Portal Icon
       const portalIcon = document.createElement('div');
       portalIcon.className = 'desktop-icon';
@@ -3885,22 +3928,7 @@ drwxr-xr-x   4 root     sys          512 Sep 18 10:49 ..
         </div>
         <div class="desktop-icon-label">Portal</div>
       `;
-      let portalLastTap = 0;
-      portalIcon.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const now = Date.now();
-        const isSelected = portalIcon.classList.contains('selected');
-        document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
-        portalIcon.classList.add('selected');
-        if (window.innerWidth <= 768) {
-          if (isSelected || (now - portalLastTap < 400)) {
-            location.href = 'index.html';
-          }
-        }
-        portalLastTap = now;
-      });
-      portalIcon.addEventListener('dblclick', (e) => {
-        e.stopPropagation();
+      bindDesktopIcon(portalIcon, () => {
         location.href = 'index.html';
       });
       iconsContainer.appendChild(portalIcon);
@@ -3910,36 +3938,16 @@ drwxr-xr-x   4 root     sys          512 Sep 18 10:49 ..
         const iconEl = document.createElement('div');
         iconEl.className = 'desktop-icon';
         iconEl.dataset.appId = app.id;
-        iconEl.title = `${app.title} (${app.categoryName}) - Double click to launch`;
+        iconEl.title = `${app.title} (${app.categoryName})`;
         iconEl.innerHTML = `
           <div class="desktop-icon-img-box">
             <img src="${app.icon}" alt="${app.title}" loading="lazy">
           </div>
           <div class="desktop-icon-label">${app.title}</div>
         `;
-        
-        let lastTap = 0;
-        iconEl.addEventListener('click', (e) => {
-          e.stopPropagation();
-          const now = Date.now();
-          const isSelected = iconEl.classList.contains('selected');
-          document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
-          iconEl.classList.add('selected');
-
-          // On mobile, tap on selected icon or quick double-tap opens the app
-          if (window.innerWidth <= 768) {
-            if (isSelected || (now - lastTap < 400)) {
-              AppLauncher.open(app.id);
-            }
-          }
-          lastTap = now;
-        });
-
-        iconEl.addEventListener('dblclick', (e) => {
-          e.stopPropagation();
+        bindDesktopIcon(iconEl, () => {
           AppLauncher.open(app.id);
         });
-
         iconsContainer.appendChild(iconEl);
       });
 
@@ -3953,22 +3961,7 @@ drwxr-xr-x   4 root     sys          512 Sep 18 10:49 ..
         </div>
         <div class="desktop-icon-label">Terminal</div>
       `;
-      let termLastTap = 0;
-      termIcon.addEventListener('click', (e) => {
-        e.stopPropagation();
-        const now = Date.now();
-        const isSelected = termIcon.classList.contains('selected');
-        document.querySelectorAll('.desktop-icon').forEach(i => i.classList.remove('selected'));
-        termIcon.classList.add('selected');
-        if (window.innerWidth <= 768) {
-          if (isSelected || (now - termLastTap < 400)) {
-            AppLauncher.open('terminal');
-          }
-        }
-        termLastTap = now;
-      });
-      termIcon.addEventListener('dblclick', (e) => {
-        e.stopPropagation();
+      bindDesktopIcon(termIcon, () => {
         AppLauncher.open('terminal');
       });
       iconsContainer.appendChild(termIcon);
