@@ -95,11 +95,15 @@ const I18N_DATA = {
       'sumris': {
         title: 'Sumris',
         desc: '暗算の爽快感と落ち物パズルのスリルが融合した新感覚の数字パズルゲーム。落下する数字ブロックを積み上げ、縦・横の合計を「10の倍数」にして爽快コンボ消去！'
+      },
+      'bubblin': {
+        title: "Bubblin'",
+        desc: '狙いを定めてバブルを発射！同色バブルを3つ以上繋げて爽快に弾け飛ばすアーケード風バブルシューティングパズルゲーム。'
       }
     }
   },
   en: {
-    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, Sumris, and more.',
+    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, Sumris, Bubblin\', and more.',
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
@@ -188,6 +192,10 @@ const I18N_DATA = {
       'sumris': {
         title: 'Sumris',
         desc: 'A fast-paced falling-block puzzle game blending spatial strategy with quick mental arithmetic. Stack falling numbered blocks to sum contiguous lines to multiples of 10 for explosive combo clears!'
+      },
+      'bubblin': {
+        title: "Bubblin'",
+        desc: 'A classic arcade-style bubble shooter puzzle game. Aim and launch bubbles to match 3 or more of the same color for satisfying chain reactions!'
       }
     }
   }

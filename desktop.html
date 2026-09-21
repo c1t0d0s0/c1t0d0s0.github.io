@@ -2094,6 +2094,7 @@
             <div class="fp-subpanel-item" onclick="AppLauncher.open('leaders-archive')">📜 歴代指導者アーカイブ</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('native-ear')">🎧 NativeEar</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('votica')">🗳️ Votica</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('bubblin')">🫧 Bubblin' (Bubble Pop)</div>
           </div>
         </div>
       </div>
@@ -2287,7 +2288,7 @@
   <!-- JAVASCRIPT LOGIC -->
   <script>
     /* ==========================================================================
-       1. DATA DEFINITIONS (18 PORTAL APPLICATIONS + SYSTEM TOOLS)
+       1. DATA DEFINITIONS (19 PORTAL APPLICATIONS + SYSTEM TOOLS)
        ========================================================================== */
     const APPS = [
       {
@@ -2487,6 +2488,17 @@
         categoryName: 'パズル・ゲーム',
         desc: '縦横の合計を「10の倍数」にして爽快コンボ消去する暗算落ち物パズル。',
         width: 720, height: 780, desktop: true
+      },
+      {
+        id: 'bubblin',
+        title: "Bubblin'",
+        titleEn: "Bubblin'",
+        url: 'https://bubblin.y8n.org/',
+        icon: 'assets/images/bubblin.webp',
+        category: 'puzzle',
+        categoryName: 'パズル・ゲーム',
+        desc: '同色バブルを3つ以上揃えて弾け飛ばすアーケード風爽快バブルシューティングパズル。',
+        width: 960, height: 700, desktop: true
       }
     ];
 
@@ -3316,9 +3328,9 @@ Type 'help' for commands, 'ls' for applications, 'cde-fetch' for system info.
 
           case 'ls':
           case 'dir':
-            output.textContent += `total 18 applications (in /opt/c1t0d0s0/apps):
-drwxr-xr-x   2 root     sys          512 Sep 18 10:49 .
-drwxr-xr-x   4 root     sys          512 Sep 18 10:49 ..
+            output.textContent += `total 19 applications (in /opt/c1t0d0s0/apps):
+drwxr-xr-x   2 root     sys          512 Sep 21 13:45 .
+drwxr-xr-x   4 root     sys          512 Sep 21 13:45 ..
 `;
             APPS.forEach(a => {
               output.textContent += `-rwxr-xr-x   1 c1t0d0s0 staff       4096 Sep 18  ${a.id.padEnd(20)} [${a.title}]\n`;
@@ -3943,7 +3955,7 @@ drwxr-xr-x   4 root     sys          512 Sep 18 10:49 ..
       });
       iconsContainer.appendChild(portalIcon);
 
-      // All 18 Web Applications
+      // All 19 Web Applications
       APPS.forEach(app => {
         const iconEl = document.createElement('div');
         iconEl.className = 'desktop-icon';

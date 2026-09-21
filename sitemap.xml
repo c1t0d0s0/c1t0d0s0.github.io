@@ -3,7 +3,7 @@
   <!-- Portal Top -->
   <url>
     <loc>https://c1t0d0s0.y8n.org/</loc>
-    <lastmod>2026-09-10</lastmod>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>weekly</changefreq>
   </url>
 
@@ -130,6 +130,13 @@
   <url>
     <loc>https://sumris.y8n.org/</loc>
     <lastmod>2026-09-05</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- Bubblin' (Bubble Pop Puzzle Game) -->
+  <url>
+    <loc>https://bubblin.y8n.org/</loc>
+    <lastmod>2026-09-21</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 </urlset>
