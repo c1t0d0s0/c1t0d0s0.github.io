@@ -5,7 +5,7 @@
 /* --- Translation Data --- */
 const I18N_DATA = {
   ja: {
-    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexiDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブ、カレンダー、Sumrisなどにアクセスできます。',
+    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexiDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブ、カレンダー、Sumris、Bubblin\'、ISS Trackerなどにアクセスできます。',
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
@@ -99,11 +99,15 @@ const I18N_DATA = {
       'bubblin': {
         title: "Bubblin'",
         desc: '狙いを定めてバブルを発射！同色バブルを3つ以上繋げて爽快に弾け飛ばすアーケード風バブルシューティングパズルゲーム。'
+      },
+      'iss-tracker': {
+        title: 'ISS Tracker',
+        desc: '国際宇宙ステーション（ISS）の現在位置を地図上にリアルタイム表示。緯度・経度・高度・速度のテレメトリーに加え、任意の日時の軌道をシミュレーションできます。'
       }
     }
   },
   en: {
-    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, Sumris, Bubblin\', and more.',
+    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, Sumris, Bubblin\', ISS Tracker, and more.',
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
@@ -196,6 +200,10 @@ const I18N_DATA = {
       'bubblin': {
         title: "Bubblin'",
         desc: 'A classic arcade-style bubble shooter puzzle game. Aim and launch bubbles to match 3 or more of the same color for satisfying chain reactions!'
+      },
+      'iss-tracker': {
+        title: 'ISS Tracker',
+        desc: 'Track the International Space Station live on a world map. View real-time latitude, longitude, altitude, and velocity telemetry, and simulate its orbit at any date and time.'
       }
     }
   }
