@@ -103,11 +103,19 @@ const I18N_DATA = {
       'iss-tracker': {
         title: 'ISS Tracker',
         desc: '国際宇宙ステーション（ISS）の現在位置を地図上にリアルタイム表示。緯度・経度・高度・速度のテレメトリーに加え、任意の日時の軌道をシミュレーションできます。'
+      },
+      'music-abc': {
+        title: 'ABC譜面スタジオ',
+        desc: 'ABC記譜法の楽譜を表示・編集・リアルタイム再生・MIDIダウンロードできるWebエディタ。唱歌や国歌などの名曲ライブラリを収録。'
+      },
+      'jirobucks': {
+        title: 'ジローバックス',
+        desc: 'ラーメン二郎のコールとスターバックスのカスタム呪文を直感的に作成！店員に見せるモードや音声読み上げで注文も安心。'
       }
     }
   },
   en: {
-    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, Sumris, Bubblin\', ISS Tracker, and more.',
+    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, Sumris, Bubblin\', ISS Tracker, ABC Score Studio, Jirobucks, and more.',
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
@@ -204,6 +212,14 @@ const I18N_DATA = {
       'iss-tracker': {
         title: 'ISS Tracker',
         desc: 'Track the International Space Station live on a world map. View real-time latitude, longitude, altitude, and velocity telemetry, and simulate its orbit at any date and time.'
+      },
+      'music-abc': {
+        title: 'ABC Score Studio',
+        desc: 'A web application for rendering, editing, synthesizing, and downloading ABC notation sheet music. Features real-time audio playback and a classic song library.'
+      },
+      'jirobucks': {
+        title: 'Jirobucks',
+        desc: 'An intuitive order customizer for Ramen Jiro and Starbucks. Generate ordering calls and custom drink spells with simple taps, text-to-speech, and staff show mode.'
       }
     }
   }

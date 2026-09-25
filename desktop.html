@@ -2096,6 +2096,8 @@
             <div class="fp-subpanel-item" onclick="AppLauncher.open('votica')">🗳️ Votica</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('bubblin')">🫧 Bubblin' (Bubble Pop)</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('iss-tracker')">🛰️ ISS Tracker</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('music-abc')">🎼 ABC譜面スタジオ</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('jirobucks')">🍜 ジローバックス</div>
           </div>
         </div>
       </div>
@@ -2289,7 +2291,7 @@
   <!-- JAVASCRIPT LOGIC -->
   <script>
     /* ==========================================================================
-       1. DATA DEFINITIONS (20 PORTAL APPLICATIONS + SYSTEM TOOLS)
+       1. DATA DEFINITIONS (22 PORTAL APPLICATIONS + SYSTEM TOOLS)
        ========================================================================== */
     const APPS = [
       {
@@ -2511,6 +2513,28 @@
         categoryName: 'クイズ・学習',
         desc: '国際宇宙ステーションの現在位置をリアルタイム表示し、任意日時の軌道をシミュレーション。',
         width: 1100, height: 720, desktop: true
+      },
+      {
+        id: 'music-abc',
+        title: 'ABC譜面スタジオ',
+        titleEn: 'ABC Score Studio',
+        url: 'https://c1t0d0s0.y8n.org/music-abc/',
+        icon: 'assets/images/music-abc.webp',
+        category: 'tool',
+        categoryName: 'ツール',
+        desc: 'ABC記譜法の楽譜を表示・編集・リアルタイム再生・MIDIダウンロードできるWebエディタ。',
+        width: 1040, height: 720, desktop: true
+      },
+      {
+        id: 'jirobucks',
+        title: 'ジローバックス',
+        titleEn: 'Jirobucks',
+        url: 'https://c1t0d0s0.y8n.org/jirobucks/',
+        icon: 'assets/images/jirobucks.webp',
+        category: 'tool',
+        categoryName: 'ツール',
+        desc: 'ラーメン二郎のコールとスターバックスのカスタム呪文を直感的に作成！',
+        width: 900, height: 700, desktop: true
       }
     ];
 
@@ -3340,9 +3364,9 @@ Type 'help' for commands, 'ls' for applications, 'cde-fetch' for system info.
 
           case 'ls':
           case 'dir':
-            output.textContent += `total 20 applications (in /opt/c1t0d0s0/apps):
-drwxr-xr-x   2 root     sys          512 Sep 23 17:45 .
-drwxr-xr-x   4 root     sys          512 Sep 23 17:45 ..
+            output.textContent += `total 22 applications (in /opt/c1t0d0s0/apps):
+drwxr-xr-x   2 root     sys          512 Sep 25 13:46 .
+drwxr-xr-x   4 root     sys          512 Sep 25 13:46 ..
 `;
             APPS.forEach(a => {
               output.textContent += `-rwxr-xr-x   1 c1t0d0s0 staff       4096 Sep 18  ${a.id.padEnd(20)} [${a.title}]\n`;
@@ -3967,7 +3991,7 @@ drwxr-xr-x   4 root     sys          512 Sep 23 17:45 ..
       });
       iconsContainer.appendChild(portalIcon);
 
-      // All 20 Web Applications
+      // All 22 Web Applications
       APPS.forEach(app => {
         const iconEl = document.createElement('div');
         iconEl.className = 'desktop-icon';
