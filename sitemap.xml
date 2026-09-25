@@ -9,7 +9,7 @@
 
   <!-- 面積迷路 (Area Mazes) -->
   <url>
-    <loc>https://area-mazes.y8n.org/</loc>
+    <loc>https://c1t0d0s0.y8n.org/area-mazes/</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
   </url>
@@ -44,7 +44,7 @@
 
   <!-- Unit Converter -->
   <url>
-    <loc>https://unit-converter.y8n.org/</loc>
+    <loc>https://c1t0d0s0.y8n.org/unit-converter/</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
   </url>
@@ -58,14 +58,14 @@
 
   <!-- ライフゲーム (Conway's Game of Life) -->
   <url>
-    <loc>https://life.y8n.org/</loc>
+    <loc>https://c1t0d0s0.y8n.org/conway-life/</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
   </url>
 
   <!-- モールスマスター (Morse Master) -->
   <url>
-    <loc>https://morse.y8n.org/</loc>
+    <loc>https://c1t0d0s0.y8n.org/morse-master/</loc>
     <lastmod>2026-08-20</lastmod>
     <changefreq>monthly</changefreq>
   </url>
