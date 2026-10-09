@@ -2098,6 +2098,7 @@
             <div class="fp-subpanel-item" onclick="AppLauncher.open('iss-tracker')">🛰️ ISS Tracker</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('music-abc')">🎼 ABC譜面スタジオ</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('jirobucks')">🍜 ジローバックス</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('wordlynx')">🟩 Wordlynx (Crossword)</div>
           </div>
         </div>
       </div>
@@ -2291,7 +2292,7 @@
   <!-- JAVASCRIPT LOGIC -->
   <script>
     /* ==========================================================================
-       1. DATA DEFINITIONS (22 PORTAL APPLICATIONS + SYSTEM TOOLS)
+       1. DATA DEFINITIONS (23 PORTAL APPLICATIONS + SYSTEM TOOLS)
        ========================================================================== */
     const APPS = [
       {
@@ -2535,6 +2536,17 @@
         categoryName: 'ツール',
         desc: 'ラーメン二郎のコールとスターバックスのカスタム呪文を直感的に作成！',
         width: 900, height: 700, desktop: true
+      },
+      {
+        id: 'wordlynx',
+        title: 'Wordlynx',
+        titleEn: 'Wordlynx (Japanese only)',
+        url: 'https://c1t0d0s0.y8n.org/wordlynx/',
+        icon: 'assets/images/wordlynx.webp',
+        category: 'puzzle education',
+        categoryName: 'ゲーム・学習',
+        desc: '小学生が遊びながら言葉をおぼえられる無料のクロスワードパズル（日本語専用）。',
+        width: 920, height: 700, desktop: true
       }
     ];
 
@@ -3364,7 +3376,7 @@ Type 'help' for commands, 'ls' for applications, 'cde-fetch' for system info.
 
           case 'ls':
           case 'dir':
-            output.textContent += `total 22 applications (in /opt/c1t0d0s0/apps):
+            output.textContent += `total 23 applications (in /opt/c1t0d0s0/apps):
 drwxr-xr-x   2 root     sys          512 Sep 25 13:46 .
 drwxr-xr-x   4 root     sys          512 Sep 25 13:46 ..
 `;
@@ -3855,8 +3867,8 @@ drwxr-xr-x   4 root     sys          512 Sep 25 13:46 ..
 
           APPS.filter(a => {
             const matchesCat = activeCat === 'all' || 
-              (activeCat === 'game' && a.category === 'puzzle') ||
-              (activeCat === 'tool' && (a.category === 'tool' || a.category === 'education' || a.category === 'collection'));
+              (activeCat === 'game' && (a.category.includes('puzzle') || a.category.includes('game'))) ||
+              (activeCat === 'tool' && (a.category.includes('tool') || a.category.includes('education') || a.category.includes('collection')));
             const matchesQuery = !query || a.title.toLowerCase().includes(query) || a.desc.toLowerCase().includes(query) || a.id.includes(query);
             return matchesCat && matchesQuery;
           }).forEach(a => {
@@ -3991,7 +4003,7 @@ drwxr-xr-x   4 root     sys          512 Sep 25 13:46 ..
       });
       iconsContainer.appendChild(portalIcon);
 
-      // All 22 Web Applications
+      // All 23 Web Applications
       APPS.forEach(app => {
         const iconEl = document.createElement('div');
         iconEl.className = 'desktop-icon';
