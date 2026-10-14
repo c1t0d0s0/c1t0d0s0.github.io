@@ -2078,6 +2078,7 @@
           <!-- Subpanel with Apps -->
           <div class="fp-subpanel" id="subpanel-apps" style="min-width: 220px; max-height: 380px; overflow-y: auto;">
             <div class="fp-subpanel-title">Installed Web Applications</div>
+            <div class="fp-subpanel-item" onclick="location.href='study.html'">📚 まなびの どうぶつえん (Study)</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('area-mazes')">📐 面積迷路 (Area Mazes)</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('noxmind')">🧠 NoxMind (Mind Map)</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('classic-solo-games')">🃏 ソロゲームズ (Solitaire/Mine)</div>
@@ -2237,6 +2238,7 @@
     <div class="ctx-separator"></div>
 
     <div class="ctx-item" onclick="AppLauncher.open('about')">About CDE Workstation...</div>
+    <div class="ctx-item" onclick="location.href='study.html'">Study (まなびの どうぶつえん)</div>
     <div class="ctx-item" onclick="location.href='https://c1t0d0s0.y8n.org/'">Return to Standard Portal</div>
   </div>
 
@@ -4002,6 +4004,21 @@ drwxr-xr-x   4 root     sys          512 Sep 25 13:46 ..
         location.href = 'index.html';
       });
       iconsContainer.appendChild(portalIcon);
+
+      // Study (Learning Apps for Elementary School Students) Icon
+      const studyIcon = document.createElement('div');
+      studyIcon.className = 'desktop-icon';
+      studyIcon.title = 'まなびの どうぶつえん - 小学生向け学習アプリ (study.html)';
+      studyIcon.innerHTML = `
+        <div class="desktop-icon-img-box" style="background:#2f5d4f; color:#ffffff;">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 4h6a4 4 0 0 1 4 4v13a3 3 0 0 0-3-3H2z"/><path d="M22 4h-6a4 4 0 0 0-4 4v13a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div class="desktop-icon-label">Study</div>
+      `;
+      bindDesktopIcon(studyIcon, () => {
+        location.href = 'study.html';
+      });
+      iconsContainer.appendChild(studyIcon);
 
       // All 23 Web Applications
       APPS.forEach(app => {

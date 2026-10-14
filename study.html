@@ -123,7 +123,7 @@
     /* ---------- Sky & entrance gate ---------- */
     .sky {
       position: relative;
-      padding: clamp(28px, 6vw, 56px) 16px 0;
+      padding: clamp(10px, 2vw, 20px) 16px 0;
       padding-left: max(16px, env(safe-area-inset-left));
       padding-right: max(16px, env(safe-area-inset-right));
       background: linear-gradient(var(--sky-top), var(--sky-bottom));
@@ -132,9 +132,9 @@
 
     .sun {
       position: absolute;
-      top: clamp(18px, 4vw, 44px);
+      top: clamp(14px, 2.5vw, 28px);
       right: clamp(18px, 8vw, 120px);
-      width: clamp(52px, 9vw, 96px);
+      width: clamp(48px, 6vw, 72px);
       aspect-ratio: 1;
       border-radius: 50%;
       background: #ffd95a;
@@ -145,7 +145,7 @@
 
     .cloud {
       position: absolute;
-      width: clamp(90px, 16vw, 170px);
+      width: clamp(80px, 12vw, 130px);
       aspect-ratio: 5 / 2;
       border-radius: 999px;
       background: #fff;
@@ -161,16 +161,16 @@
     }
     .cloud::before { left: 16%; width: 38%; aspect-ratio: 1; }
     .cloud::after  { left: 44%; width: 30%; aspect-ratio: 1; }
-    .cloud-a { top: 34px; left: 6%; }
-    .cloud-b { top: 120px; right: 22%; scale: .7; animation-duration: 80s; animation-direction: alternate-reverse; }
+    .cloud-a { top: 22px; left: 6%; }
+    .cloud-b { top: 84px; right: 20%; scale: .7; animation-duration: 80s; animation-direction: alternate-reverse; }
 
     .gate {
       --post: clamp(10px, 2vw, 16px);
       position: relative;
       z-index: 1;
-      width: min(100%, 620px);
+      width: min(100%, 560px);
       margin: 0 auto;
-      padding: 0 calc(var(--post) + clamp(10px, 3vw, 28px)) clamp(64px, 9vw, 96px);
+      padding: 0 calc(var(--post) + clamp(10px, 3vw, 28px)) clamp(54px, 7vw, 72px);
       text-align: center;
     }
     /* Gate posts run down behind the hill so they always reach the ground */
@@ -191,63 +191,70 @@
       display: block;
       width: 100%;
       height: auto;
-      margin-bottom: -6px;
+      margin-bottom: -4px;
     }
 
     .plank {
       margin: 0 calc((var(--post) + clamp(10px, 3vw, 28px) + clamp(8px, 2.5vw, 34px)) * -1);
-      padding: .35em .6em .4em;
+      padding: .2em .6em .25em;
       border: 3px solid var(--ink);
-      border-radius: 16px;
+      border-radius: 14px;
       background:
         repeating-linear-gradient(90deg, rgba(140, 90, 51, .16) 0 2px, transparent 2px 46px),
         var(--wood);
       color: var(--paper);
-      font-size: clamp(1.55rem, 6.4vw, 3rem);
+      font-size: clamp(1.3rem, 4.6vw, 2rem);
       font-weight: 700;
       line-height: 1.3;
       letter-spacing: .06em;
       text-shadow: 0 2px 0 var(--ink);
-      box-shadow: 0 6px 0 var(--wood-deep);
+      box-shadow: 0 4px 0 var(--wood-deep);
     }
     .plank span { display: inline-block; }
 
     .lead {
-      margin: clamp(20px, 4vw, 30px) auto 0;
-      max-width: 26em;
-      font-size: clamp(.95rem, 2.6vw, 1.1rem);
+      margin: 12px auto 0;
+      font-size: clamp(.88rem, 2.4vw, 1rem);
+      line-height: 1.5;
       font-weight: 700;
     }
 
     .season {
       display: inline-block;
-      margin: 14px 0 0;
-      padding: .15em 1em .2em;
+      margin: 8px 0 0;
+      padding: .05em .9em .1em;
       border: 2px solid var(--ink);
       border-radius: 999px;
       background: var(--paper);
-      font-size: .9rem;
+      font-size: .8rem;
       font-weight: 700;
     }
 
     /* Trees and the month's ornament standing on the hill */
     .yard {
-      position: relative;
+      position: absolute;
       z-index: 3;
+      left: 0;
+      right: 0;
+      bottom: clamp(8px, 1.6vw, 20px);
       display: flex;
       justify-content: space-between;
       align-items: flex-end;
-      width: min(100%, 1040px);
-      margin: -56px auto 0;
-      padding-bottom: 22px;
+      width: min(100% - 32px, 1040px);
+      margin: 0 auto;
       pointer-events: none;
     }
     .yard-side { display: flex; align-items: flex-end; gap: clamp(2px, 1vw, 12px); }
     .yard-side:last-child { flex-direction: row-reverse; }
-    .tree { width: clamp(54px, 11vw, 112px); height: auto; }
+    .tree { width: 38px; height: auto; }
     .tree .foliage { fill: var(--leaf); }
-    .decor { width: clamp(40px, 8vw, 78px); }
+    .decor { width: 28px; }
     .decor svg { display: block; width: 100%; height: auto; }
+    /* Wide screens have room beside the gate for full-size trees */
+    @media (min-width: 900px) {
+      .tree { width: 84px; }
+      .decor { width: 58px; }
+    }
 
     .hill {
       position: absolute;
@@ -255,7 +262,7 @@
       left: 0;
       bottom: -1px;
       width: 100%;
-      height: clamp(40px, 7vw, 72px);
+      height: clamp(30px, 5vw, 56px);
       fill: var(--ground);
     }
 
@@ -267,7 +274,7 @@
       justify-items: center;
       width: min(100%, 1040px);
       margin: 0 auto;
-      padding: clamp(28px, 5vw, 48px) 16px 24px;
+      padding: clamp(14px, 3vw, 28px) 16px 24px;
       padding-left: max(16px, env(safe-area-inset-left));
       padding-right: max(16px, env(safe-area-inset-right));
     }
@@ -500,7 +507,7 @@
         </g>
       </svg>
       <h1 class="plank"><span>まなびの</span> <span>どうぶつえん</span></h1>
-      <p class="lead">算数・国語・理科・社会の 学習アプリが あつまる ひろばです。動物を えらんで 出かけよう。</p>
+      <p class="lead">動物を えらんで 学習アプリへ 出かけよう。</p>
       <p class="season" id="season"></p>
     </div>
 
