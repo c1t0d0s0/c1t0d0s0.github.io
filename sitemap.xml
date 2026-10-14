@@ -188,6 +188,13 @@
     <changefreq>monthly</changefreq>
   </url>
 
+  <!-- Reading Quest (長文読解) -->
+  <url>
+    <loc>https://c1t0d0s0.y8n.org/reading-quest/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+
   <!-- まいにち理科ノート (Science Quiz) -->
   <url>
     <loc>https://c1t0d0s0.y8n.org/science-quiz/</loc>
