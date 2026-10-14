@@ -2079,7 +2079,6 @@
           <div class="fp-subpanel" id="subpanel-apps" style="min-width: 220px; max-height: 380px; overflow-y: auto;">
             <div class="fp-subpanel-title">Installed Web Applications</div>
             <div class="fp-subpanel-item" onclick="location.href='study.html'">📚 まなびの どうぶつえん (Study)</div>
-            <div class="fp-subpanel-item" onclick="AppLauncher.open('area-mazes')">📐 面積迷路 (Area Mazes)</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('noxmind')">🧠 NoxMind (Mind Map)</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('classic-solo-games')">🃏 ソロゲームズ (Solitaire/Mine)</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('conway-life')">🧬 ライフゲーム (Life Game)</div>
@@ -2099,7 +2098,6 @@
             <div class="fp-subpanel-item" onclick="AppLauncher.open('iss-tracker')">🛰️ ISS Tracker</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('music-abc')">🎼 ABC譜面スタジオ</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('jirobucks')">🍜 ジローバックス</div>
-            <div class="fp-subpanel-item" onclick="AppLauncher.open('wordlynx')">🟩 Wordlynx (Crossword)</div>
           </div>
         </div>
       </div>
@@ -2294,20 +2292,9 @@
   <!-- JAVASCRIPT LOGIC -->
   <script>
     /* ==========================================================================
-       1. DATA DEFINITIONS (23 PORTAL APPLICATIONS + SYSTEM TOOLS)
+       1. DATA DEFINITIONS (21 PORTAL APPLICATIONS + SYSTEM TOOLS)
        ========================================================================== */
     const APPS = [
-      {
-        id: 'area-mazes',
-        title: '面積迷路',
-        titleEn: 'Area Mazes',
-        url: 'https://c1t0d0s0.y8n.org/area-mazes/',
-        icon: 'assets/images/area-maze.webp',
-        category: 'puzzle',
-        categoryName: 'パズル・ゲーム',
-        desc: 'ひらめきと論理的思考力を鍛えるロジックパズル。長方形の面積比から未知の長さを解き明かす。',
-        width: 960, height: 680, desktop: true
-      },
       {
         id: 'manhole',
         title: 'マンホールカード',
@@ -2538,17 +2525,6 @@
         categoryName: 'ツール',
         desc: 'ラーメン二郎のコールとスターバックスのカスタム呪文を直感的に作成！',
         width: 900, height: 700, desktop: true
-      },
-      {
-        id: 'wordlynx',
-        title: 'Wordlynx',
-        titleEn: 'Wordlynx (Japanese only)',
-        url: 'https://c1t0d0s0.y8n.org/wordlynx/',
-        icon: 'assets/images/wordlynx.webp',
-        category: 'puzzle education',
-        categoryName: 'ゲーム・学習',
-        desc: '小学生が遊びながら言葉をおぼえられる無料のクロスワードパズル（日本語専用）。',
-        width: 920, height: 700, desktop: true
       }
     ];
 
@@ -3378,7 +3354,7 @@ Type 'help' for commands, 'ls' for applications, 'cde-fetch' for system info.
 
           case 'ls':
           case 'dir':
-            output.textContent += `total 23 applications (in /opt/c1t0d0s0/apps):
+            output.textContent += `total 21 applications (in /opt/c1t0d0s0/apps):
 drwxr-xr-x   2 root     sys          512 Sep 25 13:46 .
 drwxr-xr-x   4 root     sys          512 Sep 25 13:46 ..
 `;
@@ -3929,7 +3905,7 @@ drwxr-xr-x   4 root     sys          512 Sep 25 13:46 ..
             Workstation: Sun Ultra 60 (Dual UltraSPARC-II @ 450MHz)<br>
             Operating System: SunOS 5.8 / Solaris 8 (Generic_108528-29)<br>
             Window Manager: Motif mwm / CDE Front Panel<br>
-            Installed Apps: 18 Web Applications & 6 Built-in Accessories<br>
+            Installed Apps: ${APPS.length} Web Applications & 6 Built-in Accessories<br>
             Portal URL: <a href="https://c1t0d0s0.y8n.org" target="_blank" style="color:#64b5f6;">https://c1t0d0s0.y8n.org</a>
           </div>
           <p style="font-size:11px; color:#333;">
@@ -3954,7 +3930,7 @@ drwxr-xr-x   4 root     sys          512 Sep 25 13:46 ..
        7. DESKTOP INITIALIZATION & CLOCK TICKER
        ========================================================================== */
     function initDesktop() {
-      // 1. Populate Desktop Icons (Portal + All 18 Applications + System Terminal)
+      // 1. Populate Desktop Icons (Portal + All Applications + System Terminal)
       const iconsContainer = document.getElementById('desktop-icons');
       iconsContainer.innerHTML = '';
       
@@ -4020,7 +3996,7 @@ drwxr-xr-x   4 root     sys          512 Sep 25 13:46 ..
       });
       iconsContainer.appendChild(studyIcon);
 
-      // All 23 Web Applications
+      // All 21 Web Applications
       APPS.forEach(app => {
         const iconEl = document.createElement('div');
         iconEl.className = 'desktop-icon';

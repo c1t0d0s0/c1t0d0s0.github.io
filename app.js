@@ -5,7 +5,7 @@
 /* --- Translation Data --- */
 const I18N_DATA = {
   ja: {
-    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。面積迷路、マンホールカード、NoxMind、世界遺産マスター、LexiDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブ、カレンダー、Sumris、Bubblin\'、ISS Tracker、ABC譜面スタジオ、ジローバックス、Wordlynxなどにアクセスできます。',
+    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。マンホールカード、NoxMind、世界遺産マスター、LexiDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブ、カレンダー、Sumris、Bubblin\'、ISS Tracker、ABC譜面スタジオ、ジローバックスなどにアクセスできます。',
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
@@ -24,10 +24,6 @@ const I18N_DATA = {
     noResults: '該当するプロジェクトが見つかりませんでした。',
     backToTopAria: 'ページ先頭へ戻る',
     cards: {
-      'area-mazes': {
-        title: '面積迷路',
-        desc: 'ひらめきと論理的思考力を鍛えるロジックパズル。複雑な計算を使わずに、長方形の面積と辺の比率から未知の長さを解き明かします。'
-      },
       'manhole': {
         title: 'マンホールカード',
         desc: '全国各地の鮮やかなデザインマンホールカードを集めて楽しむビューア＆マップ。地域の歴史や文化が詰まったご当地デザインを探訪できます。'
@@ -111,15 +107,11 @@ const I18N_DATA = {
       'jirobucks': {
         title: 'ジローバックス',
         desc: 'ラーメン二郎のコールとスターバックスのカスタム呪文を直感的に作成！店員に見せるモードや音声読み上げで注文も安心。'
-      },
-      'wordlynx': {
-        title: 'Wordlynx',
-        desc: '小学生が遊びながら言葉をおぼえられる無料のクロスワードパズル。日替わりの「今日のパズル」と低学年・高学年の2つのモードで楽しく語彙力を身につけられます。'
       }
     }
   },
   en: {
-    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Area Mazes, Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, Sumris, Bubblin\', ISS Tracker, ABC Score Studio, Jirobucks, Wordlynx (Japanese only), and more.',
+    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, Sumris, Bubblin\', ISS Tracker, ABC Score Studio, Jirobucks, and more.',
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
@@ -137,10 +129,6 @@ const I18N_DATA = {
     noResults: 'No matching projects found.',
     backToTopAria: 'Back to top',
     cards: {
-      'area-mazes': {
-        title: 'Area Mazes',
-        desc: 'A logic puzzle that trains intuition and reasoning. Unravel unknown lengths and areas using rectangle proportions and basic arithmetic—no fractions needed!'
-      },
       'manhole': {
         title: 'Manhole Cards',
         desc: 'An interactive collection viewer and map of Japan\'s artistic manhole cards. Explore vibrant regional designs rich in local culture and history.'
@@ -224,11 +212,6 @@ const I18N_DATA = {
       'jirobucks': {
         title: 'Jirobucks',
         desc: 'An intuitive order customizer for Ramen Jiro and Starbucks. Generate ordering calls and custom drink spells with simple taps, text-to-speech, and staff show mode.'
-      },
-      'wordlynx': {
-        title: 'Wordlynx (Japanese only)',
-        desc: 'A free crossword puzzle game where elementary students learn Japanese vocabulary while playing. Features daily puzzles and two difficulty modes. (Note: Available in Japanese only)',
-        actionText: 'Open App (Japanese only)'
       }
     }
   }

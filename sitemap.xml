@@ -174,5 +174,32 @@
     <lastmod>2026-10-09</lastmod>
     <changefreq>monthly</changefreq>
   </url>
+  <!-- 算数チャレンジ (Math Quiz) -->
+  <url>
+    <loc>https://c1t0d0s0.y8n.org/math-quiz/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- 漢字クイズ (Kanji Quiz) -->
+  <url>
+    <loc>https://c1t0d0s0.y8n.org/kanji-quiz/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- まいにち理科ノート (Science Quiz) -->
+  <url>
+    <loc>https://c1t0d0s0.y8n.org/science-quiz/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
+
+  <!-- スズメの社会クイズ (Social Studies Quiz) -->
+  <url>
+    <loc>https://c1t0d0s0.y8n.org/social-studies-quiz/</loc>
+    <lastmod>2026-10-14</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
 
