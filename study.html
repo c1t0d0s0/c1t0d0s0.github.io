@@ -480,6 +480,99 @@
       to   { transform: translate3d(var(--drift), 112vh, 0) rotate(var(--rot)); }
     }
 
+    /* ---------- App viewer: a learning app opened full-window on top of the zoo ---------- */
+    .viewer {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: flex;
+      flex-direction: column;
+      background: var(--board);
+    }
+    .viewer[hidden] { display: none; }
+
+    .viewer-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 8px;
+      padding-top: max(4px, env(safe-area-inset-top));
+      padding-left: max(8px, env(safe-area-inset-left));
+      padding-right: max(8px, env(safe-area-inset-right));
+      border-bottom: 3px solid var(--ink);
+      background:
+        repeating-linear-gradient(90deg, rgba(140, 90, 51, .16) 0 2px, transparent 2px 46px),
+        var(--wood);
+    }
+    .viewer-close, .viewer-newtab {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      flex: none;
+      min-width: 40px;
+      min-height: 40px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--ink);
+      font: inherit;
+      font-size: .9rem;
+      font-weight: 700;
+      line-height: 1.2;
+      text-decoration: none;
+      cursor: pointer;
+    }
+    .viewer-close { padding: 0 14px 0 8px; }
+    .viewer-close:hover, .viewer-newtab:hover { background: #ffe9b8; }
+    .viewer-close:focus-visible, .viewer-newtab:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+    .viewer-close svg, .viewer-newtab svg { width: 18px; height: 18px; flex: none; }
+    .viewer-title {
+      flex: 1;
+      min-width: 0;
+      margin: 0;
+      overflow: hidden;
+      color: var(--paper);
+      font-weight: 700;
+      text-align: center;
+      text-overflow: ellipsis;
+      text-shadow: 0 2px 0 var(--ink);
+      white-space: nowrap;
+    }
+    @media (max-width: 480px) { .viewer-close .long { display: none; } }
+
+    .viewer-frame {
+      position: relative;
+      flex: 1;
+      min-height: 0;
+    }
+    .viewer-loading {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      margin: 0;
+      color: var(--chalk-white);
+      font-family: 'Klee One', 'Zen Maru Gothic', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+    .viewer-frame iframe {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+      background: #fff;
+      opacity: 0;
+    }
+    .viewer-frame iframe.ready { opacity: 1; }
+
+    /* While an app is open, the zoo behind it stands still */
+    .viewing body { overflow: hidden; }
+    .viewing .animal *, .viewing .cloud { animation-play-state: paused; }
+    .viewing .fall { display: none; }
+
     @media (prefers-reduced-motion: reduce) {
       .animal *, .cloud { animation: none !important; }
       .fall { display: none; }
@@ -529,6 +622,7 @@
 
   <!--
     リンクを増やすとき: 追加したい教科の <ul class="links"> に、下の形の <li> を1つ足すだけです。
+    リンクはページ内の全画面ビューアー (iframe) で開き、「もどる」でこのページに戻ります (ページ末尾のスクリプト)。
       <li><a href="URL"><span class="name">アプリ名</span><span class="note">ひとこと説明</span></a></li>
   -->
   <main class="zoo">
@@ -723,6 +817,23 @@
 
   <div class="fall" id="fall" aria-hidden="true"></div>
 
+  <!-- App viewer (filled in by the script at the bottom when a link on a blackboard is clicked) -->
+  <div class="viewer" id="viewer" role="dialog" aria-modal="true" aria-labelledby="viewer-title" hidden>
+    <div class="viewer-bar">
+      <button type="button" class="viewer-close" id="viewer-close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="15 5 8 12 15 19"></polyline></svg>
+        <span><span class="long">どうぶつえんへ </span>もどる</span>
+      </button>
+      <p class="viewer-title" id="viewer-title"></p>
+      <a class="viewer-newtab" id="viewer-newtab" href="./" target="_blank" rel="noopener" aria-label="新しいタブで ひらく" title="新しいタブで ひらく">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+      </a>
+    </div>
+    <div class="viewer-frame" id="viewer-frame">
+      <p class="viewer-loading">じゅんびちゅう…</p>
+    </div>
+  </div>
+
   <script>
     (function () {
       var season = SEASONS[MONTH];
@@ -812,6 +923,124 @@
           p.style.setProperty('--rot', rain ? '0deg' : ((Math.random() * 720 - 360).toFixed(0) + 'deg'));
           layer.appendChild(p);
         }
+      }
+    })();
+  </script>
+  <script>
+    /* App viewer: opens a learning app in a full-window iframe so that closing it returns to the zoo.
+       The links stay ordinary links — Ctrl/⌘-click, middle-click and no-JS still work as usual. */
+    (function () {
+      var root = document.documentElement;
+      var viewer = document.getElementById('viewer');
+      var frameBox = document.getElementById('viewer-frame');
+      var titleEl = document.getElementById('viewer-title');
+      var newTab = document.getElementById('viewer-newtab');
+      var closeBtn = document.getElementById('viewer-close');
+      var background = document.querySelectorAll('.sky, .zoo, .exit');
+      var nav = window.navigation;
+
+      var frame = null;       // the <iframe> while an app is shown
+      var opener = null;      // link to give focus back to
+      var returnKey = null;   // Navigation API key of the history entry to return to
+      var unwinding = false;  // true while walking history back after "もどる"
+      var unwindTimer = null;
+      var unwindSteps = 0;
+
+      function show(url, name) {
+        titleEl.textContent = name;
+        newTab.href = url;
+        frame = document.createElement('iframe');
+        frame.title = name;
+        frame.setAttribute('allow', 'fullscreen; clipboard-read; clipboard-write');
+        var f = frame;
+        var ready = function () { f.classList.add('ready'); };
+        f.addEventListener('load', ready);
+        setTimeout(ready, 4000);
+        f.src = url;
+        frameBox.appendChild(f);
+        viewer.hidden = false;
+        root.classList.add('viewing');
+        Array.prototype.forEach.call(background, function (el) { el.inert = true; });
+        closeBtn.focus();
+      }
+
+      function teardown() {
+        clearTimeout(unwindTimer);
+        unwinding = false;
+        if (frame) { frame.remove(); frame = null; }
+        viewer.hidden = true;
+        root.classList.remove('viewing');
+        Array.prototype.forEach.call(background, function (el) { el.inert = false; });
+        if (opener) { opener.focus({ preventScroll: true }); opener = null; }
+      }
+
+      function open(link) {
+        if (frame || unwinding) return;
+        opener = link;
+        var nameEl = link.querySelector('.name');
+        var name = (nameEl || link).textContent.trim();
+        returnKey = (nav && nav.currentEntry) ? nav.currentEntry.key : null;
+        // This entry is what the browser's Back button lands on to close the viewer
+        history.pushState({ viewer: { url: link.href, name: name } }, '');
+        show(link.href, name);
+      }
+
+      // Screen changes inside the app add browser history entries of their own.
+      // Closing walks back past all of them to the entry the zoo was on.
+      function stepBack() {
+        if (!unwinding) return;
+        if (unwindSteps++ >= 50) {
+          history.replaceState(null, '');
+          teardown();
+          return;
+        }
+        history.back();
+        unwindTimer = setTimeout(stepBack, 250);
+      }
+
+      function requestClose() {
+        if (!frame || unwinding) return;
+        unwinding = true;
+        unwindSteps = 0;
+        viewer.hidden = true;
+        var jumped = false;
+        if (returnKey && nav && nav.traverseTo) {
+          try {
+            var result = nav.traverseTo(returnKey);
+            if (result && result.finished) result.finished.catch(function () {});
+            jumped = true;
+          } catch (e) {}
+        }
+        if (jumped) unwindTimer = setTimeout(stepBack, 1200);
+        else stepBack();
+      }
+
+      window.addEventListener('popstate', function (e) {
+        var v = e.state && e.state.viewer;
+        if (!v) {
+          if (frame) teardown();
+        } else if (!frame) {
+          // Came forward again into an entry where an app was open
+          returnKey = null;
+          show(v.url, v.name);
+        }
+      });
+
+      document.querySelector('.zoo').addEventListener('click', function (e) {
+        var link = e.target.closest ? e.target.closest('.links a') : null;
+        if (!link || e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        e.preventDefault();
+        open(link);
+      });
+
+      closeBtn.addEventListener('click', requestClose);
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') requestClose();
+      });
+
+      // Reloading while an app is open keeps the history entry, so show the app again
+      if (history.state && history.state.viewer) {
+        show(history.state.viewer.url, history.state.viewer.name);
       }
     })();
   </script>
