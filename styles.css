@@ -606,6 +606,19 @@ a {
   }
 }
 
+/* Header page links (Desktop / Study) collapse to icon-only on phones */
+@media (max-width: 480px) {
+  .nav-link-btn {
+    width: 36px;
+    padding: 0;
+    justify-content: center;
+  }
+
+  .nav-link-btn span {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>まなびの どうぶつえん | 小学生の学習アプリ リンク集</title>
+
+  <!-- Google tag (gtag.js) - Deferred to eliminate mobile bandwidth contention -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-W76HCVTSNX');
+
+    window.addEventListener('load', function() {
+      var s = document.createElement('script');
+      s.async = true;
+      s.src = 'https://www.googletagmanager.com/gtag/js?id=G-W76HCVTSNX';
+      document.head.appendChild(s);
+    });
+  </script>
+
+  <!-- SEO & Meta Tags -->
+  <meta name="description" content="小学生向けの学習アプリをあつめたリンク集です。算数（算数チャレンジ・面積迷路）、国語（Wordlynx）、理科（まいにち理科ノート）、社会（スズメの社会クイズ）に、教科ごとの動物キャラクターといっしょに出かけよう。">
+  <meta name="keywords" content="小学生, 学習アプリ, 算数, 国語, 理科, 社会, 算数チャレンジ, 面積迷路, Wordlynx, クロスワード, まいにち理科ノート, スズメの社会クイズ, 中学受験, c1t0d0s0">
+  <meta name="author" content="c1t0d0s0">
+  <meta name="theme-color" content="#a8d4f2">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://c1t0d0s0.y8n.org/study.html">
+  <meta property="og:title" content="まなびの どうぶつえん | 小学生の学習アプリ リンク集">
+  <meta property="og:description" content="算数・国語・理科・社会の学習アプリがあつまる広場。動物をえらんで出かけよう。">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="まなびの どうぶつえん | 小学生の学習アプリ リンク集">
+  <meta name="twitter:description" content="算数・国語・理科・社会の学習アプリがあつまる広場。動物をえらんで出かけよう。">
+
+  <!-- Favicon -->
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://c1t0d0s0.y8n.org/study.html">
+
+  <!-- Fonts (same families as the learning apps) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Klee+One:wght@600&family=Zen+Maru+Gothic:wght@500;700&display=swap" rel="stylesheet">
+
+  <!-- Seasonal theme: applied before first paint (preview any month with ?month=1..12) -->
+  <script>
+    var SEASONS = {
+      1:  { label: 'お正月と 雪の きせつ',        sky: ['#bfe0f5', '#eef7fb'], ground: '#eef4f7', mound: '#ffffff', leaf: '#dce9f0', sun: 1,   fall: 'snow',  colors: ['#ffffff'], decor: 'snowman' },
+      2:  { label: 'うめの花が さく きせつ',      sky: ['#c6e1f3', '#f8edf1'], ground: '#eef3f1', mound: '#ffffff', leaf: '#f2a9c0', sun: 1,   fall: 'snow',  colors: ['#ffffff'], decor: 'ume' },
+      3:  { label: '春が やってくる きせつ',      sky: ['#bfe6f7', '#fdf3e3'], ground: '#cfe6a8', mound: '#e2f1c2', leaf: '#f7bccb', sun: 1,   fall: 'petal', colors: ['#f9c9d6', '#fbe08a'], decor: 'nanohana' },
+      4:  { label: 'さくらの きせつ',            sky: ['#bde3f8', '#fde9ef'], ground: '#bfe39a', mound: '#d8efb8', leaf: '#f9c0d2', sun: 1,   fall: 'petal', colors: ['#f9c6d6', '#fde3ea'], decor: 'tulip' },
+      5:  { label: '新緑と こいのぼりの きせつ',  sky: ['#9fd8f7', '#e6f6fb'], ground: '#a6db7c', mound: '#c6eba0', leaf: '#6fbf5a', sun: 1,   fall: 'none',  colors: [], decor: 'koinobori' },
+      6:  { label: 'つゆと あじさいの きせつ',    sky: ['#b4c4d4', '#e3e9ee'], ground: '#a9d3a0', mound: '#c5e3bd', leaf: '#5fa977', sun: 0,   fall: 'rain',  colors: ['#7f9fc4'], decor: 'ajisai' },
+      7:  { label: '七夕と 夏の はじまり',        sky: ['#8fd0fb', '#dff3ff'], ground: '#9bd872', mound: '#bfe89a', leaf: '#4fae55', sun: 1,   fall: 'none',  colors: [], decor: 'tanabata' },
+      8:  { label: 'ひまわりと 入道雲の きせつ',  sky: ['#6fc2fb', '#d4eeff'], ground: '#94d36a', mound: '#b9e690', leaf: '#3f9f4d', sun: 1,   fall: 'none',  colors: [], decor: 'himawari' },
+      9:  { label: 'お月見の きせつ',            sky: ['#a9cdee', '#fbe7c8'], ground: '#c4d98a', mound: '#dbe8ad', leaf: '#7fae5a', sun: 1,   fall: 'none',  colors: [], decor: 'tsukimi' },
+      10: { label: 'もみじの きせつ',            sky: ['#a8d4f2', '#fdebd0'], ground: '#d6d48a', mound: '#e8e3ae', leaf: '#e98a3c', sun: 1,   fall: 'leaf',  colors: ['#e2603a', '#f0a23c', '#c9462f'], decor: 'pumpkin' },
+      11: { label: 'いちょうと 落ち葉の きせつ',  sky: ['#b7d3ea', '#fbe9cf'], ground: '#dcc98a', mound: '#ece0b0', leaf: '#eab73a', sun: 1,   fall: 'leaf',  colors: ['#eab73a', '#f3d15c', '#c98a3a'], decor: 'donguri' },
+      12: { label: '冬と クリスマスの きせつ',    sky: ['#b5cfe8', '#eef3f8'], ground: '#edf2f5', mound: '#ffffff', leaf: '#3f8a5f', sun: 1,   fall: 'snow',  colors: ['#ffffff'], decor: 'tree' }
+    };
+    var MONTH = (function () {
+      var m = parseInt((location.search.match(/[?&]month=(\d+)/) || [])[1], 10);
+      return (m >= 1 && m <= 12) ? m : new Date().getMonth() + 1;
+    })();
+    (function () {
+      var s = SEASONS[MONTH], r = document.documentElement.style;
+      r.setProperty('--sky-top', s.sky[0]);
+      r.setProperty('--sky-bottom', s.sky[1]);
+      r.setProperty('--ground', s.ground);
+      r.setProperty('--mound', s.mound);
+      r.setProperty('--leaf', s.leaf);
+      r.setProperty('--sun', s.sun);
+      var tc = document.querySelector('meta[name="theme-color"]');
+      if (tc) tc.setAttribute('content', s.sky[0]);
+    })();
+  </script>
+
+  <style>
+    :root {
+      --ink: #1c2a4a;
+      --board: #2f5d4f;
+      --board-deep: #24483d;
+      --chalk-white: #fdfdfa;
+      --chalk-soft: #cfe3d8;
+      --wood: #b9824e;
+      --wood-deep: #8c5a33;
+      --paper: #fffaf0;
+
+      /* Overwritten per month by the script above (October as fallback) */
+      --sky-top: #a8d4f2;
+      --sky-bottom: #fdebd0;
+      --ground: #d6d48a;
+      --mound: #e8e3ae;
+      --leaf: #e98a3c;
+      --sun: 1;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    html { -webkit-text-size-adjust: 100%; }
+
+    body {
+      margin: 0;
+      font-family: 'Zen Maru Gothic', 'Hiragino Maru Gothic ProN', 'Yu Gothic', 'Meiryo', sans-serif;
+      font-weight: 500;
+      line-height: 1.7;
+      color: var(--ink);
+      background: var(--ground);
+      overflow-x: hidden;
+      /* Text is written with spaces between phrases, so only break lines there */
+      word-break: keep-all;
+      overflow-wrap: anywhere;
+    }
+
+    /* ---------- Sky & entrance gate ---------- */
+    .sky {
+      position: relative;
+      padding: clamp(28px, 6vw, 56px) 16px 0;
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+      background: linear-gradient(var(--sky-top), var(--sky-bottom));
+      overflow: hidden;
+    }
+
+    .sun {
+      position: absolute;
+      top: clamp(18px, 4vw, 44px);
+      right: clamp(18px, 8vw, 120px);
+      width: clamp(52px, 9vw, 96px);
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: #ffd95a;
+      box-shadow: 0 0 0 clamp(8px, 1.6vw, 16px) rgba(255, 217, 90, .3);
+      opacity: var(--sun);
+    }
+    @media (max-width: 860px) { .sun { display: none; } }
+
+    .cloud {
+      position: absolute;
+      width: clamp(90px, 16vw, 170px);
+      aspect-ratio: 5 / 2;
+      border-radius: 999px;
+      background: #fff;
+      opacity: .85;
+      animation: drift 60s ease-in-out infinite alternate;
+    }
+    .cloud::before, .cloud::after {
+      content: '';
+      position: absolute;
+      bottom: 40%;
+      border-radius: 50%;
+      background: #fff;
+    }
+    .cloud::before { left: 16%; width: 38%; aspect-ratio: 1; }
+    .cloud::after  { left: 44%; width: 30%; aspect-ratio: 1; }
+    .cloud-a { top: 34px; left: 6%; }
+    .cloud-b { top: 120px; right: 22%; scale: .7; animation-duration: 80s; animation-direction: alternate-reverse; }
+
+    .gate {
+      --post: clamp(10px, 2vw, 16px);
+      position: relative;
+      z-index: 1;
+      width: min(100%, 620px);
+      margin: 0 auto;
+      padding: 0 calc(var(--post) + clamp(10px, 3vw, 28px)) clamp(64px, 9vw, 96px);
+      text-align: center;
+    }
+    /* Gate posts run down behind the hill so they always reach the ground */
+    .gate::before, .gate::after {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      bottom: -400px;
+      width: var(--post);
+      border-radius: 8px 8px 0 0;
+      background: var(--wood);
+    }
+    .gate::before { left: 0; }
+    .gate::after  { right: 0; }
+
+    .bunting {
+      display: block;
+      width: 100%;
+      height: auto;
+      margin-bottom: -6px;
+    }
+
+    .plank {
+      margin: 0 calc((var(--post) + clamp(10px, 3vw, 28px) + clamp(8px, 2.5vw, 34px)) * -1);
+      padding: .35em .6em .4em;
+      border: 3px solid var(--ink);
+      border-radius: 16px;
+      background:
+        repeating-linear-gradient(90deg, rgba(140, 90, 51, .16) 0 2px, transparent 2px 46px),
+        var(--wood);
+      color: var(--paper);
+      font-size: clamp(1.55rem, 6.4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: .06em;
+      text-shadow: 0 2px 0 var(--ink);
+      box-shadow: 0 6px 0 var(--wood-deep);
+    }
+    .plank span { display: inline-block; }
+
+    .lead {
+      margin: clamp(20px, 4vw, 30px) auto 0;
+      max-width: 26em;
+      font-size: clamp(.95rem, 2.6vw, 1.1rem);
+      font-weight: 700;
+    }
+
+    .season {
+      display: inline-block;
+      margin: 14px 0 0;
+      padding: .15em 1em .2em;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: var(--paper);
+      font-size: .9rem;
+      font-weight: 700;
+    }
+
+    /* Trees and the month's ornament standing on the hill */
+    .yard {
+      position: relative;
+      z-index: 3;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      width: min(100%, 1040px);
+      margin: -56px auto 0;
+      padding-bottom: 22px;
+      pointer-events: none;
+    }
+    .yard-side { display: flex; align-items: flex-end; gap: clamp(2px, 1vw, 12px); }
+    .yard-side:last-child { flex-direction: row-reverse; }
+    .tree { width: clamp(54px, 11vw, 112px); height: auto; }
+    .tree .foliage { fill: var(--leaf); }
+    .decor { width: clamp(40px, 8vw, 78px); }
+    .decor svg { display: block; width: 100%; height: auto; }
+
+    .hill {
+      position: absolute;
+      z-index: 2;
+      left: 0;
+      bottom: -1px;
+      width: 100%;
+      height: clamp(40px, 7vw, 72px);
+      fill: var(--ground);
+    }
+
+    /* ---------- Habitats ---------- */
+    .zoo {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
+      gap: clamp(36px, 6vw, 56px) clamp(24px, 5vw, 56px);
+      justify-items: center;
+      width: min(100%, 1040px);
+      margin: 0 auto;
+      padding: clamp(28px, 5vw, 48px) 16px 24px;
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+    }
+
+    .habitat {
+      position: relative;
+      isolation: isolate;
+      display: grid;
+      grid-template-columns: clamp(88px, 26%, 150px) minmax(0, 1fr);
+      align-items: end;
+      column-gap: clamp(6px, 2vw, 16px);
+      width: 100%;
+      max-width: 600px;
+      padding-bottom: 14px;
+    }
+    /* The open clearing each animal lives on — no fences */
+    .habitat::before {
+      content: '';
+      position: absolute;
+      z-index: -1;
+      left: -3%;
+      right: -3%;
+      bottom: 0;
+      height: 84px;
+      border-radius: 50%;
+      background: var(--mound);
+    }
+
+    .keeper { text-align: center; min-width: 0; }
+    .animal { display: block; width: 100%; height: auto; overflow: visible; }
+
+    /* Species plaque, as found in front of every zoo enclosure */
+    .plaque {
+      display: inline-block;
+      margin: 2px 0 0;
+      padding: .05em .7em .1em;
+      border: 2px solid var(--ink);
+      border-radius: 6px;
+      background: var(--paper);
+      font-size: clamp(.72rem, 2.2vw, .85rem);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    /* Blackboard on two wooden legs */
+    .stand {
+      min-width: 0;
+      padding-bottom: 26px;
+      background:
+        linear-gradient(var(--wood-deep), var(--wood-deep)) 14% 100% / 12px 40px no-repeat,
+        linear-gradient(var(--wood-deep), var(--wood-deep)) 86% 100% / 12px 40px no-repeat;
+    }
+    .board {
+      position: relative;
+      padding: clamp(10px, 2.4vw, 16px) clamp(12px, 3vw, 20px) clamp(12px, 2.4vw, 16px);
+      border: 8px solid var(--wood);
+      border-bottom-width: 14px;
+      border-radius: 10px;
+      background:
+        radial-gradient(120% 80% at 20% 10%, rgba(255, 255, 255, .07), transparent 60%),
+        var(--board);
+      box-shadow: 0 0 0 2px var(--ink), inset 0 0 0 2px var(--board-deep);
+      color: var(--chalk-white);
+      font-family: 'Klee One', 'Zen Maru Gothic', sans-serif;
+      font-weight: 600;
+    }
+    /* A piece of chalk and an eraser on the tray */
+    .board::before, .board::after {
+      content: '';
+      position: absolute;
+      bottom: -11px;
+      height: 7px;
+      border-radius: 2px;
+    }
+    .board::before { right: 22px; width: 26px; background: var(--chalk); }
+    .board::after  { right: 58px; width: 34px; background: #5b6f8f; box-shadow: inset 0 -3px 0 var(--paper); }
+
+    .board h2 {
+      margin: 0 0 4px;
+      color: var(--chalk);
+      font-size: clamp(1.5rem, 5vw, 2rem);
+      line-height: 1.3;
+      letter-spacing: .12em;
+    }
+
+    .links { margin: 0; padding: 0; list-style: none; }
+    .links li + li { border-top: 2px dashed rgba(253, 253, 250, .28); }
+    .links a {
+      display: block;
+      min-height: 48px;
+      margin: 0 -8px;
+      padding: 8px;
+      border-radius: 8px;
+      color: inherit;
+      text-decoration: none;
+      transition: background-color .15s;
+    }
+    .links .name {
+      display: block;
+      font-size: clamp(1.05rem, 3.4vw, 1.25rem);
+      line-height: 1.4;
+      text-decoration: underline;
+      text-decoration-color: var(--chalk);
+      text-decoration-thickness: 2px;
+      text-underline-offset: .3em;
+    }
+    .links .note {
+      display: block;
+      margin-top: 4px;
+      color: var(--chalk-soft);
+      font-size: clamp(.78rem, 2.4vw, .88rem);
+      line-height: 1.5;
+    }
+    .links a:hover { background: rgba(253, 253, 250, .12); }
+    .links a:focus-visible { outline: 3px solid var(--chalk); outline-offset: 1px; }
+    .links a:active { background: rgba(253, 253, 250, .2); }
+
+    /* In the two-column layout the right-hand animals stand on the outside */
+    @media (min-width: 880px) {
+      .habitat:nth-child(even) { grid-template-columns: minmax(0, 1fr) clamp(88px, 26%, 150px); }
+      .habitat:nth-child(even) .keeper { order: 2; }
+    }
+
+    /* ---------- Footer signpost ---------- */
+    .exit {
+      padding: 20px 16px calc(32px + env(safe-area-inset-bottom));
+      text-align: center;
+      font-size: .9rem;
+    }
+    .exit a {
+      display: inline-block;
+      padding: .5em 1.4em .55em;
+      border: 3px solid var(--ink);
+      border-radius: 10px;
+      background: var(--wood);
+      color: var(--paper);
+      font-weight: 700;
+      text-decoration: none;
+      box-shadow: 0 4px 0 var(--wood-deep);
+    }
+    .exit a:hover { background: var(--wood-deep); }
+    .exit a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+    .exit p { margin: 16px 0 0; opacity: .75; }
+
+    /* ---------- Animal motion ---------- */
+    .animal * { transform-box: view-box; }
+    .head { transform-origin: 60px 100px; animation: tilt 7s ease-in-out infinite; }
+    .eyes { transform-box: fill-box; transform-origin: center; animation: blink 5.2s infinite; }
+
+    .monkey .tail { transform-origin: 86px 146px; animation: sway 3.6s ease-in-out infinite; }
+    .lynx .head   { animation-duration: 9s; animation-delay: -3s; }
+    .lynx .eyes   { animation-delay: -1.7s; }
+    .lynx .tail   { transform-origin: 88px 146px; animation: flick 4.8s ease-in-out infinite; }
+    .shiba .head  { animation-duration: 6s; animation-delay: -2s; }
+    .shiba .eyes  { animation-delay: -3.1s; }
+    .shiba .tail  { transform-origin: 86px 146px; animation: wag .9s ease-in-out infinite; }
+    .sparrow .bird { transform-origin: 60px 109px; animation: hop 3.8s ease-in-out infinite; }
+    .sparrow .eyes { animation-delay: -.8s; }
+    .sparrow .wing-l { transform-origin: 26px 66px; animation: flap-l 3.8s ease-in-out infinite; }
+    .sparrow .wing-r { transform-origin: 94px 66px; animation: flap-r 3.8s ease-in-out infinite; }
+
+    @keyframes tilt  { 0%, 100% { transform: rotate(-3deg); } 50% { transform: rotate(3.5deg); } }
+    @keyframes blink { 0%, 94%, 100% { transform: scaleY(1); } 97% { transform: scaleY(.08); } }
+    @keyframes sway  { 0%, 100% { transform: rotate(-7deg); } 50% { transform: rotate(9deg); } }
+    @keyframes flick { 0%, 70%, 100% { transform: rotate(0); } 78% { transform: rotate(-16deg); } 86% { transform: rotate(8deg); } }
+    @keyframes wag   { 0%, 100% { transform: rotate(-9deg); } 50% { transform: rotate(11deg); } }
+    @keyframes hop {
+      0%, 52%, 100% { transform: translateY(0) scaleY(1); }
+      56% { transform: translateY(0) scaleY(.94); }
+      64% { transform: translateY(-14px) scaleY(1.02); }
+      72% { transform: translateY(0) scaleY(.95); }
+      80% { transform: translateY(-9px) scaleY(1.01); }
+      88% { transform: translateY(0) scaleY(1); }
+    }
+    @keyframes flap-l { 0%, 56%, 88%, 100% { transform: rotate(0); } 64%, 80% { transform: rotate(16deg); } 72% { transform: rotate(4deg); } }
+    @keyframes flap-r { 0%, 56%, 88%, 100% { transform: rotate(0); } 64%, 80% { transform: rotate(-16deg); } 72% { transform: rotate(-4deg); } }
+    @keyframes drift { from { transform: translateX(-3vw); } to { transform: translateX(5vw); } }
+
+    /* ---------- Seasonal falling things (snow, petals, rain, leaves) ---------- */
+    .fall {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .fall i {
+      position: absolute;
+      top: -6vh;
+      left: var(--x);
+      width: var(--s);
+      height: var(--s);
+      background: var(--c);
+      opacity: .9;
+      animation: fall var(--d) linear var(--delay) infinite;
+    }
+    .fall-snow i  { border-radius: 50%; }
+    .fall-petal i { border-radius: 80% 0 80% 0; }
+    .fall-leaf i  { border-radius: 0 70% 0 70%; }
+    .fall-rain i  { width: 2px; height: 18px; border-radius: 2px; opacity: .55; }
+    @keyframes fall {
+      from { transform: translate3d(0, 0, 0) rotate(0); }
+      to   { transform: translate3d(var(--drift), 112vh, 0) rotate(var(--rot)); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .animal *, .cloud { animation: none !important; }
+      .fall { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="sky">
+    <div class="sun" aria-hidden="true"></div>
+    <div class="cloud cloud-a" aria-hidden="true"></div>
+    <div class="cloud cloud-b" aria-hidden="true"></div>
+
+    <div class="gate">
+      <svg class="bunting" viewBox="0 0 600 46" aria-hidden="true">
+        <path d="M0 6Q300 40 600 6" fill="none" stroke="#1c2a4a" stroke-width="2.5"/>
+        <g stroke="#1c2a4a" stroke-width="2.5" stroke-linejoin="round">
+          <path fill="#ffe36e" d="M52 13L84 17L64 40Z"/>
+          <path fill="#f7a8b8" d="M132 20L164 22L146 44Z"/>
+          <path fill="#9fd3ec" d="M212 24L244 25L228 46Z"/>
+          <path fill="#b6e0a0" d="M284 25L316 25L300 46Z"/>
+          <path fill="#ffe36e" d="M356 25L388 24L372 46Z"/>
+          <path fill="#f7a8b8" d="M436 22L468 20L454 44Z"/>
+          <path fill="#9fd3ec" d="M516 17L548 13L536 40Z"/>
+        </g>
+      </svg>
+      <h1 class="plank"><span>まなびの</span> <span>どうぶつえん</span></h1>
+      <p class="lead">算数・国語・理科・社会の 学習アプリが あつまる ひろばです。動物を えらんで 出かけよう。</p>
+      <p class="season" id="season"></p>
+    </div>
+
+    <div class="yard" aria-hidden="true">
+      <div class="yard-side">
+        <svg class="tree" viewBox="0 0 100 130"><path fill="#8c5a33" stroke="#1c2a4a" stroke-width="2.5" stroke-linejoin="round" d="M43 128L46 78H54L57 128Z"/><path class="foliage" stroke="#1c2a4a" stroke-width="2.5" stroke-linejoin="round" d="M50 6C34 6 24 17 24 30C12 34 6 46 10 58C14 72 28 82 50 82C72 82 86 72 90 58C94 46 88 34 76 30C76 17 66 6 50 6Z"/></svg>
+        <div class="decor"></div>
+      </div>
+      <div class="yard-side">
+        <svg class="tree" viewBox="0 0 100 130"><path fill="#8c5a33" stroke="#1c2a4a" stroke-width="2.5" stroke-linejoin="round" d="M43 128L46 78H54L57 128Z"/><path class="foliage" stroke="#1c2a4a" stroke-width="2.5" stroke-linejoin="round" d="M50 6C34 6 24 17 24 30C12 34 6 46 10 58C14 72 28 82 50 82C72 82 86 72 90 58C94 46 88 34 76 30C76 17 66 6 50 6Z"/></svg>
+        <div class="decor"></div>
+      </div>
+    </div>
+
+    <svg class="hill" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0 80V46C150 8 330 6 520 34C720 62 960 60 1200 22V80Z"/>
+    </svg>
+  </header>
+
+  <!--
+    リンクを増やすとき: 追加したい教科の <ul class="links"> に、下の形の <li> を1つ足すだけです。
+      <li><a href="URL"><span class="name">アプリ名</span><span class="note">ひとこと説明</span></a></li>
+  -->
+  <main class="zoo">
+
+    <!-- 算数: リスザル -->
+    <section class="habitat" style="--chalk: #ffe36e" aria-labelledby="subject-math">
+      <div class="keeper">
+        <svg class="animal monkey" viewBox="-15 -4 150 170" role="img" aria-label="リスザル">
+          <g class="tail" fill="none" stroke-linecap="round">
+            <path stroke="#1c2a4a" stroke-width="13" d="M86 146C114 150 126 128 118 108C112 94 97 98 101 110"/>
+            <path stroke="#e3b84f" stroke-width="8" d="M86 146C114 150 126 128 118 108C112 94 97 98 101 110"/>
+            <path stroke="#3d3a44" stroke-width="8" pathLength="100" stroke-dasharray="0 74 26" d="M86 146C114 150 126 128 118 108C112 94 97 98 101 110"/>
+          </g>
+          <g stroke="#1c2a4a" stroke-width="2.5" stroke-linejoin="round">
+            <path fill="#e3b84f" d="M60 92C38 92 30 112 30 132C30 150 42 158 60 158C78 158 90 150 90 132C90 112 82 92 60 92Z"/>
+            <ellipse fill="#fffaf0" stroke="none" cx="60" cy="134" rx="16" ry="19"/>
+            <ellipse fill="#e3b84f" cx="38" cy="126" rx="7" ry="13" transform="rotate(14 38 126)"/>
+            <ellipse fill="#e3b84f" cx="82" cy="126" rx="7" ry="13" transform="rotate(-14 82 126)"/>
+            <ellipse fill="#e3b84f" cx="44" cy="157" rx="12" ry="6"/>
+            <ellipse fill="#e3b84f" cx="76" cy="157" rx="12" ry="6"/>
+          </g>
+          <g class="head">
+            <g stroke="#1c2a4a" stroke-width="2.5"><circle cx="16" cy="61" r="13.5" fill="#fffaf0"/><circle cx="104" cy="61" r="13.5" fill="#fffaf0"/></g>
+            <circle cx="17.5" cy="62" r="6.5" fill="#f3b8a4"/><circle cx="102.5" cy="62" r="6.5" fill="#f3b8a4"/>
+            <path fill="#e3b84f" stroke="#1c2a4a" stroke-width="2.5" stroke-linejoin="round" d="M60 26C35 26 20 44 20 66C20 90 38 106 60 106C82 106 100 90 100 66C100 44 85 26 60 26Z"/>
+            <path fill="#6b6558" d="M22.6 53C25 37 40 27.4 60 27.4C80 27.4 95 37 97.4 53C90 44 80 42 72 46C67 48.500 63 53 60 59C57 53 53 48.500 48 46C40 42 30 44 22.6 53Z"/>
+            <path fill="#fffaf0" d="M60 58C54 48 40 46 31.5 54C24.5 61 24.5 76 31.5 84C38 91 50 92 60 87C70 92 82 91 88.5 84C95.5 76 95.5 61 88.5 54C80 46 66 48 60 58Z"/>
+            <ellipse cx="33.5" cy="81" rx="5.5" ry="3.4" fill="#f3b8a4" opacity="0.7"/><ellipse cx="86.5" cy="81" rx="5.5" ry="3.4" fill="#f3b8a4" opacity="0.7"/>
+            <ellipse cx="60" cy="90.500" rx="14" ry="10.500" fill="#3d3a44" stroke="#1c2a4a" stroke-width="2"/>
+            <g class="eyes">
+              <ellipse cx="43" cy="69" rx="7.5" ry="8.5" fill="#1c2a4a"/><circle cx="45.6" cy="65.4" r="3.1" fill="#fff"/><circle cx="40.4" cy="72.6" r="1.5" fill="#fff"/>
+              <ellipse cx="77" cy="69" rx="7.5" ry="8.5" fill="#1c2a4a"/><circle cx="79.6" cy="65.4" r="3.1" fill="#fff"/><circle cx="74.4" cy="72.6" r="1.5" fill="#fff"/>
+            </g>
+            <path fill="#77717f" d="M56.6 85.2Q60 83.6 63.4 85.2Q62 88.2 60 88.6Q58 88.2 56.6 85.2Z"/>
+            <path fill="none" stroke="#f6dccd" stroke-width="2" stroke-linecap="round" d="M53.5 92Q60 97.500 66.5 92"/>
+          </g>
+        </svg>
+        <p class="plaque" aria-hidden="true">リスザル</p>
+      </div>
+      <div class="stand">
+        <div class="board">
+          <h2 id="subject-math">算数</h2>
+          <ul class="links">
+            <li><a href="https://c1t0d0s0.y8n.org/math-quiz/"><span class="name">算数チャレンジ</span><span class="note">1年生から 6年生までの 計算に チャレンジ</span></a></li>
+            <li><a href="https://c1t0d0s0.y8n.org/area-mazes/"><span class="name">面積迷路</span><span class="note">整数と ひらめきで とく 図形パズル</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 国語: オオヤマネコ -->
+    <section class="habitat" style="--chalk: #f9b4c4" aria-labelledby="subject-japanese">
+      <div class="keeper">
+        <svg class="animal lynx" viewBox="-15 -4 150 170" role="img" aria-label="オオヤマネコ">
+          <g class="tail" fill="none" stroke-linecap="round">
+            <path stroke="#1c2a4a" stroke-width="15" d="M88 146C99 145 106 138 107 128"/>
+            <path stroke="#e9bd72" stroke-width="10" d="M88 146C99 145 106 138 107 128"/>
+            <path stroke="#1c2a4a" stroke-width="10" pathLength="100" stroke-dasharray="0 70 30" d="M88 146C99 145 106 138 107 128"/>
+          </g>
+          <g stroke="#1c2a4a" stroke-width="2.5" stroke-linejoin="round">
+            <path fill="#e9bd72" d="M60 92C38 92 30 112 30 132C30 150 42 158 60 158C78 158 90 150 90 132C90 112 82 92 60 92Z"/>
+            <ellipse fill="#fff6e1" stroke="none" cx="60" cy="132" rx="15" ry="21"/>
+            <ellipse fill="#e9bd72" cx="46" cy="156" rx="11" ry="7"/>
+            <ellipse fill="#e9bd72" cx="74" cy="156" rx="11" ry="7"/>
+          </g>
+          <g fill="#8c5a33" opacity=".55">
+            <ellipse cx="37" cy="124" rx="2.6" ry="3.4"/><ellipse cx="40" cy="138" rx="2.6" ry="3.4"/>
+            <ellipse cx="83" cy="124" rx="2.6" ry="3.4"/><ellipse cx="80" cy="138" rx="2.6" ry="3.4"/>
+          </g>
+          <g class="head">
+            <g stroke="#1c2a4a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+              <path fill="#e9bd72" d="M27 52C21 38 21 24 25 13C36 19 47 27 53 36ZM93 52C99 38 99 24 95 13C84 19 73 27 67 36Z"/>
+              <path fill="#e9bd72" d="M60 28C36 28 19 44 19 67C19 73 15 79 8 85C18 86 25 89 31 95C39 103 50 106 60 106C70 106 81 103 89 95C95 89 102 86 112 85C105 79 101 73 101 67C101 44 84 28 60 28Z"/>
+            </g>
+            <path fill="#f7b3a6" d="M30 43C28 35 28 28 30 22C36 26 41 31 45 36ZM90 43C92 35 92 28 90 22C84 26 79 31 75 36Z"/>
+            <path fill="#1c2a4a" d="M24 15C22 10 20 6 19 1C24 4 28 8 31 12ZM96 15C98 10 100 6 101 1C96 4 92 8 89 12Z"/>
+            <ellipse fill="#fff6e1" cx="60" cy="86" rx="15" ry="11"/>
+            <ellipse fill="#f7b3a6" cx="28" cy="82" rx="6.5" ry="4" opacity="0.75"/><ellipse fill="#f7b3a6" cx="92" cy="82" rx="6.5" ry="4" opacity="0.75"/>
+            <path fill="none" stroke="#1c2a4a" stroke-width="2.5" stroke-linecap="round" d="M53 39L54 45M60 37V44M67 39L66 45"/>
+            <g class="eyes">
+              <ellipse cx="42" cy="69" rx="7.5" ry="8.5" fill="#1c2a4a"/><circle cx="44.6" cy="65.4" r="3.1" fill="#fff"/><circle cx="39.4" cy="72.6" r="1.5" fill="#fff"/>
+              <ellipse cx="78" cy="69" rx="7.5" ry="8.5" fill="#1c2a4a"/><circle cx="80.6" cy="65.4" r="3.1" fill="#fff"/><circle cx="75.4" cy="72.6" r="1.5" fill="#fff"/>
+            </g>
+            <path fill="#f28f86" d="M56.8 88.5Q60 95.500 63.2 88.5Z"/>
+            <path fill="#e0705f" d="M56.2 79.4Q60 77.6 63.8 79.4Q62.4 83.4 60 84Q57.6 83.4 56.2 79.4Z"/>
+            <path fill="none" stroke="#1c2a4a" stroke-width="2" stroke-linecap="round" d="M60 84V86M60 86C58 90 53 90 51.5 87M60 86C62 90 67 90 68.5 87"/>
+            <path fill="none" stroke="#1c2a4a" stroke-width="1.4" stroke-linecap="round" d="M45 87L33 89M45.5 90.500L35 96M75 87L87 89M74.5 90.500L85 96"/>
+          </g>
+        </svg>
+        <p class="plaque" aria-hidden="true">オオヤマネコ</p>
+      </div>
+      <div class="stand">
+        <div class="board">
+          <h2 id="subject-japanese">国語</h2>
+          <ul class="links">
+            <li><a href="https://c1t0d0s0.y8n.org/wordlynx/"><span class="name">Wordlynx</span><span class="note">言葉を おぼえる クロスワードパズル</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 理科: 柴犬 -->
+    <section class="habitat" style="--chalk: #a5d8f0" aria-labelledby="subject-science">
+      <div class="keeper">
+        <svg class="animal shiba" viewBox="-15 -4 150 170" role="img" aria-label="柴犬">
+          <g class="tail" fill="none" stroke-linecap="round">
+            <path stroke="#1c2a4a" stroke-width="17" d="M86 146C106 146 114 130 105 120C98 113 89 119 93 127"/>
+            <path stroke="#e0a05a" stroke-width="12" d="M86 146C106 146 114 130 105 120C98 113 89 119 93 127"/>
+            <path stroke="#fff8ea" stroke-width="5" d="M100 141C108 135 108 126 103 121"/>
+          </g>
+          <g stroke="#1c2a4a" stroke-width="2.5" stroke-linejoin="round">
+            <path fill="#e0a05a" d="M60 96C38 96 30 114 30 133C30 150 42 158 60 158C78 158 90 150 90 133C90 114 82 96 60 96Z"/>
+            <path fill="#fff8ea" stroke="none" d="M60 108C48 108 44 122 44 136C44 148 50 156 60 156C70 156 76 148 76 136C76 122 72 108 60 108Z"/>
+            <ellipse fill="#fff8ea" cx="46" cy="156" rx="11" ry="7"/>
+            <ellipse fill="#fff8ea" cx="74" cy="156" rx="11" ry="7"/>
+          </g>
+          <g transform="translate(0 6)"><g class="head">
+            <g stroke="#1c2a4a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+              <path fill="#e0a05a" d="M25 52C19 38 20 22 27 9C39 14 49 24 54 37ZM95 52C101 38 100 22 93 9C81 14 71 24 66 37Z"/>
+              <path fill="#e0a05a" d="M60 28C35 28 17 43 16 64C15 74 11 78 9 84C16 86 22 91 29 97C38 104 49 107 60 107C71 107 82 104 91 97C98 91 104 86 111 84C109 78 105 74 104 64C103 43 85 28 60 28Z"/>
+            </g>
+            <path fill="#f4b3a2" d="M29 42C27 33 28 25 31 18C38 22 43 28 46 35ZM91 42C93 33 92 25 89 18C82 22 77 28 74 35Z"/>
+            <path fill="#fff8ea" d="M17 79C22 68 33 64 44 70C48 73 51 71 52 66C54 58 66 58 68 66C69 71 72 73 76 70C87 64 98 68 103 79C105 82 107 83 109 84C103 87 98 91 91 96.5C82 103 71 105.500 60 105.500C49 105.500 38 103 29 96.5C22 91 17 87 11 84C13 83 15 82 17 79Z"/>
+            <ellipse fill="#fff8ea" cx="42" cy="54.500" rx="5.2" ry="3.4" transform="rotate(-12 42 54.500)"/>
+            <ellipse fill="#fff8ea" cx="78" cy="54.500" rx="5.2" ry="3.4" transform="rotate(12 78 54.500)"/>
+            <ellipse fill="#f4b3a2" cx="27" cy="83" rx="6.5" ry="4" opacity="0.7"/><ellipse fill="#f4b3a2" cx="93" cy="83" rx="6.5" ry="4" opacity="0.7"/>
+            <g class="eyes">
+              <ellipse cx="42" cy="69" rx="7.5" ry="8.5" fill="#1c2a4a"/><circle cx="44.6" cy="65.4" r="3.1" fill="#fff"/>
+              <ellipse cx="78" cy="69" rx="7.5" ry="8.5" fill="#1c2a4a"/><circle cx="80.6" cy="65.4" r="3.1" fill="#fff"/>
+            </g>
+            <path fill="#f28f86" d="M56.2 90.500Q60 99 63.8 90.500Z"/>
+            <path fill="#1c2a4a" d="M53.5 78.6Q60 75.4 66.5 78.6Q64.6 85 60 85.6Q55.4 85 53.5 78.6Z"/>
+            <path fill="none" stroke="#1c2a4a" stroke-width="2" stroke-linecap="round" d="M60 85.6V88M60 88C58 92.500 52.5 92.500 51 89M60 88C62 92.500 67.5 92.500 69 89"/>
+          </g></g>
+        </svg>
+        <p class="plaque" aria-hidden="true">柴犬</p>
+      </div>
+      <div class="stand">
+        <div class="board">
+          <h2 id="subject-science">理科</h2>
+          <ul class="links">
+            <li><a href="https://c1t0d0s0.y8n.org/science-quiz/"><span class="name">まいにち理科ノート</span><span class="note">毎日 10問の 理科クイズ</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 社会: スズメ -->
+    <section class="habitat" style="--chalk: #bfe6a4" aria-labelledby="subject-social">
+      <div class="keeper">
+        <svg class="animal sparrow" viewBox="-15 -4 150 170" role="img" aria-label="スズメ">
+          <g transform="translate(0 52)">
+            <g class="bird">
+              <path fill="none" stroke="#e8963a" stroke-width="3" stroke-linecap="round" d="M48 103V109M43 109H53M72 103V109M67 109H77"/>
+              <g stroke="#1c2a4a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round">
+                <path class="wing-l" fill="#8c5a33" d="M22 62C8 72 6 92 17 103C25 97 29 82 27 66Z"/>
+                <path class="wing-r" fill="#8c5a33" d="M98 62C112 72 114 92 103 103C95 97 91 82 93 66Z"/>
+                <path fill="#b9763f" d="M54 30C53 22 56 17 59 21C60 15 65 15 65 21C68 18 71 22 68 30Z"/>
+                <path fill="#b9763f" d="M60 27C36 27 19 45 19 68C19 91 36 106 60 106C84 106 101 91 101 68C101 45 84 27 60 27Z"/>
+              </g>
+              <path fill="#fbf3e2" d="M60 58C50 51 34 53 25 64C21 85 37 103 60 103C83 103 99 85 95 64C86 53 70 51 60 58Z"/>
+              <path fill="none" stroke="#8c5a33" stroke-width="2" stroke-linecap="round" opacity="0.55" d="M46 39Q60 34 74 39M40 47Q60 40 80 47"/>
+              <ellipse cx="30" cy="83" rx="6.5" ry="5" fill="#1c2a4a"/><ellipse cx="90" cy="83" rx="6.5" ry="5" fill="#1c2a4a"/>
+              <g class="eyes">
+                <ellipse cx="42" cy="69" rx="7.5" ry="8.5" fill="#1c2a4a"/><circle cx="44.6" cy="65.4" r="3.1" fill="#fff"/><circle cx="39.4" cy="72.6" r="1.5" fill="#fff"/>
+                <ellipse cx="78" cy="69" rx="7.5" ry="8.5" fill="#1c2a4a"/><circle cx="80.6" cy="65.4" r="3.1" fill="#fff"/><circle cx="75.4" cy="72.6" r="1.5" fill="#fff"/>
+              </g>
+              <path fill="#1c2a4a" d="M53 91Q60 94 67 91Q67.5 99 60 101Q52.5 99 53 91Z"/>
+              <path fill="#5a4636" stroke="#1c2a4a" stroke-width="2" stroke-linejoin="round" d="M54 79.500Q60 75.500 66 79.500L60 88.5Z"/>
+              <path fill="none" stroke="#1c2a4a" stroke-width="1.4" stroke-linecap="round" d="M56 81.500Q60 83.500 64 81.500"/>
+            </g>
+          </g>
+        </svg>
+        <p class="plaque" aria-hidden="true">スズメ</p>
+      </div>
+      <div class="stand">
+        <div class="board">
+          <h2 id="subject-social">社会</h2>
+          <ul class="links">
+            <li><a href="https://c1t0d0s0.y8n.org/social-studies-quiz/"><span class="name">スズメの社会クイズ</span><span class="note">毎日 10問で スタンプを ためよう</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="exit">
+    <a href="./">c1t0d0s0 ポータルへ</a>
+    <p>&copy; c1t0d0s0</p>
+  </footer>
+
+  <div class="fall" id="fall" aria-hidden="true"></div>
+
+  <script>
+    (function () {
+      var season = SEASONS[MONTH];
+      var INK = 'stroke="#1c2a4a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"';
+
+      // One small ornament per month, standing beside the trees
+      var DECOR = {
+        snowman:
+          '<g ' + INK + '><circle cx="40" cy="70" r="24" fill="#fff"/><circle cx="40" cy="32" r="17" fill="#fff"/>' +
+          '<path fill="#e2603a" d="M24 44Q40 54 56 44L58 51Q40 61 22 51Z"/><path fill="#f0a23c" d="M40 33L54 37L40 39Z"/></g>' +
+          '<circle cx="34" cy="28" r="2.4" fill="#1c2a4a"/><circle cx="46" cy="28" r="2.4" fill="#1c2a4a"/>' +
+          '<circle cx="40" cy="66" r="2.4" fill="#1c2a4a"/><circle cx="40" cy="78" r="2.4" fill="#1c2a4a"/>',
+        ume:
+          '<path fill="none" stroke="#6b4a33" stroke-width="5" stroke-linecap="round" d="M40 96C40 70 34 56 22 40M38 66C48 54 54 42 58 24M30 52C24 48 18 46 12 46"/>' +
+          '<g fill="#f2a9c0" ' + INK + '><circle cx="22" cy="38" r="7"/><circle cx="58" cy="22" r="7"/><circle cx="12" cy="46" r="6"/><circle cx="48" cy="52" r="6"/><circle cx="36" cy="14" r="6"/></g>' +
+          '<g fill="#ffe36e"><circle cx="22" cy="38" r="2"/><circle cx="58" cy="22" r="2"/><circle cx="12" cy="46" r="2"/><circle cx="48" cy="52" r="2"/><circle cx="36" cy="14" r="2"/></g>',
+        nanohana:
+          '<path fill="none" stroke="#5fa94a" stroke-width="4" stroke-linecap="round" d="M22 96V52M40 96V40M58 96V56M40 78L28 68M40 70L52 60"/>' +
+          '<g fill="#ffd84a" ' + INK + '><circle cx="22" cy="46" r="8"/><circle cx="14" cy="56" r="6"/><circle cx="30" cy="56" r="6"/>' +
+          '<circle cx="40" cy="32" r="9"/><circle cx="31" cy="44" r="6"/><circle cx="49" cy="44" r="6"/>' +
+          '<circle cx="58" cy="50" r="8"/><circle cx="66" cy="60" r="6"/></g>',
+        tulip:
+          '<path fill="none" stroke="#5fa94a" stroke-width="4" stroke-linecap="round" d="M20 96V58M40 96V46M60 96V58"/>' +
+          '<g fill="#7fc264" ' + INK + '><path d="M40 92C30 88 26 78 27 70C35 74 40 82 40 92ZM40 92C50 88 54 78 53 70C45 74 40 82 40 92Z"/></g>' +
+          '<g ' + INK + '><path fill="#f28f86" d="M10 40L16 46L20 38L24 46L30 40V52C30 59 26 62 20 62C14 62 10 59 10 52Z"/>' +
+          '<path fill="#ffd84a" d="M29 26L36 33L40 24L44 33L51 26V40C51 48 46 51 40 51C34 51 29 48 29 40Z"/>' +
+          '<path fill="#f7a8c0" d="M50 40L56 46L60 38L64 46L70 40V52C70 59 66 62 60 62C54 62 50 59 50 52Z"/></g>',
+        koinobori:
+          '<path stroke="#8c5a33" stroke-width="4" stroke-linecap="round" d="M14 98V8"/><circle cx="14" cy="7" r="5" fill="#ffd84a" ' + INK + '/>' +
+          '<g ' + INK + '><path fill="#4f7fc4" d="M16 16H58L70 10V34L58 28H16Z"/><path fill="#e2603a" d="M16 42H52L62 37V57L52 52H16Z"/></g>' +
+          '<circle cx="26" cy="22" r="3.4" fill="#fff" stroke="#1c2a4a" stroke-width="1.5"/><circle cx="26" cy="47" r="3" fill="#fff" stroke="#1c2a4a" stroke-width="1.5"/>' +
+          '<path fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" d="M38 18V26M46 18V26M36 44V50M43 44V50"/>',
+        ajisai:
+          '<g fill="#5fa977" ' + INK + '><path d="M40 96C22 92 12 80 12 66C28 68 38 78 40 96ZM40 96C58 92 68 80 68 66C52 68 42 78 40 96Z"/></g>' +
+          '<g fill="#8f9fe0" ' + INK + '><circle cx="28" cy="52" r="11"/><circle cx="52" cy="52" r="11"/><circle cx="40" cy="62" r="11"/><circle cx="40" cy="40" r="11"/></g>' +
+          '<g fill="#c7b4f0" ' + INK + '><circle cx="22" cy="40" r="8"/><circle cx="58" cy="40" r="8"/><circle cx="40" cy="51" r="8"/></g>',
+        tanabata:
+          '<path fill="none" stroke="#5fa94a" stroke-width="4" stroke-linecap="round" d="M30 98C30 60 34 30 48 6M34 56C22 50 14 50 6 54M38 36C50 34 60 38 68 46M32 76C44 72 54 74 62 80"/>' +
+          '<g ' + INK + '><rect x="4" y="56" width="10" height="22" fill="#f7a8b8"/><rect x="62" y="48" width="10" height="22" fill="#ffe36e"/>' +
+          '<rect x="56" y="82" width="10" height="16" fill="#9fd3ec"/><rect x="42" y="12" width="10" height="20" fill="#b6e0a0"/></g>',
+        himawari:
+          '<path fill="none" stroke="#5fa94a" stroke-width="5" stroke-linecap="round" d="M40 98V54"/>' +
+          '<g fill="#6fbf5a" ' + INK + '><path d="M40 84C28 84 20 76 20 66C32 66 40 72 40 84ZM40 76C52 76 60 68 60 58C48 58 40 64 40 76Z"/></g>' +
+          '<g fill="#ffd23c" ' + INK + '><circle cx="40" cy="12" r="9"/><circle cx="58" cy="19" r="9"/><circle cx="64" cy="36" r="9"/><circle cx="55" cy="52" r="9"/>' +
+          '<circle cx="40" cy="58" r="9"/><circle cx="25" cy="52" r="9"/><circle cx="16" cy="36" r="9"/><circle cx="22" cy="19" r="9"/></g>' +
+          '<circle cx="40" cy="35" r="15" fill="#8c5a33" ' + INK + '/>',
+        tsukimi:
+          '<circle cx="56" cy="20" r="16" fill="#ffe89a" ' + INK + '/>' +
+          '<g ' + INK + '><path fill="#b9824e" d="M14 78H66L60 98H20Z"/><path fill="#fffaf0" d="M8 70H72V78H8Z"/>' +
+          '<g fill="#fff"><circle cx="26" cy="61" r="9"/><circle cx="42" cy="61" r="9"/><circle cx="58" cy="61" r="9"/><circle cx="34" cy="47" r="9"/><circle cx="50" cy="47" r="9"/><circle cx="42" cy="33" r="9"/></g></g>',
+        pumpkin:
+          '<g ' + INK + '><path fill="#5fa94a" d="M37 44C36 36 38 30 44 26L48 31C45 34 44 38 44 44Z"/>' +
+          '<path fill="#f0963c" d="M40 44C20 40 6 54 6 70C6 86 20 98 40 98C60 98 74 86 74 70C74 54 60 40 40 44Z"/></g>' +
+          '<path fill="none" stroke="#c96a2a" stroke-width="2.5" stroke-linecap="round" d="M28 50C20 60 20 82 28 92M52 50C60 60 60 82 52 92M40 48V96"/>',
+        donguri:
+          '<g ' + INK + '><path fill="#c98a3a" d="M12 60C12 80 20 94 28 98C36 94 44 80 44 60Z"/><path fill="#8c5a33" d="M8 52C8 44 18 40 28 40C38 40 48 44 48 52V60H8Z"/><path fill="none" d="M28 40V32"/>' +
+          '<path fill="#d9a04a" d="M48 72C48 86 54 95 60 98C66 95 72 86 72 72Z"/><path fill="#8c5a33" d="M45 66C45 60 52 57 60 57C68 57 75 60 75 66V72H45Z"/><path fill="none" d="M60 57V51"/></g>',
+        tree:
+          '<g ' + INK + '><path fill="#8c5a33" d="M34 84H46V98H34Z"/><path fill="#3f8a5f" d="M40 12L58 38H50L64 60H54L70 86H10L26 60H16L30 38H22Z"/>' +
+          '<path fill="#ffd84a" d="M40 2L43 9L50 10L45 15L46 22L40 18L34 22L35 15L30 10L37 9Z"/></g>' +
+          '<circle cx="34" cy="48" r="3.5" fill="#e2603a"/><circle cx="48" cy="68" r="3.5" fill="#ffd84a"/><circle cx="28" cy="74" r="3.5" fill="#9fd3ec"/><circle cx="46" cy="36" r="3" fill="#9fd3ec"/>'
+      };
+
+      document.getElementById('season').textContent = MONTH + '月 ' + season.label;
+
+      var decorSvg = '<svg viewBox="0 0 80 100">' + DECOR[season.decor] + '</svg>';
+      Array.prototype.forEach.call(document.querySelectorAll('.decor'), function (el) {
+        el.innerHTML = decorSvg;
+      });
+
+      // Falling snow / petals / rain / leaves
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (season.fall !== 'none' && !reduce) {
+        var layer = document.getElementById('fall');
+        layer.className = 'fall fall-' + season.fall;
+        var rain = season.fall === 'rain';
+        var count = rain ? 26 : (window.innerWidth < 600 ? 10 : 16);
+        for (var i = 0; i < count; i++) {
+          var p = document.createElement('i');
+          var dur = rain ? 0.9 + Math.random() * 0.6 : 9 + Math.random() * 9;
+          p.style.setProperty('--x', (Math.random() * 100).toFixed(1) + '%');
+          p.style.setProperty('--s', (8 + Math.random() * 8).toFixed(0) + 'px');
+          p.style.setProperty('--c', season.colors[i % season.colors.length]);
+          p.style.setProperty('--d', dur.toFixed(2) + 's');
+          p.style.setProperty('--delay', (-Math.random() * dur).toFixed(2) + 's');
+          p.style.setProperty('--drift', rain ? '-3vw' : ((Math.random() * 24 - 12).toFixed(1) + 'vw'));
+          p.style.setProperty('--rot', rain ? '0deg' : ((Math.random() * 720 - 360).toFixed(0) + 'deg'));
+          layer.appendChild(p);
+        }
+      }
+    })();
+  </script>
+</body>
+</html>
