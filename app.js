@@ -21,6 +21,8 @@ const I18N_DATA = {
       education: 'クイズ・学習'
     },
     cardAction: 'サイトを開く',
+    recentBadgeTitle: '更新日: {date}',
+    recentBadgeAria: '最近更新されました（{date}）',
     noResults: '該当するプロジェクトが見つかりませんでした。',
     backToTopAria: 'ページ先頭へ戻る',
     cards: {
@@ -126,6 +128,8 @@ const I18N_DATA = {
       education: 'Quiz & Learning'
     },
     cardAction: 'Open App',
+    recentBadgeTitle: 'Updated: {date}',
+    recentBadgeAria: 'Recently updated ({date})',
     noResults: 'No matching projects found.',
     backToTopAria: 'Back to top',
     cards: {
@@ -288,6 +292,15 @@ function isWithinOneWeek(lastmodStr) {
   return diffDays >= -1 && diffDays <= 7;
 }
 
+const RECENT_BADGE_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 2.5C10.6 7 13 9.4 17.5 10C13 10.6 10.6 13 10 17.5C9.4 13 7 10.6 2.5 10C7 9.4 9.4 7 10 2.5Z M18 14.5C18.3 16.4 19.6 17.7 21.5 18C19.6 18.3 18.3 19.6 18 21.5C17.7 19.6 16.4 18.3 14.5 18C16.4 17.7 17.7 16.4 18 14.5Z"></path></svg>';
+
+function labelRecentBadge(badge) {
+  const data = I18N_DATA[currentLanguage] || I18N_DATA.ja;
+  const date = badge.dataset.lastmod || '';
+  badge.setAttribute('title', data.recentBadgeTitle.replace('{date}', date));
+  badge.setAttribute('aria-label', data.recentBadgeAria.replace('{date}', date));
+}
+
 function updateCardRecentBadge(card, lastmod) {
   const isRecent = isWithinOneWeek(lastmod);
   let badge = card.querySelector('.card-update-badge');
@@ -295,12 +308,13 @@ function updateCardRecentBadge(card, lastmod) {
     if (!badge) {
       badge = document.createElement('span');
       badge.className = 'card-update-badge';
-      badge.innerHTML = '<span class="badge-dot"></span>UPDATE';
       card.prepend(badge);
     }
-    if (lastmod) {
-      badge.setAttribute('title', `Updated: ${lastmod}`);
-    }
+    // Always rebuild so badges pre-rendered in index.html get the current markup too
+    badge.setAttribute('role', 'img');
+    badge.innerHTML = RECENT_BADGE_ICON;
+    badge.dataset.lastmod = lastmod;
+    labelRecentBadge(badge);
   } else if (badge) {
     badge.remove();
   }
@@ -443,6 +457,9 @@ function applyLanguage(lang) {
     const actionTextEl = card.querySelector('.card-action-text');
     if (actionTextEl) actionTextEl.textContent = (cardData && cardData.actionText) || data.cardAction;
   });
+
+  // 6b. Update "recently updated" badge labels
+  document.querySelectorAll('.card-update-badge').forEach(labelRecentBadge);
 
   // 7. Update No Results Text
   const noResultsText = document.getElementById('noResultsText');
