@@ -292,7 +292,7 @@ function isWithinOneWeek(lastmodStr) {
   return diffDays >= -1 && diffDays <= 7;
 }
 
-const RECENT_BADGE_ICON = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M10 2.5C10.6 7 13 9.4 17.5 10C13 10.6 10.6 13 10 17.5C9.4 13 7 10.6 2.5 10C7 9.4 9.4 7 10 2.5Z M18 14.5C18.3 16.4 19.6 17.7 21.5 18C19.6 18.3 18.3 19.6 18 21.5C17.7 19.6 16.4 18.3 14.5 18C16.4 17.7 17.7 16.4 18 14.5Z"></path></svg>';
+const RECENT_BADGE_ICON = '<svg viewBox="0 0 24 24" aria-hidden="true"><path class="spark-l" d="M10 2.5C10.6 7 13 9.4 17.5 10C13 10.6 10.6 13 10 17.5C9.4 13 7 10.6 2.5 10C7 9.4 9.4 7 10 2.5Z"></path><path class="spark-s" d="M18 14.5C18.3 16.4 19.6 17.7 21.5 18C19.6 18.3 18.3 19.6 18 21.5C17.7 19.6 16.4 18.3 14.5 18C16.4 17.7 17.7 16.4 18 14.5Z"></path></svg>';
 
 function labelRecentBadge(badge) {
   const data = I18N_DATA[currentLanguage] || I18N_DATA.ja;

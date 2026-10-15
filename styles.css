@@ -366,17 +366,41 @@ a {
   justify-content: center;
   width: 34px;
   height: 34px;
-  color: #ffffff;
-  background: var(--accent);
-  border: 2px solid rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid rgba(0, 0, 0, 0.06);
   border-radius: 50%;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(8px);
   user-select: none;
 }
 
 .card-update-badge svg {
-  width: 22px;
-  height: 22px;
+  width: 24px;
+  height: 24px;
+  overflow: visible;
+  filter: drop-shadow(0 0 3px rgba(255, 190, 20, 0.55));
+}
+
+.card-update-badge .spark-l,
+.card-update-badge .spark-s {
+  stroke: #d99a00;
+  stroke-width: 1;
+  stroke-linejoin: round;
+}
+
+.card-update-badge .spark-l { fill: #ffc414; }
+.card-update-badge .spark-s { fill: #ffdc4a; }
+
+[data-theme="dark"] .card-update-badge {
+  background: rgba(29, 29, 31, 0.85);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] .card-update-badge .spark-l,
+[data-theme="dark"] .card-update-badge .spark-s {
+  stroke: #ffb300;
 }
 
 /* Thumbnail Media Container */
