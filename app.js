@@ -223,7 +223,6 @@ let currentLanguage = 'ja';
 applyStoredTheme();
 
 document.addEventListener('DOMContentLoaded', () => {
-  shuffleCards();
   initLanguage();
   initThemeToggle();
   initFiltering();
