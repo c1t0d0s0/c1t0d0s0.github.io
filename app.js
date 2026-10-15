@@ -277,6 +277,35 @@ function parseSitemapLastmod(xmlText) {
   return map;
 }
 
+function isWithinOneWeek(lastmodStr) {
+  if (!lastmodStr) return false;
+  const parts = lastmodStr.split('-');
+  if (parts.length < 3) return false;
+  const lastmodDate = new Date(parseInt(parts[0], 10), parseInt(parts[1], 10) - 1, parseInt(parts[2], 10));
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const diffDays = Math.floor((today.getTime() - lastmodDate.getTime()) / (1000 * 60 * 60 * 24));
+  return diffDays >= -1 && diffDays <= 7;
+}
+
+function updateCardRecentBadge(card, lastmod) {
+  const isRecent = isWithinOneWeek(lastmod);
+  let badge = card.querySelector('.card-update-badge');
+  if (isRecent) {
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.className = 'card-update-badge';
+      badge.innerHTML = '<span class="badge-dot"></span>UPDATE';
+      card.prepend(badge);
+    }
+    if (lastmod) {
+      badge.setAttribute('title', `Updated: ${lastmod}`);
+    }
+  } else if (badge) {
+    badge.remove();
+  }
+}
+
 async function sortCardsBySitemap() {
   const cardsGrid = document.getElementById('cardsGrid');
   if (!cardsGrid) return;
@@ -331,6 +360,7 @@ async function sortCardsBySitemap() {
     });
 
     cardData.forEach(item => {
+      updateCardRecentBadge(item.card, item.lastmod);
       if (noResults) {
         cardsGrid.insertBefore(item.card, noResults);
       } else {
