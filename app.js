@@ -223,35 +223,125 @@ let currentLanguage = 'ja';
 applyStoredTheme();
 
 document.addEventListener('DOMContentLoaded', () => {
+  sortCardsBySitemap();
   initLanguage();
   initThemeToggle();
   initFiltering();
   initBackToTop();
 });
 
-/* --- 0. Card Randomization (Shuffle) --- */
-function shuffleCards() {
-  const cardsGrid = document.getElementById('cardsGrid');
-  const noResults = document.getElementById('noResults');
-  if (!cardsGrid) return;
+/* --- 0. Sort Cards by sitemap.xml update date (lastmod descending) --- */
+function parseSitemapLastmod(xmlText) {
+  const map = {};
 
-  const cards = Array.from(cardsGrid.querySelectorAll('.app-card'));
-  if (cards.length <= 1) return;
-
-  // Keep the first card (featured/LCP card) stable at index 0 to optimize Core Web Vitals (LCP),
-  // and shuffle cards 1 through N.
-  for (let i = cards.length - 1; i > 1; i--) {
-    const j = 1 + Math.floor(Math.random() * i);
-    [cards[i], cards[j]] = [cards[j], cards[i]];
+  function register(loc, lastmod) {
+    if (!loc || !lastmod) return;
+    const cleanLoc = loc.trim();
+    const cleanMod = lastmod.trim();
+    map[cleanLoc] = cleanMod;
+    map[cleanLoc.replace(/\/+$/, '')] = cleanMod;
+    const noProto = cleanLoc.replace(/^https?:\/\//i, '').replace(/\/+$/, '');
+    if (noProto) {
+      map[noProto] = cleanMod;
+    }
   }
 
-  cards.forEach(card => {
-    if (noResults) {
-      cardsGrid.insertBefore(card, noResults);
-    } else {
-      cardsGrid.appendChild(card);
+  // 1. Try DOMParser (standard XML parsing in browser)
+  try {
+    const doc = new DOMParser().parseFromString(xmlText, 'application/xml');
+    const urlElements = doc.getElementsByTagName('url');
+    for (let i = 0; i < urlElements.length; i++) {
+      const u = urlElements[i];
+      const locEl = u.getElementsByTagName('loc')[0];
+      const modEl = u.getElementsByTagName('lastmod')[0];
+      if (locEl && modEl) {
+        register(locEl.textContent, modEl.textContent);
+      }
     }
-  });
+  } catch (e) {
+    // Parser error fallback
+  }
+
+  // 2. Fallback to Regex if DOMParser didn't extract entries
+  if (Object.keys(map).length === 0) {
+    const urlBlocks = xmlText.match(/<url>[\s\S]*?<\/url>/gi) || [];
+    urlBlocks.forEach(block => {
+      const locMatch = block.match(/<loc>\s*([^<\s]+)\s*<\/loc>/i);
+      const modMatch = block.match(/<lastmod>\s*([^<\s]+)\s*<\/lastmod>/i);
+      if (locMatch && modMatch) {
+        register(locMatch[1], modMatch[1]);
+      }
+    });
+  }
+
+  return map;
+}
+
+async function sortCardsBySitemap() {
+  const cardsGrid = document.getElementById('cardsGrid');
+  if (!cardsGrid) return;
+
+  try {
+    const response = await fetch('sitemap.xml', { cache: 'no-cache' });
+    if (!response.ok) return;
+
+    const xmlText = await response.text();
+    const dateMap = parseSitemapLastmod(xmlText);
+    if (!dateMap || Object.keys(dateMap).length === 0) return;
+
+    const noResults = document.getElementById('noResults');
+    const cards = Array.from(cardsGrid.querySelectorAll('.app-card'));
+    if (cards.length <= 1) return;
+
+    const getCardDate = (card) => {
+      const rawHref = (card.getAttribute('href') || '').trim();
+      const resolvedHref = (card.href || '').trim();
+      const rawNoSlash = rawHref.replace(/\/+$/, '');
+      const rawNoProto = rawNoSlash.replace(/^https?:\/\//i, '');
+      const resolvedNoSlash = resolvedHref.replace(/\/+$/, '');
+      const resolvedNoProto = resolvedNoSlash.replace(/^https?:\/\//i, '');
+
+      return dateMap[rawHref] ||
+             dateMap[rawNoSlash] ||
+             dateMap[rawNoProto] ||
+             dateMap[resolvedHref] ||
+             dateMap[resolvedNoSlash] ||
+             dateMap[resolvedNoProto] ||
+             '';
+    };
+
+    const cardData = cards.map((card, index) => ({
+      card,
+      lastmod: getCardDate(card),
+      originalIndex: index
+    }));
+
+    // Stable sort by lastmod descending (newest first).
+    // If dates are identical or not found, preserve original DOM order.
+    cardData.sort((a, b) => {
+      if (a.lastmod && b.lastmod) {
+        const cmp = b.lastmod.localeCompare(a.lastmod);
+        if (cmp !== 0) return cmp;
+      } else if (b.lastmod && !a.lastmod) {
+        return 1;
+      } else if (a.lastmod && !b.lastmod) {
+        return -1;
+      }
+      return a.originalIndex - b.originalIndex;
+    });
+
+    cardData.forEach(item => {
+      if (noResults) {
+        cardsGrid.insertBefore(item.card, noResults);
+      } else {
+        cardsGrid.appendChild(item.card);
+      }
+    });
+  } catch (err) {
+    // If fetching or parsing fails (e.g. offline, local file protocol),
+    // retain the static HTML card order as fallback.
+    console.warn('Could not sort cards from sitemap.xml:', err);
+  }
 }
 
 /* --- 1. Internationalization (i18n) & Language Switcher --- */
