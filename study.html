@@ -45,6 +45,9 @@
   <!-- Canonical URL -->
   <link rel="canonical" href="https://c1t0d0s0.y8n.org/study.html">
 
+  <!-- Firebase settings for Google login (generated at deploy time from repository variables; absent locally = no login) -->
+  <script src="config.js" onerror="this.remove()"></script>
+
   <!-- Fonts (same families as the learning apps) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -641,6 +644,154 @@
     .viewing .animal *, .viewing .cloud { animation-play-state: paused; }
     .viewing .fall { display: none; }
 
+    /* Google login row at the bottom of the grade box */
+    .auth {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: .78rem;
+      font-weight: 700;
+    }
+    .auth[hidden] { display: none; }
+    .auth-state:empty { display: none; }
+    .auth-btn, .progress-login, .progress-retry {
+      min-height: 32px;
+      padding: 2px 14px 3px;
+      border: 2px solid var(--ink);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--ink);
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .auth-btn:hover, .progress-login:hover, .progress-retry:hover { background: #ffe9b8; }
+    .auth-btn:focus-visible, .progress-login:focus-visible, .progress-retry:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; }
+    .auth-btn:disabled, .progress-login:disabled { opacity: .5; cursor: default; }
+
+    /* ---------- がんばり ノート (progress board) ---------- */
+    .progress {
+      width: min(100%, 820px);
+      margin: 0 auto;
+      padding: 8px 16px 8px;
+      padding-left: max(16px, env(safe-area-inset-left));
+      padding-right: max(16px, env(safe-area-inset-right));
+    }
+    .progress[hidden] { display: none; }
+    .progress .board h2 { margin-bottom: 8px; }
+    .progress-guest p { margin: 0 0 10px; }
+    .progress-guest .progress-login { min-height: 44px; font-size: 1rem; }
+    .progress-note { margin: 10px 0 0; color: var(--chalk-soft); font-size: .85rem; }
+    .progress-status { margin: 0 0 10px; color: #ffd2a0; font-size: .95rem; }
+    .progress-status[hidden] { display: none; }
+    .progress-status .progress-retry { min-height: 30px; margin-left: 4px; font-family: 'Zen Maru Gothic', sans-serif; font-size: .85rem; }
+
+    .period-tabs { display: flex; gap: 8px; margin: 0 0 10px; }
+    .period-tab {
+      flex: 1;
+      max-width: 120px;
+      min-height: 44px;
+      border: 2px solid rgba(253, 253, 250, .55);
+      border-radius: 999px;
+      background: transparent;
+      color: var(--chalk-white);
+      font: inherit;
+      font-size: 1.05rem;
+      cursor: pointer;
+    }
+    .period-tab:hover { background: rgba(253, 253, 250, .12); }
+    .period-tab:focus-visible { outline: 3px solid var(--chalk-white); outline-offset: 2px; }
+    .period-tab[aria-selected="true"] { background: var(--chalk-white); border-color: var(--chalk-white); color: var(--board-deep); }
+
+    .progress-summary { margin: 0 0 8px; font-size: clamp(1rem, 3.2vw, 1.15rem); }
+
+    /* Today: one line per app, grouped by subject */
+    .today-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: 10px 24px; }
+    .today-subject { margin: 0 0 2px; color: var(--subject); font-size: 1.1rem; letter-spacing: .1em; }
+    .today-group ul { margin: 0; padding: 0; list-style: none; }
+    .today-group li { display: flex; align-items: baseline; gap: 6px; padding: 3px 0; border-top: 1px dashed rgba(253, 253, 250, .2); }
+    .today-mark { flex: none; width: 1.1em; text-align: center; color: var(--chalk-soft); }
+    .today-name { flex: 1; min-width: 0; }
+    .today-state { flex: none; color: var(--chalk-soft); font-size: .85rem; }
+    .today-group li.is-done .today-mark, .today-group li.is-done .today-state { color: var(--chalk-white); font-weight: 600; }
+    .today-group li.is-done .today-state::before { content: ''; }
+    .today-clears { flex: none; padding: 0 6px; border: 1px solid rgba(253, 253, 250, .45); border-radius: 999px; font-size: .75rem; }
+
+    /* Week / month: stacked columns of goals met per day */
+    .bars { display: grid; grid-template-columns: 22px minmax(0, 1fr); height: 190px; margin: 30px 0 0; padding-bottom: 40px; }
+    .bars-month { height: 170px; padding-bottom: 24px; }
+    .bars-axis { position: relative; }
+    .bars-axis span { position: absolute; right: 6px; transform: translateY(50%); color: var(--chalk-soft); font-size: .7rem; line-height: 1; }
+    .bars-plot { position: relative; display: flex; gap: clamp(4px, 1.6vw, 12px); border-bottom: 2px solid var(--chalk-soft); }
+    .bars-month .bars-plot { gap: clamp(1px, .5vw, 4px); }
+    .bars-grid { position: absolute; left: 0; right: 0; height: 0; border-top: 1px dashed rgba(253, 253, 250, .16); pointer-events: none; }
+    .bars-col {
+      position: relative;
+      flex: 1;
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0;
+      border: 0;
+      border-radius: 4px 4px 0 0;
+      background: none;
+      color: inherit;
+      font: inherit;
+      cursor: default;
+    }
+    .bars-col:hover { background: rgba(253, 253, 250, .07); }
+    .bars-col:focus-visible { outline: 2px solid var(--chalk-white); outline-offset: 2px; }
+    .bars-stack { display: flex; flex-direction: column-reverse; gap: 2px; width: 100%; max-width: 46px; margin: 0 auto; }
+    .bars-seg { min-height: 0; }
+    .bars-seg:last-child { border-radius: 4px 4px 0 0; }
+    .bars-month .bars-seg:last-child { border-radius: 2px 2px 0 0; }
+    .bars-label, .bars-sub { position: absolute; left: 50%; transform: translateX(-50%); white-space: nowrap; pointer-events: none; }
+    .bars-label { top: calc(100% + 4px); font-size: .82rem; }
+    .bars-month .bars-label { font-size: .7rem; }
+    .bars-sub { top: calc(100% + 22px); color: var(--chalk-soft); font-size: .68rem; }
+    .bars-col.is-today .bars-label { padding: 0 4px; border-radius: 4px; background: var(--chalk-white); color: var(--board-deep); }
+    .bars-col.is-future .bars-label, .bars-col.is-future .bars-sub { opacity: .4; }
+    .bars-tip {
+      position: absolute;
+      top: -6px;
+      z-index: 3;
+      max-width: 240px;
+      padding: 4px 10px 5px;
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: .8rem;
+      line-height: 1.4;
+      transform: translate(-50%, -100%);
+      pointer-events: none;
+    }
+    .bars-tip[hidden] { display: none; }
+
+    .progress-legend { display: flex; flex-wrap: wrap; gap: 4px 16px; margin: 4px 0 0; padding: 0; list-style: none; font-size: .85rem; }
+    .progress-legend[hidden] { display: none; }
+    .swatch { display: inline-block; width: 10px; height: 10px; margin-right: 5px; border-radius: 2px; vertical-align: 0; }
+
+    .progress-table { margin-top: 12px; }
+    .progress-table summary { cursor: pointer; color: var(--chalk-soft); }
+    .progress-table summary:focus-visible { outline: 2px solid var(--chalk-white); outline-offset: 2px; }
+    .progress-table table { width: 100%; margin-top: 6px; border-collapse: collapse; font-size: .85rem; }
+    .progress-table th, .progress-table td { padding: 4px 6px; border-bottom: 1px dashed rgba(253, 253, 250, .2); text-align: left; font-weight: 600; }
+    .progress-table thead th { color: var(--chalk-soft); font-size: .78rem; }
+    .progress-table td:nth-child(n+3), .progress-table thead th:nth-child(n+3) { text-align: right; white-space: nowrap; }
+
+    @media (max-width: 520px) { .progress-table .col-subject { display: none; } }
+
+    .progress-undated { margin-top: 12px; font-size: .85rem; }
+    .progress-undated[hidden] { display: none; }
+    .undated-head { margin: 0 0 2px; color: var(--chalk-soft); }
+    .progress-undated ul { margin: 0; padding: 0; list-style: none; }
+    .progress-undated li { display: flex; justify-content: space-between; gap: 12px; padding: 2px 0; border-top: 1px dashed rgba(253, 253, 250, .2); }
+
     @media (prefers-reduced-motion: reduce) {
       .animal *, .cloud { animation: none !important; }
       .fall { display: none; }
@@ -682,6 +833,10 @@
           <button type="button" class="grade-btn" data-grade="4" aria-pressed="false">4<span>年</span></button>
           <button type="button" class="grade-btn" data-grade="5" aria-pressed="false">5<span>年</span></button>
           <button type="button" class="grade-btn" data-grade="6" aria-pressed="false">6<span>年</span></button>
+        </div>
+        <div class="auth" id="auth" hidden>
+          <span class="auth-state" id="auth-state"></span>
+          <button type="button" class="auth-btn" id="auth-btn">Googleで ログイン</button>
         </div>
       </div>
     </div>
@@ -896,6 +1051,45 @@
     </section>
 
   </main>
+
+  <!-- がんばり ノート: shown only when Firebase settings exist (config.js); filled in by assets/study/progress.js -->
+  <section class="progress" id="progress" aria-labelledby="progress-title" hidden>
+    <div class="stand">
+      <div class="board" style="--chalk: #fdfdfa">
+        <h2 id="progress-title">がんばり ノート</h2>
+        <p class="progress-status" id="progress-status" role="status" hidden></p>
+        <div class="progress-guest" id="progress-guest">
+          <p>ログインすると、学習アプリで がんばった きろくを グラフで 見られるよ。</p>
+          <button type="button" class="progress-login" id="progress-login">Googleで ログイン</button>
+          <p class="progress-note">学習アプリで つかっている Googleアカウントで ログインしてね。</p>
+        </div>
+        <div class="progress-view" id="progress-view" hidden>
+          <div class="period-tabs" role="tablist" aria-label="きかん">
+            <button type="button" class="period-tab" role="tab" data-period="today" aria-selected="true">今日</button>
+            <button type="button" class="period-tab" role="tab" data-period="week" aria-selected="false">今週</button>
+            <button type="button" class="period-tab" role="tab" data-period="month" aria-selected="false">今月</button>
+          </div>
+          <p class="progress-summary" id="progress-summary"></p>
+          <div class="progress-chart" id="progress-chart"></div>
+          <ul class="progress-legend" id="progress-legend" aria-label="教科の 色" hidden>
+            <li><span class="swatch" style="background:#f4c430"></span>算数</li>
+            <li><span class="swatch" style="background:#ff7aa2"></span>国語</li>
+            <li><span class="swatch" style="background:#56b4f0"></span>理科</li>
+            <li><span class="swatch" style="background:#b4e05a"></span>社会</li>
+          </ul>
+          <details class="progress-table">
+            <summary>アプリごとの きろく</summary>
+            <table>
+              <thead><tr><th scope="col" class="col-subject">教科</th><th scope="col">アプリ</th><th scope="col" id="progress-head-days">たっせいした日</th><th scope="col">クリア</th></tr></thead>
+              <tbody id="progress-rows"></tbody>
+            </table>
+          </details>
+          <div class="progress-undated" id="progress-undated" hidden></div>
+          <p class="progress-note">目標たっせい = それぞれの アプリで その日の 目標（スタンプなど）を もらった 日です。</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
   <footer class="exit">
     <a href="./">c1t0d0s0 ポータルへ</a>
@@ -1242,5 +1436,6 @@
       }
     })();
   </script>
+  <script type="module" src="assets/study/progress.js"></script>
 </body>
 </html>
