@@ -1,5 +1,5 @@
 /* ==========================================================================
-   まなびの どうぶつえん - がんばり ノート
+   THE LEARNING ZOO - がんばり ノート
    Google login + progress charts (today / this week / this month) built from the
    records the learning apps save in Firestore: users/{uid}/apps/{appId}.
    ========================================================================== */
