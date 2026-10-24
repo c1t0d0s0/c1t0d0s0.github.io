@@ -236,5 +236,12 @@
     <lastmod>2026-10-22</lastmod>
     <changefreq>monthly</changefreq>
   </url>
+
+  <!-- 地学ビューア (Geoscience Viewer) -->
+  <url>
+    <loc>https://c1t0d0s0.y8n.org/geoscience-viewer/</loc>
+    <lastmod>2026-10-25</lastmod>
+    <changefreq>monthly</changefreq>
+  </url>
 </urlset>
 
