@@ -24,11 +24,15 @@ const HIP_Y = 92;
 
 function leg(cls, hx, color) {
   const y = HIP_Y;
-  return `<g class="ln-leg ${cls}" style="--hx:${hx}px;--hy:${y}px">`
-    + `<path d="M${hx - 7} ${y - 10}H${hx + 7}V${y + 12}C${hx + 7} ${y + 17} ${hx + 4} ${y + 19} ${hx} ${y + 19}C${hx - 4} ${y + 19} ${hx - 7} ${y + 17} ${hx - 7} ${y + 12}Z" fill="${color}" ${STROKE}/>`
-    + `<path d="M${hx - 8} ${y + 22}C${hx - 8} ${y + 15} ${hx + 12} ${y + 15} ${hx + 12} ${y + 22}Z" fill="${color}" ${STROKE}/>`
-    + `<path d="M${hx + 1} ${y + 18.5}V${y + 21.5}M${hx + 6} ${y + 18.5}V${y + 21.5}" fill="none" stroke="${INK}" stroke-width="1.4" stroke-linecap="round"/>`
-    + '</g>';
+  // One soft shape: a slightly tapered leg ending in a rounded paw that points forward.
+  // The top is tucked under the body (legs are drawn before it), so no seam shows.
+  const d = `M${hx - 8} ${y - 12}`
+    + `C${hx - 9} ${y} ${hx - 8} ${y + 9} ${hx - 7} ${y + 14}`
+    + `C${hx - 8} ${y + 20} ${hx - 4} ${y + 22.5} ${hx + 1} ${y + 22.5}`
+    + `H${hx + 6}`
+    + `C${hx + 12} ${y + 22.5} ${hx + 13} ${y + 15.5} ${hx + 7} ${y + 14}`
+    + `C${hx + 7} ${y + 8} ${hx + 8} ${y} ${hx + 8} ${y - 12}Z`;
+  return `<g class="ln-leg ${cls}" style="--hx:${hx}px;--hy:${y}px"><path d="${d}" fill="${color}" ${STROKE}/></g>`;
 }
 
 /** A scalloped ring for the father's mane (face coordinates) */
@@ -83,13 +87,13 @@ export function lionSVG(kind) {
       <path d="M34 76C20 75 12 66 12 52" fill="none" stroke="${k.body}" stroke-width="4.5" stroke-linecap="round"/>
       <path d="M12 41C5 44 5 54 12 56C19 54 19 44 12 41Z" fill="${k.tuft}" ${STROKE}/>
     </g>
-    ${leg('far hind b', 56, k.far)}
-    ${leg('far front a', 110, k.far)}
+    ${leg('far hind b', 58, k.far)}
+    ${leg('far front a', 112, k.far)}
+    ${leg('near hind a', 46, k.body)}
+    ${leg('near front b', 122, k.body)}
     <path d="M46 66C58 59 96 58 112 60C126 62 134 72 134 84C134 96 124 102 110 102H52C38 102 30 94 30 83C30 75 36 70 46 66Z" fill="${k.body}" ${STROKE}/>
     <path d="M54 102C58 94 104 94 110 102Z" fill="${k.belly}"/>
     ${spots}
-    ${leg('near hind a', 46, k.body)}
-    ${leg('near front b', 120, k.body)}
     <g class="ln-head"><g transform="${head}">${face(k)}</g></g>
   </g></g>
   <g class="ln-z" fill="${INK}"><text x="140" y="22" font-size="12">z</text><text x="150" y="12" font-size="9">z</text></g>
