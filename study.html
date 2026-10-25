@@ -78,10 +78,15 @@
       1: [6.83, 16.83], 2: [6.5, 17.33], 3: [5.92, 17.75], 4: [5.25, 18.17], 5: [4.67, 18.58], 6: [4.42, 19],
       7: [4.67, 18.92], 8: [5.08, 18.5], 9: [5.5, 17.83], 10: [5.83, 17.25], 11: [6.33, 16.58], 12: [6.75, 16.5]
     };
-    // Current hour of the day (preview any time with ?hour=0..23.99)
+    // Current hour of the day. Preview any time with ?time=14, ?time=14.5 or ?time=14:30 (?hour= also works)
     function nowHours() {
-      var q = parseFloat((location.search.match(/[?&]hour=(\d+(?:\.\d+)?)/) || [])[1]);
-      if (q >= 0 && q < 24) return q;
+      var m = decodeURIComponent(location.search).match(/[?&](?:time|hour)=(\d{1,2})(?:([.:])(\d+))?/);
+      if (m) {
+        var h = parseInt(m[1], 10);
+        if (m[2] === ':') h += parseInt(m[3], 10) / 60;
+        else if (m[2] === '.') h = parseFloat(m[1] + '.' + m[3]);
+        if (h >= 0 && h < 24) return h;
+      }
       var d = new Date();
       return d.getHours() + d.getMinutes() / 60;
     }
