@@ -73,16 +73,58 @@
       var m = parseInt((location.search.match(/[?&]month=(\d+)/) || [])[1], 10);
       return (m >= 1 && m <= 12) ? m : new Date().getMonth() + 1;
     })();
+    // Approximate sunrise / sunset in Tokyo around the middle of each month (hours)
+    var SUN_TIMES = {
+      1: [6.83, 16.83], 2: [6.5, 17.33], 3: [5.92, 17.75], 4: [5.25, 18.17], 5: [4.67, 18.58], 6: [4.42, 19],
+      7: [4.67, 18.92], 8: [5.08, 18.5], 9: [5.5, 17.83], 10: [5.83, 17.25], 11: [6.33, 16.58], 12: [6.75, 16.5]
+    };
+    // Current hour of the day (preview any time with ?hour=0..23.99)
+    function nowHours() {
+      var q = parseFloat((location.search.match(/[?&]hour=(\d+(?:\.\d+)?)/) || [])[1]);
+      if (q >= 0 && q < 24) return q;
+      var d = new Date();
+      return d.getHours() + d.getMinutes() / 60;
+    }
+    /* night: how deep into the night (0 day .. 1 night, eased over an hour around sunset / sunrise)
+       glow:  sunrise / sunset colors (strongest at sunrise and sunset)
+       progress: how far through the day (sun) or the night (moon), 0..1 */
+    function skyState(month, h) {
+      var t = SUN_TIMES[month], rise = t[0], set = t[1];
+      var ease = function (x) { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
+      var isDay = h >= rise && h < set;
+      var night = h >= set ? ease(h - set) : h < rise ? ease(rise - h) : 0;
+      var glow = 1 - ease(Math.min(Math.abs(h - rise), Math.abs(h - set)) / 1.1);
+      var progress = isDay ? (h - rise) / (set - rise) : (h >= set ? h - set : h + 24 - set) / (24 - (set - rise));
+      return { isDay: isDay, night: night, glow: glow, progress: progress };
+    }
+    function mixColor(a, b, k) {
+      var pa = parseInt(a.slice(1), 16), pb = parseInt(b.slice(1), 16), out = '#';
+      for (var shift = 16; shift >= 0; shift -= 8) {
+        var ca = (pa >> shift) & 255, cb = (pb >> shift) & 255;
+        out += ('0' + Math.round(ca + (cb - ca) * k).toString(16)).slice(-2);
+      }
+      return out;
+    }
+    // Sky colors for the time of day. Night stays a soft navy-lavender, never dark
+    function applySky() {
+      var s = SEASONS[MONTH], st = skyState(MONTH, nowHours()), r = document.documentElement.style;
+      var top = mixColor(mixColor(s.sky[0], '#f4a8a0', st.glow * 0.35), '#5468a8', st.night * 0.75);
+      var bottom = mixColor(mixColor(s.sky[1], '#ffc49a', st.glow * 0.65), '#aba7d8', st.night * 0.75);
+      r.setProperty('--sky-top', top);
+      r.setProperty('--sky-bottom', bottom);
+      r.setProperty('--night', st.night.toFixed(3));
+      var tc = document.querySelector('meta[name="theme-color"]');
+      if (tc) tc.setAttribute('content', top);
+      window.SKY_STATE = st;
+      return st;
+    }
     (function () {
       var s = SEASONS[MONTH], r = document.documentElement.style;
-      r.setProperty('--sky-top', s.sky[0]);
-      r.setProperty('--sky-bottom', s.sky[1]);
+      applySky();
       r.setProperty('--ground', s.ground);
       r.setProperty('--mound', s.mound);
       r.setProperty('--leaf', s.leaf);
       r.setProperty('--sun', s.sun);
-      var tc = document.querySelector('meta[name="theme-color"]');
-      if (tc) tc.setAttribute('content', s.sky[0]);
     })();
   </script>
 
@@ -133,18 +175,39 @@
       overflow: hidden;
     }
 
+    /* Sun by day, moon by night. Placed by the script in the open sky beside the gate sign:
+       mornings on the left, afternoons on the right, rising and sinking behind the hill */
     .sun {
       position: absolute;
-      top: clamp(14px, 2.5vw, 28px);
-      right: clamp(18px, 8vw, 120px);
+      top: 0;
+      left: 0;
       width: clamp(48px, 6vw, 72px);
       aspect-ratio: 1;
       border-radius: 50%;
-      background: #ffd95a;
+      background: var(--sun-color, #ffd95a);
       box-shadow: 0 0 0 clamp(8px, 1.6vw, 16px) rgba(255, 217, 90, .3);
       opacity: var(--sun);
+      visibility: hidden;
     }
-    @media (max-width: 860px) { .sun { display: none; } }
+    .sun.is-placed { visibility: visible; }
+    .sun.is-moon {
+      background: transparent;
+      box-shadow: inset clamp(-18px, -1.6vw, -12px) clamp(5px, .6vw, 8px) 0 0 #fff4c8, 0 0 20px rgba(255, 244, 200, .35);
+      scale: .82;
+    }
+    .star {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fffbea;
+      box-shadow: 0 0 6px rgba(255, 251, 234, .9);
+      opacity: calc(var(--night, 0) * var(--sun));
+      visibility: hidden;
+    }
+    .star.is-placed { visibility: visible; }
+    .star:nth-of-type(3n) { width: 3px; height: 3px; }
+    @media (max-width: 860px) { .sun, .star { display: none; } }
 
     .cloud {
       position: absolute;
@@ -152,7 +215,7 @@
       aspect-ratio: 5 / 2;
       border-radius: 999px;
       background: #fff;
-      opacity: .85;
+      opacity: calc(.85 - var(--night, 0) * .15);
       animation: drift 60s ease-in-out infinite alternate;
     }
     .cloud::before, .cloud::after {
@@ -839,6 +902,8 @@
 
   <header class="sky">
     <div class="sun" aria-hidden="true"></div>
+    <i class="star" aria-hidden="true"></i><i class="star" aria-hidden="true"></i><i class="star" aria-hidden="true"></i><i class="star" aria-hidden="true"></i>
+    <i class="star" aria-hidden="true"></i><i class="star" aria-hidden="true"></i><i class="star" aria-hidden="true"></i><i class="star" aria-hidden="true"></i>
     <div class="cloud cloud-a" aria-hidden="true"></div>
     <div class="cloud cloud-b" aria-hidden="true"></div>
 
@@ -1149,6 +1214,55 @@
     (function () {
       var season = SEASONS[MONTH];
       var INK = 'stroke="#1c2a4a" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"';
+
+      // ----- Sun / moon / stars, kept in the open sky on either side of the gate sign -----
+      var skyEl = document.querySelector('.sky');
+      var signEl = document.querySelector('.sign');
+      var sunEl = document.querySelector('.sun');
+      var starEls = document.querySelectorAll('.star');
+      // Star spots inside a side band: [across 0..1 from the outer edge, down 0..1]
+      var STAR_SPOTS = [[0.15, 0.12], [0.7, 0.22], [0.35, 0.42], [0.85, 0.55]];
+
+      function placeSky() {
+        var st = applySky();
+        if (!skyEl || !signEl || !sunEl || window.innerWidth < 860) return;
+        var sky = skyEl.getBoundingClientRect();
+        var sign = signEl.getBoundingClientRect();
+        var gap = 12;
+        var leftBand = [gap, sign.left - sky.left - gap];
+        var rightBand = [sign.right - sky.left + gap, sky.width - gap];
+        var size = sunEl.offsetWidth;
+        var rise = Math.sin(Math.PI * st.progress);
+        var pm = st.progress >= 0.5;
+        var band = pm ? rightBand : leftBand;
+        var room = Math.max(0, band[1] - band[0] - size);
+        var inward = Math.min(40, room) * rise;
+        var x = pm ? band[1] - size - inward : band[0] + inward;
+        // Low at sunrise / sunset (half behind the hill), high around noon / midnight
+        var bottom = sky.height * (0.04 + rise * 0.74);
+        var y = Math.max(gap, sky.height - bottom - size);
+        sunEl.style.left = Math.round(x) + 'px';
+        sunEl.style.top = Math.round(y) + 'px';
+        sunEl.classList.toggle('is-moon', !st.isDay);
+        sunEl.style.setProperty('--sun-color', mixColor('#ffd95a', '#ffb45a', st.isDay ? st.glow : 0));
+        sunEl.classList.add('is-placed');
+
+        Array.prototype.forEach.call(starEls, function (star, i) {
+          var b = i % 2 ? rightBand : leftBand;
+          var spot = STAR_SPOTS[Math.floor(i / 2) % STAR_SPOTS.length];
+          var w = Math.max(0, b[1] - b[0] - 4);
+          var sx = i % 2 ? b[1] - 4 - spot[0] * w : b[0] + spot[0] * w;
+          star.style.left = Math.round(sx) + 'px';
+          star.style.top = Math.round(gap + spot[1] * sky.height * 0.6) + 'px';
+          star.classList.add('is-placed');
+        });
+      }
+      placeSky();
+      setInterval(placeSky, 60000);
+      document.addEventListener('visibilitychange', function () { if (document.visibilityState === 'visible') placeSky(); });
+      var resizeTimer = null;
+      window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(placeSky, 150); });
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeSky);
 
       // One small ornament per month, standing beside the trees
       var DECOR = {
