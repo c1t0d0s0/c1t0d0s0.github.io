@@ -915,37 +915,31 @@
       position: absolute;
       top: 0;
       left: 50%;
-      z-index: 0;
+      z-index: 2;
       display: none;
       width: 100vw;
-      height: 100px;
+      height: 120px;
       transform: translateX(-50%);
       pointer-events: none;
     }
-    @media (min-width: 1280px) { .lion-path { display: block; } }
-    .lion-path::before {
-      content: '';
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 14px;
-      border-radius: 999px;
-      background: var(--mound);
+    /* Stacking: first row of boards < lions < second row of boards (always two columns at this width) */
+    @media (min-width: 1280px) {
+      .lion-path { display: block; }
+      .habitat:nth-of-type(n+3) { z-index: 3; }
     }
-    .lion { position: absolute; left: 0; bottom: 2px; will-change: transform; }
+    .lion { position: absolute; left: 0; bottom: 0; will-change: transform; }
     .lion-cub { z-index: 2; }
     .lion-mother { z-index: 1; }
     .lion svg { display: block; width: 100%; height: auto; overflow: visible; }
     .lion svg * { transform-box: view-box; }
     .ln-shadow { fill: rgba(28, 42, 74, .14); }
-    .ln-flip { transform-origin: 70px 50px; }
+    .ln-flip { transform-origin: 82px 60px; }
     .lion.is-left .ln-flip { transform: scaleX(-1); }
-    .ln-pose { transform-origin: 100px 60px; transition: transform .45s ease; }
+    .ln-pose { transform-origin: 118px 90px; transition: transform .45s ease; }
     .ln-leg { transform-origin: var(--hx) var(--hy); transition: transform .45s ease; }
-    .ln-head { transform-origin: 106px 46px; transition: transform .45s ease; }
-    .ln-tail { transform-origin: 30px 50px; }
-    .ln-eye-open { transform-origin: 120px 31px; }
+    .ln-head { transform-origin: 120px 76px; transition: transform .45s ease; }
+    .ln-tail { transform-origin: 34px 76px; }
+    .ln-eye-open { transform-origin: 120px 61px; }
     .ln-eye-closed, .ln-z { display: none; }
 
     /* walk / run: diagonal legs swing together */
@@ -962,19 +956,19 @@
     .lion.is-sit .ln-pose { transform: rotate(-26deg); }
     .lion.is-sit .ln-leg.front { transform: rotate(26deg); }
     .lion.is-sit .ln-leg.hind { transform: rotate(-64deg); }
-    .lion.is-sit .ln-head { transform: rotate(20deg); }
+    .lion.is-sit .ln-head { transform: rotate(26deg); }
 
     /* sleep: lying down, legs tucked forward, eyes closed, breathing */
-    .lion.is-sleep .ln-pose { transform: translateY(19px); }
+    .lion.is-sleep .ln-pose { transform: translateY(14px); }
     .lion.is-sleep .ln-leg { transform: rotate(-82deg); }
-    .lion.is-sleep .ln-head { transform: translate(3px, 9px) rotate(10deg); }
-    .lion.is-sleep .ln-tail { transform: translate(4px, 16px) rotate(-60deg); }
+    .lion.is-sleep .ln-head { transform: translate(2px, 8px) rotate(6deg); }
+    .lion.is-sleep .ln-tail { transform: translate(4px, 12px) rotate(-60deg); }
     .lion.is-sleep .ln-bob { animation: ln-breathe 3.2s ease-in-out infinite; }
     .lion.is-sleep .ln-eye-open { display: none; }
     .lion.is-sleep .ln-eye-closed, .lion.is-sleep .ln-z { display: inline; }
     .lion.is-sleep .ln-z text { font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; animation: ln-z 3s ease-in-out infinite; }
     .lion.is-sleep .ln-z text + text { animation-delay: -1.5s; }
-    .lion.is-left .ln-z { transform: scaleX(-1); transform-origin: 70px 50px; }
+    .lion.is-left .ln-z { transform: scaleX(-1); transform-origin: 145px 60px; }
 
     /* idle / sit: blink and look around now and then */
     .lion.is-idle .ln-eye-open, .lion.is-sit .ln-eye-open { animation: ln-blink 4.6s infinite; }

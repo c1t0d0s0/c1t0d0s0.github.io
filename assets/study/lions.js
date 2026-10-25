@@ -1,30 +1,38 @@
 /* ==========================================================================
    THE LEARNING ZOO - lion family
    A father, a mother and a cub roam a walkway that runs across the whole page
-   width behind the first row of blackboards. They rest only where they can be
+   width, in front of the first row of blackboards and behind the second row
+   (feet just above the 理科・社会 headings). They rest only where they can be
    seen (the open space on either side) and pass behind the boards in between.
    ========================================================================== */
 
 const INK = '#1c2a4a';
 
 const KINDS = {
-  father: { width: 124, body: '#e6a948', far: '#cf9234', belly: '#fff3d6', tuft: '#8c4a22', mane: ['#b8612c', '#d98a42'], headScale: 1.15 },
-  mother: { width: 108, body: '#e9b257', far: '#d29a3e', belly: '#fff3d6', tuft: '#8c4a22', headScale: 1.2 },
-  cub: { width: 72, body: '#f0c26a', far: '#dcab52', belly: '#fff6e0', tuft: '#a8642e', spots: true, headScale: 1.42 },
+  father: { width: 150, body: '#e8ab45', far: '#d39536', belly: '#fff4dc', tuft: '#8c4a22', mane: ['#b25a2a', '#d98a42'], face: 0.6 },
+  mother: { width: 132, body: '#ebb456', far: '#d69d40', belly: '#fff4dc', tuft: '#8c4a22', face: 0.64 },
+  cub: { width: 92, body: '#f2c46c', far: '#ddae55', belly: '#fff7e4', tuft: '#a8642e', spots: true, face: 0.76 },
 };
 
-/* ---------- Drawing (viewBox 0 0 140 100, facing right, ground at y = 95) ---------- */
+/* ---------- Drawing ----------
+   viewBox 0 0 160 120, ground at y = 114. The body is drawn from the side so the four legs
+   can walk; the head faces the viewer and uses the same parts as the other zoo characters
+   (squirrel monkey / lynx): round head, big eyes with two highlights, blush, small nose. */
+
+const STROKE = `stroke="${INK}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"`;
+const HIP_Y = 92;
 
 function leg(cls, hx, color) {
-  const hy = 60;
-  return `<g class="ln-leg ${cls}" style="--hx:${hx}px;--hy:${hy}px">`
-    + `<path d="M${hx - 6} ${hy - 6}H${hx + 6}V${hy + 25}C${hx + 6} ${hy + 30} ${hx + 3} ${hy + 31} ${hx} ${hy + 31}C${hx - 3} ${hy + 31} ${hx - 6} ${hy + 30} ${hx - 6} ${hy + 25}Z" fill="${color}" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/>`
-    + `<ellipse cx="${hx + 2}" cy="${hy + 31}" rx="8" ry="4" fill="${color}" stroke="${INK}" stroke-width="2.5"/>`
+  const y = HIP_Y;
+  return `<g class="ln-leg ${cls}" style="--hx:${hx}px;--hy:${y}px">`
+    + `<path d="M${hx - 7} ${y - 10}H${hx + 7}V${y + 12}C${hx + 7} ${y + 17} ${hx + 4} ${y + 19} ${hx} ${y + 19}C${hx - 4} ${y + 19} ${hx - 7} ${y + 17} ${hx - 7} ${y + 12}Z" fill="${color}" ${STROKE}/>`
+    + `<path d="M${hx - 8} ${y + 22}C${hx - 8} ${y + 15} ${hx + 12} ${y + 15} ${hx + 12} ${y + 22}Z" fill="${color}" ${STROKE}/>`
+    + `<path d="M${hx + 1} ${y + 18.5}V${y + 21.5}M${hx + 6} ${y + 18.5}V${y + 21.5}" fill="none" stroke="${INK}" stroke-width="1.4" stroke-linecap="round"/>`
     + '</g>';
 }
 
-/** A scalloped ring for the father's mane */
-function manePath(cx, cy, r, bumps) {
+/** A scalloped ring for the father's mane (face coordinates) */
+function manePath(cx, cy, r, bumps, depth) {
   let d = '';
   for (let i = 0; i <= bumps; i++) {
     const a = (i / bumps) * Math.PI * 2;
@@ -32,53 +40,59 @@ function manePath(cx, cy, r, bumps) {
     const y = cy + Math.sin(a) * r;
     if (i === 0) { d += `M${x.toFixed(1)} ${y.toFixed(1)}`; continue; }
     const am = ((i - 0.5) / bumps) * Math.PI * 2;
-    const qx = cx + Math.cos(am) * (r + 7);
-    const qy = cy + Math.sin(am) * (r + 7);
-    d += `Q${qx.toFixed(1)} ${qy.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}`;
+    d += `Q${(cx + Math.cos(am) * (r + depth)).toFixed(1)} ${(cy + Math.sin(am) * (r + depth)).toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)}`;
   }
   return d + 'Z';
 }
 
+/** Front-facing face in the 120 x 120 coordinate system of the other characters' heads */
+function face(k) {
+  const mane = k.mane
+    ? `<path d="${manePath(60, 68, 50, 16, 10)}" fill="${k.mane[0]}" ${STROKE}/>`
+      + `<path d="${manePath(60, 68, 42, 16, 6)}" fill="${k.mane[1]}"/>`
+    : '';
+  return `${mane}
+    <g ${STROKE}><circle cx="29" cy="38" r="14" fill="${k.body}"/><circle cx="91" cy="38" r="14" fill="${k.body}"/></g>
+    <circle cx="30" cy="39" r="7" fill="#f3b8a4"/><circle cx="90" cy="39" r="7" fill="#f3b8a4"/>
+    <path d="M60 28C36 28 19 44 19 67C19 90 38 106 60 106C82 106 101 90 101 67C101 44 84 28 60 28Z" fill="${k.body}" ${STROKE}/>
+    <path d="M42 40Q60 34 78 40" fill="none" stroke="${k.tuft}" stroke-width="2" stroke-linecap="round" opacity=".35"/>
+    <ellipse cx="60" cy="87" rx="17" ry="12.5" fill="${k.belly}"/>
+    <ellipse cx="28" cy="83" rx="6.5" ry="4" fill="#f7b3a6" opacity=".75"/><ellipse cx="92" cy="83" rx="6.5" ry="4" fill="#f7b3a6" opacity=".75"/>
+    <g class="ln-eye-open">
+      <ellipse cx="42" cy="69" rx="7.5" ry="8.5" fill="${INK}"/><circle cx="44.6" cy="65.4" r="3.1" fill="#fff"/><circle cx="39.4" cy="72.6" r="1.5" fill="#fff"/>
+      <ellipse cx="78" cy="69" rx="7.5" ry="8.5" fill="${INK}"/><circle cx="80.6" cy="65.4" r="3.1" fill="#fff"/><circle cx="75.4" cy="72.6" r="1.5" fill="#fff"/>
+    </g>
+    <path class="ln-eye-closed" d="M35 70Q42 76 49 70M71 70Q78 76 85 70" fill="none" stroke="${INK}" stroke-width="2.5" stroke-linecap="round"/>
+    <path d="M55.6 79.6Q60 77.6 64.4 79.6Q62.8 84 60 84.6Q57.2 84 55.6 79.6Z" fill="#7a3f2a" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>
+    <path d="M60 84.6V87M60 87C58 91 53 91 51.5 88M60 87C62 91 67 91 68.5 88" fill="none" stroke="${INK}" stroke-width="2" stroke-linecap="round"/>
+    <g fill="${INK}" opacity=".55"><circle cx="49" cy="86" r="1.1"/><circle cx="47" cy="90" r="1.1"/><circle cx="71" cy="86" r="1.1"/><circle cx="73" cy="90" r="1.1"/></g>`;
+}
+
 export function lionSVG(kind) {
   const k = KINDS[kind];
-  const s = k.headScale || 1;
   const spots = k.spots
-    ? `<g fill="${k.tuft}" opacity=".28"><circle cx="50" cy="46" r="3"/><circle cx="62" cy="52" r="2.6"/><circle cx="78" cy="45" r="3"/><circle cx="88" cy="54" r="2.4"/><circle cx="44" cy="58" r="2.4"/></g>`
+    ? `<g fill="${k.tuft}" opacity=".25"><circle cx="58" cy="72" r="3.4"/><circle cx="72" cy="80" r="3"/><circle cx="88" cy="70" r="3.4"/><circle cx="100" cy="80" r="2.8"/><circle cx="48" cy="86" r="2.8"/></g>`
     : '';
-  const mane = k.mane
-    ? `<path d="${manePath(114, 36, 25, 14)}" fill="${k.mane[0]}" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/><circle cx="114" cy="36" r="20" fill="${k.mane[1]}"/>`
-    : '';
-  return `<svg viewBox="0 0 140 100" aria-hidden="true" focusable="false">
-  <ellipse class="ln-shadow" cx="72" cy="95" rx="46" ry="4"/>
+  // Head centre sits over the front shoulders; the face is scaled from its 120-unit drawing
+  const head = `translate(122 56) scale(${k.face}) translate(-60 -67)`;
+  return `<svg viewBox="0 0 160 120" aria-hidden="true" focusable="false">
+  <ellipse class="ln-shadow" cx="82" cy="114" rx="52" ry="4.5"/>
   <g class="ln-flip"><g class="ln-pose"><g class="ln-bob">
     <g class="ln-tail">
-      <path d="M30 50C18 49 10 41 9 29" fill="none" stroke="${INK}" stroke-width="8.5" stroke-linecap="round"/>
-      <path d="M30 50C18 49 10 41 9 29" fill="none" stroke="${k.body}" stroke-width="4" stroke-linecap="round"/>
-      <ellipse cx="9" cy="26" rx="5" ry="7" transform="rotate(-18 9 26)" fill="${k.tuft}" stroke="${INK}" stroke-width="2.2"/>
+      <path d="M34 76C20 75 12 66 12 52" fill="none" stroke="${INK}" stroke-width="9" stroke-linecap="round"/>
+      <path d="M34 76C20 75 12 66 12 52" fill="none" stroke="${k.body}" stroke-width="4.5" stroke-linecap="round"/>
+      <path d="M12 41C5 44 5 54 12 56C19 54 19 44 12 41Z" fill="${k.tuft}" ${STROKE}/>
     </g>
-    ${leg('far hind b', 46, k.far)}
-    ${leg('far front a', 96, k.far)}
-    <path d="M36 40C46 33 72 33 96 34C108 35 116 42 116 53C116 65 108 71 96 71H44C32 71 26 63 27 53C27 47 30 43 36 40Z" fill="${k.body}" stroke="${INK}" stroke-width="2.5" stroke-linejoin="round"/>
-    <ellipse cx="72" cy="66" rx="26" ry="4.5" fill="${k.belly}"/>
+    ${leg('far hind b', 56, k.far)}
+    ${leg('far front a', 110, k.far)}
+    <path d="M46 66C58 59 96 58 112 60C126 62 134 72 134 84C134 96 124 102 110 102H52C38 102 30 94 30 83C30 75 36 70 46 66Z" fill="${k.body}" ${STROKE}/>
+    <path d="M54 102C58 94 104 94 110 102Z" fill="${k.belly}"/>
     ${spots}
-    ${leg('near hind a', 38, k.body)}
-    ${leg('near front b', 102, k.body)}
-    <g class="ln-head"><g transform="translate(106 46) scale(${s}) translate(-106 -46)">
-      ${mane}
-      <circle cx="106" cy="20" r="6" fill="${k.body}" stroke="${INK}" stroke-width="2.5"/>
-      <circle cx="106" cy="20" r="2.6" fill="#f3b8a4"/>
-      <circle cx="121" cy="19" r="6" fill="${k.body}" stroke="${INK}" stroke-width="2.5"/>
-      <circle cx="121" cy="19" r="2.6" fill="#f3b8a4"/>
-      <circle cx="115" cy="36" r="17" fill="${k.body}" stroke="${INK}" stroke-width="2.5"/>
-      <ellipse cx="127" cy="42" rx="9" ry="7" fill="${k.belly}" stroke="${INK}" stroke-width="2"/>
-      <path d="M130.5 36.5H137L133.8 40.6Z" fill="${INK}" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>
-      <path d="M133.8 41V43.5C133 46 130 46.5 128.5 45" fill="none" stroke="${INK}" stroke-width="1.6" stroke-linecap="round"/>
-      <ellipse cx="117" cy="43" rx="4" ry="2.5" fill="#f3b8a4" opacity=".7"/>
-      <g class="ln-eye-open"><ellipse cx="120" cy="31" rx="3.6" ry="4.4" fill="${INK}"/><circle cx="121.3" cy="29.6" r="1.4" fill="#fff"/></g>
-      <path class="ln-eye-closed" d="M116.4 32.4Q120 35.6 123.6 32.4" fill="none" stroke="${INK}" stroke-width="2" stroke-linecap="round"/>
-    </g></g>
+    ${leg('near hind a', 46, k.body)}
+    ${leg('near front b', 120, k.body)}
+    <g class="ln-head"><g transform="${head}">${face(k)}</g></g>
   </g></g>
-  <g class="ln-z" fill="${INK}"><text x="122" y="10" font-size="11">z</text><text x="131" y="3" font-size="8">z</text></g>
+  <g class="ln-z" fill="${INK}"><text x="140" y="22" font-size="12">z</text><text x="150" y="12" font-size="9">z</text></g>
   </g>
 </svg>`;
 }
@@ -129,10 +143,15 @@ function start() {
   function layout() {
     const habitats = Array.from(zoo.querySelectorAll('.habitat'));
     if (!habitats.length) return;
-    const firstTop = habitats[0].offsetTop;
-    const row = habitats.filter((h) => Math.abs(h.offsetTop - firstTop) < 4);
-    const bottom = Math.max(...row.map((h) => h.offsetTop + h.offsetHeight));
-    path.style.top = `${bottom - path.offsetHeight - 10}px`;
+    const tops = [...new Set(habitats.map((h) => h.offsetTop))].sort((a, b) => a - b);
+    // The walkway runs just above the headings of the second row (理科・社会)
+    const row = habitats.filter((h) => h.offsetTop === (tops[1] !== undefined ? tops[1] : tops[0]));
+    const zr = zoo.getBoundingClientRect();
+    const headings = row.map((h) => h.querySelector('.board h2')).filter(Boolean);
+    const ground = headings.length
+      ? Math.min(...headings.map((el) => el.getBoundingClientRect().top - zr.top)) - 4
+      : Math.max(...row.map((h) => h.offsetTop + h.offsetHeight));
+    path.style.top = `${ground - path.offsetHeight}px`;
 
     const pr = path.getBoundingClientRect();
     const blocks = row.map((h) => h.getBoundingClientRect()).map((r) => [r.left - pr.left, r.right - pr.left]).sort((a, b) => a[0] - b[0]);
