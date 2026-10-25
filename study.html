@@ -237,16 +237,39 @@
       border: 0;
     }
 
+    /* Season plaque hanging from the gate sign on two cords */
     .season {
+      position: relative;
       display: inline-block;
       margin: 12px 0 0;
-      padding: .05em .9em .1em;
+      padding: .05em 1em .1em;
       border: 2px solid var(--ink);
-      border-radius: 999px;
-      background: var(--paper);
+      border-radius: 6px;
+      background:
+        repeating-linear-gradient(90deg, rgba(140, 90, 51, .12) 0 2px, transparent 2px 34px),
+        #e8c79a;
+      box-shadow: 0 3px 0 var(--wood-deep);
+      color: var(--ink);
       font-size: .8rem;
       font-weight: 700;
+      white-space: nowrap;
+      transform-origin: 50% -12px;
+      animation: plaque-sway 6s ease-in-out infinite;
     }
+    /* Cords run up to the bottom of the sign; a small ring sits at the top of each */
+    .season::before, .season::after {
+      content: '';
+      position: absolute;
+      bottom: calc(100% + 2px);
+      width: 6px;
+      height: 14px;
+      background:
+        radial-gradient(circle at 50% 3px, var(--ink) 2.2px, transparent 2.8px),
+        linear-gradient(var(--ink), var(--ink)) 50% 100% / 2px 12px no-repeat;
+    }
+    .season::before { left: 18%; }
+    .season::after  { right: 18%; }
+    @keyframes plaque-sway { 0%, 100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg); } }
 
     /* Grade selector inside the entrance gate */
     .grade-box {
@@ -655,7 +678,7 @@
 
     /* While an app is open, the zoo behind it stands still */
     .viewing body { overflow: hidden; }
-    .viewing .animal *, .viewing .cloud { animation-play-state: paused; }
+    .viewing .animal *, .viewing .cloud, .viewing .season { animation-play-state: paused; }
     .viewing .fall { display: none; }
 
     /* Google login row at the bottom of the grade box */
@@ -807,7 +830,7 @@
     .progress-undated li { display: flex; justify-content: space-between; gap: 12px; padding: 2px 0; border-top: 1px dashed rgba(253, 253, 250, .2); }
 
     @media (prefers-reduced-motion: reduce) {
-      .animal *, .cloud { animation: none !important; }
+      .animal *, .cloud, .season { animation: none !important; }
       .fall { display: none; }
     }
   </style>
