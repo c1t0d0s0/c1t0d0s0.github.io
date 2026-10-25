@@ -216,7 +216,8 @@
       border-radius: 999px;
       background: #fff;
       opacity: calc(.85 - var(--night, 0) * .15);
-      animation: drift 60s ease-in-out infinite alternate;
+      left: 0;
+      animation: cloud-flow 150s linear infinite;
     }
     .cloud::before, .cloud::after {
       content: '';
@@ -227,8 +228,10 @@
     }
     .cloud::before { left: 16%; width: 38%; aspect-ratio: 1; }
     .cloud::after  { left: 44%; width: 30%; aspect-ratio: 1; }
-    .cloud-a { top: 22px; left: 6%; }
-    .cloud-b { top: 84px; right: 20%; scale: .7; animation-duration: 80s; animation-direction: alternate-reverse; }
+    /* Clouds drift slowly from left to right across the sky and come round again.
+       Negative delays start them part-way across so the sky is not empty on load */
+    .cloud-a { top: 22px; animation-delay: -20s; }
+    .cloud-b { top: 84px; scale: .7; animation-duration: 210s; animation-delay: -150s; }
 
     .gate {
       --post: clamp(10px, 2vw, 16px);
@@ -623,7 +626,7 @@
     }
     @keyframes flap-l { 0%, 56%, 88%, 100% { transform: rotate(0); } 64%, 80% { transform: rotate(16deg); } 72% { transform: rotate(4deg); } }
     @keyframes flap-r { 0%, 56%, 88%, 100% { transform: rotate(0); } 64%, 80% { transform: rotate(-16deg); } 72% { transform: rotate(-4deg); } }
-    @keyframes drift { from { transform: translateX(-3vw); } to { transform: translateX(5vw); } }
+    @keyframes cloud-flow { from { transform: translateX(-110%); } to { transform: translateX(calc(100vw + 10%)); } }
 
     /* ---------- Seasonal falling things (snow, petals, rain, leaves) ---------- */
     .fall {
@@ -894,6 +897,8 @@
 
     @media (prefers-reduced-motion: reduce) {
       .animal *, .cloud, .season { animation: none !important; }
+      .cloud-a { left: 6%; }
+      .cloud-b { left: 70%; }
       .fall { display: none; }
     }
   </style>
