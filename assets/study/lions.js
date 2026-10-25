@@ -9,13 +9,13 @@
 const INK = '#1c2a4a';
 
 const KINDS = {
-  father: { width: 150, body: '#e8ab45', far: '#d39536', belly: '#fff4dc', tuft: '#8c4a22', mane: ['#b25a2a', '#d98a42'], face: 0.6 },
-  mother: { width: 132, body: '#ebb456', far: '#d69d40', belly: '#fff4dc', tuft: '#8c4a22', face: 0.64 },
-  cub: { width: 92, body: '#f2c46c', far: '#ddae55', belly: '#fff7e4', tuft: '#a8642e', spots: true, face: 0.76 },
+  father: { width: 137, body: '#e8ab45', far: '#d39536', belly: '#fff4dc', tuft: '#8c4a22', mane: ['#b25a2a', '#d98a42'], face: 0.6 },
+  mother: { width: 121, body: '#ebb456', far: '#d69d40', belly: '#fff4dc', tuft: '#8c4a22', face: 0.64 },
+  cub: { width: 84, body: '#f2c46c', far: '#ddae55', belly: '#fff7e4', tuft: '#a8642e', spots: true, face: 0.76 },
 };
 
 /* ---------- Drawing ----------
-   viewBox 0 0 160 120, ground at y = 114. The body is drawn from the side so the four legs
+   viewBox 14 0 146 120, ground at y = 114. The body is drawn from the side so the four legs
    can walk; the head faces the viewer and uses the same parts as the other zoo characters
    (squirrel monkey / lynx): round head, big eyes with two highlights, blush, small nose. */
 
@@ -75,24 +75,24 @@ function face(k) {
 export function lionSVG(kind) {
   const k = KINDS[kind];
   const spots = k.spots
-    ? `<g fill="${k.tuft}" opacity=".25"><circle cx="58" cy="72" r="3.4"/><circle cx="72" cy="80" r="3"/><circle cx="88" cy="70" r="3.4"/><circle cx="100" cy="80" r="2.8"/><circle cx="48" cy="86" r="2.8"/></g>`
+    ? `<g fill="${k.tuft}" opacity=".25"><circle cx="68" cy="72" r="3.4"/><circle cx="80" cy="81" r="3"/><circle cx="93" cy="70" r="3.4"/><circle cx="104" cy="80" r="2.8"/><circle cx="58" cy="87" r="2.8"/></g>`
     : '';
   // Head centre sits over the front shoulders; the face is scaled from its 120-unit drawing
   const head = `translate(122 56) scale(${k.face}) translate(-60 -67)`;
-  return `<svg viewBox="0 0 160 120" aria-hidden="true" focusable="false">
-  <ellipse class="ln-shadow" cx="82" cy="114" rx="52" ry="4.5"/>
+  return `<svg viewBox="14 0 146 120" aria-hidden="true" focusable="false">
+  <ellipse class="ln-shadow" cx="90" cy="114" rx="46" ry="4.5"/>
   <g class="ln-flip"><g class="ln-pose"><g class="ln-bob">
     <g class="ln-tail">
-      <path d="M34 76C20 75 12 66 12 52" fill="none" stroke="${INK}" stroke-width="9" stroke-linecap="round"/>
-      <path d="M34 76C20 75 12 66 12 52" fill="none" stroke="${k.body}" stroke-width="4.5" stroke-linecap="round"/>
-      <path d="M12 41C5 44 5 54 12 56C19 54 19 44 12 41Z" fill="${k.tuft}" ${STROKE}/>
+      <path d="M48 76C34 75 26 66 26 52" fill="none" stroke="${INK}" stroke-width="9" stroke-linecap="round"/>
+      <path d="M48 76C34 75 26 66 26 52" fill="none" stroke="${k.body}" stroke-width="4.5" stroke-linecap="round"/>
+      <path d="M26 41C19 44 19 54 26 56C33 54 33 44 26 41Z" fill="${k.tuft}" ${STROKE}/>
     </g>
-    ${leg('far hind b', 58, k.far)}
+    ${leg('far hind b', 72, k.far)}
     ${leg('far front a', 112, k.far)}
-    ${leg('near hind a', 46, k.body)}
+    ${leg('near hind a', 60, k.body)}
     ${leg('near front b', 122, k.body)}
-    <path d="M46 66C58 59 96 58 112 60C126 62 134 72 134 84C134 96 124 102 110 102H52C38 102 30 94 30 83C30 75 36 70 46 66Z" fill="${k.body}" ${STROKE}/>
-    <path d="M54 102C58 94 104 94 110 102Z" fill="${k.belly}"/>
+    <path d="M60 66C70 59 98 58 112 60C126 62 134 72 134 84C134 96 124 102 110 102H66C52 102 44 94 44 83C44 75 50 70 60 66Z" fill="${k.body}" ${STROKE}/>
+    <path d="M68 102C72 94 104 94 110 102Z" fill="${k.belly}"/>
     ${spots}
     <g class="ln-head"><g transform="${head}">${face(k)}</g></g>
   </g></g>
