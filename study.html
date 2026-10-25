@@ -56,8 +56,8 @@
   <!-- Seasonal theme: applied before first paint (preview any month with ?month=1..12) -->
   <script>
     var SEASONS = {
-      1:  { label: 'お正月と 雪の きせつ',        sky: ['#bfe0f5', '#eef7fb'], ground: '#eef4f7', mound: '#ffffff', leaf: '#dce9f0', sun: 1,   fall: 'snow',  colors: ['#ffffff'], decor: 'snowman' },
-      2:  { label: 'うめの花が さく きせつ',      sky: ['#c6e1f3', '#f8edf1'], ground: '#eef3f1', mound: '#ffffff', leaf: '#f2a9c0', sun: 1,   fall: 'snow',  colors: ['#ffffff'], decor: 'ume' },
+      1:  { label: 'お正月と 雪の きせつ',        sky: ['#a9d4f3', '#c4e0f5'], ground: '#edf2f6', mound: '#ffffff', edge: '#b5c8da', leaf: '#dce9f0', sun: 1,   fall: 'snow',  colors: ['#ffffff'], decor: 'snowman' },
+      2:  { label: 'うめの花が さく きせつ',      sky: ['#bcd9f0', '#f0cfdc'], ground: '#eef2f0', mound: '#ffffff', edge: '#bccbc6', leaf: '#f2a9c0', sun: 1,   fall: 'snow',  colors: ['#ffffff'], decor: 'ume' },
       3:  { label: '春が やってくる きせつ',      sky: ['#bfe6f7', '#fdf3e3'], ground: '#cfe6a8', mound: '#e2f1c2', leaf: '#f7bccb', sun: 1,   fall: 'petal', colors: ['#f9c9d6', '#fbe08a'], decor: 'nanohana' },
       4:  { label: 'さくらの きせつ',            sky: ['#bde3f8', '#fde9ef'], ground: '#bfe39a', mound: '#d8efb8', leaf: '#f9c0d2', sun: 1,   fall: 'petal', colors: ['#f9c6d6', '#fde3ea'], decor: 'tulip' },
       5:  { label: '新緑と こいのぼりの きせつ',  sky: ['#9fd8f7', '#e6f6fb'], ground: '#a6db7c', mound: '#c6eba0', leaf: '#6fbf5a', sun: 1,   fall: 'none',  colors: [], decor: 'koinobori' },
@@ -67,7 +67,7 @@
       9:  { label: 'お月見の きせつ',            sky: ['#a9cdee', '#fbe7c8'], ground: '#c4d98a', mound: '#dbe8ad', leaf: '#7fae5a', sun: 1,   fall: 'none',  colors: [], decor: 'tsukimi' },
       10: { label: 'もみじの きせつ',            sky: ['#a8d4f2', '#fdebd0'], ground: '#d6d48a', mound: '#e8e3ae', leaf: '#e98a3c', sun: 1,   fall: 'leaf',  colors: ['#e2603a', '#f0a23c', '#c9462f'], decor: 'pumpkin' },
       11: { label: 'いちょうと 落ち葉の きせつ',  sky: ['#b7d3ea', '#fbe9cf'], ground: '#dcc98a', mound: '#ece0b0', leaf: '#eab73a', sun: 1,   fall: 'leaf',  colors: ['#eab73a', '#f3d15c', '#c98a3a'], decor: 'donguri' },
-      12: { label: '冬と クリスマスの きせつ',    sky: ['#b5cfe8', '#eef3f8'], ground: '#edf2f5', mound: '#ffffff', leaf: '#3f8a5f', sun: 1,   fall: 'snow',  colors: ['#ffffff'], decor: 'tree' }
+      12: { label: '冬と クリスマスの きせつ',    sky: ['#a7c4e5', '#c6d9ee'], ground: '#ecf1f5', mound: '#ffffff', edge: '#b3c4d6', leaf: '#3f8a5f', sun: 1,   fall: 'snow',  colors: ['#ffffff'], decor: 'tree' }
     };
     var MONTH = (function () {
       var m = parseInt((location.search.match(/[?&]month=(\d+)/) || [])[1], 10);
@@ -127,6 +127,8 @@
       var s = SEASONS[MONTH], r = document.documentElement.style;
       applySky();
       r.setProperty('--ground', s.ground);
+      // Snowy months: a thin shadow line along the hilltop so white ground doesn't melt into the sky
+      r.setProperty('--hill-edge', s.edge || 'transparent');
       r.setProperty('--mound', s.mound);
       r.setProperty('--leaf', s.leaf);
       r.setProperty('--sun', s.sun);
@@ -444,6 +446,12 @@
       width: 100%;
       height: clamp(30px, 5vw, 56px);
       fill: var(--ground);
+    }
+    .hill .hill-edge {
+      fill: none;
+      stroke: var(--hill-edge, transparent);
+      stroke-width: 2.5;
+      vector-effect: non-scaling-stroke;
     }
 
     /* ---------- Habitats ---------- */
@@ -957,6 +965,7 @@
 
     <svg class="hill" viewBox="0 0 1200 80" preserveAspectRatio="none" aria-hidden="true">
       <path d="M0 80V46C150 8 330 6 520 34C720 62 960 60 1200 22V80Z"/>
+      <path class="hill-edge" d="M0 46C150 8 330 6 520 34C720 62 960 60 1200 22"/>
     </svg>
   </header>
 
