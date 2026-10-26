@@ -22,7 +22,7 @@ const KINDS = {
 const STROKE = `stroke="${INK}" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"`;
 const HIP_Y = 92;
 
-function leg(cls, hx, color) {
+function leg(cls, hx, color, boot) {
   const y = HIP_Y;
   // One soft shape: a slightly tapered leg ending in a rounded paw that points forward.
   // The top is tucked under the body (legs are drawn before it), so no seam shows.
@@ -32,7 +32,11 @@ function leg(cls, hx, color) {
     + `H${hx + 6}`
     + `C${hx + 12} ${y + 22.5} ${hx + 13} ${y + 15.5} ${hx + 7} ${y + 14}`
     + `C${hx + 7} ${y + 8} ${hx + 8} ${y} ${hx + 8} ${y - 12}Z`;
-  return `<g class="ln-leg ${cls}" style="--hx:${hx}px;--hy:${y}px"><path d="${d}" fill="${color}" ${STROKE}/></g>`;
+  const bootPath = boot
+    ? `<path d="M${hx - 7.3} ${y + 11}C${hx - 8} ${y + 20} ${hx - 4} ${y + 22.5} ${hx + 1} ${y + 22.5}H${hx + 6}C${hx + 12} ${y + 22.5} ${hx + 13} ${y + 15.5} ${hx + 7.2} ${y + 11}Z" fill="${boot}" ${STROKE}/>`
+      + `<path d="M${hx - 8.5} ${y + 8}H${hx + 8.5}V${y + 12.5}H${hx - 8.5}Z" fill="#ffffff" ${STROKE} stroke-width="2"/>`
+    : '';
+  return `<g class="ln-leg ${cls}" style="--hx:${hx}px;--hy:${y}px"><path d="${d}" fill="${color}" ${STROKE}/>${bootPath}</g>`;
 }
 
 /** A scalloped ring for the father's mane (face coordinates) */
@@ -56,10 +60,10 @@ function face(k) {
       + `<path d="${manePath(60, 68, 42, 16, 6)}" fill="${k.mane[1]}"/>`
     : '';
   return `${mane}
-    <g ${STROKE}><circle cx="29" cy="38" r="14" fill="${k.body}"/><circle cx="91" cy="38" r="14" fill="${k.body}"/></g>
+    <g ${STROKE}><circle cx="29" cy="38" r="14" fill="${k.fur || k.body}"/><circle cx="91" cy="38" r="14" fill="${k.fur || k.body}"/></g>
     <circle cx="30" cy="39" r="7" fill="#f3b8a4"/><circle cx="90" cy="39" r="7" fill="#f3b8a4"/>
-    <path d="M60 28C36 28 19 44 19 67C19 90 38 106 60 106C82 106 101 90 101 67C101 44 84 28 60 28Z" fill="${k.body}" ${STROKE}/>
-    <path d="M42 40Q60 34 78 40" fill="none" stroke="${k.tuft}" stroke-width="2" stroke-linecap="round" opacity=".35"/>
+    <path d="M60 28C36 28 19 44 19 67C19 90 38 106 60 106C82 106 101 90 101 67C101 44 84 28 60 28Z" fill="${k.fur || k.body}" ${STROKE}/>
+    <path d="M42 40Q60 34 78 40" fill="none" stroke="${k.fur ? '#8c4a22' : k.tuft}" stroke-width="2" stroke-linecap="round" opacity=".35"/>
     <ellipse cx="60" cy="87" rx="17" ry="12.5" fill="${k.belly}"/>
     <ellipse cx="28" cy="83" rx="6.5" ry="4" fill="#f7b3a6" opacity=".75"/><ellipse cx="92" cy="83" rx="6.5" ry="4" fill="#f7b3a6" opacity=".75"/>
     <g class="ln-eye-open">
@@ -69,11 +73,37 @@ function face(k) {
     <path class="ln-eye-closed" d="M35 70Q42 76 49 70M71 70Q78 76 85 70" fill="none" stroke="${INK}" stroke-width="2.5" stroke-linecap="round"/>
     <path d="M55.6 79.6Q60 77.6 64.4 79.6Q62.8 84 60 84.6Q57.2 84 55.6 79.6Z" fill="#7a3f2a" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>
     <path d="M60 84.6V87M60 87C58 91 53 91 51.5 88M60 87C62 91 67 91 68.5 88" fill="none" stroke="${INK}" stroke-width="2" stroke-linecap="round"/>
-    <g fill="${INK}" opacity=".55"><circle cx="49" cy="86" r="1.1"/><circle cx="47" cy="90" r="1.1"/><circle cx="71" cy="86" r="1.1"/><circle cx="73" cy="90" r="1.1"/></g>`;
+    <g fill="${INK}" opacity=".55"><circle cx="49" cy="86" r="1.1"/><circle cx="47" cy="90" r="1.1"/><circle cx="71" cy="86" r="1.1"/><circle cx="73" cy="90" r="1.1"/></g>
+    ${k.hat ? SANTA_HAT : ''}`;
 }
 
-export function lionSVG(kind) {
-  const k = KINDS[kind];
+// Santa hat in face coordinates: red cap flopping to the right, white trim and pompom
+const SANTA_HAT = `<g transform="rotate(8 60 34)">
+    <path d="M30 38C32 10 60 -4 90 2C102 5 108 14 106 26C100 21 94 24 90 38Z" fill="#d9473f" ${STROKE}/>
+    <circle cx="106" cy="28" r="8.5" fill="#ffffff" ${STROKE}/>
+    <path d="M24 38C24 30 96 30 96 38C96 46 24 46 24 38Z" fill="#ffffff" ${STROKE}/>
+  </g>`;
+
+// Santa coat details on the body: white fur hem and a black belt with a gold buckle
+const BODY_PATH = 'M60 66C70 59 98 58 112 60C126 62 134 72 134 84C134 96 124 102 110 102H66C52 102 44 94 44 83C44 75 50 70 60 66Z';
+const SANTA_BELT = `<clipPath id="ln-clip-santa"><path d="${BODY_PATH}"/></clipPath>
+    <g clip-path="url(#ln-clip-santa)">
+      <rect x="40" y="94" width="100" height="10" fill="#ffffff"/>
+      <path d="M40 94H140" stroke="${INK}" stroke-width="2"/>
+      <rect x="40" y="76" width="100" height="9" fill="#2b2b36"/>
+    </g>
+    <rect x="96" y="74.5" width="12" height="12" rx="2" fill="#f2c14e" ${STROKE} stroke-width="2"/>
+    <rect x="99.5" y="78" width="5" height="5" fill="#2b2b36"/>
+    <path d="${BODY_PATH}" fill="none" ${STROKE}/>`;
+
+/** Costumes change colours and add pieces. 'santa': red coat, belt, boots, white-mane beard, hat */
+function dressed(k, costume) {
+  if (costume !== 'santa') return k;
+  return { ...k, fur: k.body, body: '#d9473f', far: '#b8392f', belly: '#ffffff', tuft: '#ffffff', mane: ['#ffffff', '#e8edf4'], hat: true, boot: '#2b2b36', belt: true };
+}
+
+export function lionSVG(kind, costume) {
+  const k = dressed(KINDS[kind], costume);
   const spots = k.spots
     ? `<g fill="${k.tuft}" opacity=".25"><circle cx="68" cy="72" r="3.4"/><circle cx="80" cy="81" r="3"/><circle cx="93" cy="70" r="3.4"/><circle cx="104" cy="80" r="2.8"/><circle cx="58" cy="87" r="2.8"/></g>`
     : '';
@@ -87,13 +117,14 @@ export function lionSVG(kind) {
       <path d="M48 76C34 75 26 66 26 52" fill="none" stroke="${k.body}" stroke-width="4.5" stroke-linecap="round"/>
       <path d="M26 41C19 44 19 54 26 56C33 54 33 44 26 41Z" fill="${k.tuft}" ${STROKE}/>
     </g>
-    ${leg('far hind b', 72, k.far)}
-    ${leg('far front a', 112, k.far)}
-    ${leg('near hind a', 60, k.body)}
-    ${leg('near front b', 122, k.body)}
+    ${leg('far hind b', 72, k.far, k.boot)}
+    ${leg('far front a', 112, k.far, k.boot)}
+    ${leg('near hind a', 60, k.body, k.boot)}
+    ${leg('near front b', 122, k.body, k.boot)}
     <path d="M60 66C70 59 98 58 112 60C126 62 134 72 134 84C134 96 124 102 110 102H66C52 102 44 94 44 83C44 75 50 70 60 66Z" fill="${k.body}" ${STROKE}/>
     <path d="M68 102C72 94 104 94 110 102Z" fill="${k.belly}"/>
     ${spots}
+    ${k.belt ? SANTA_BELT : ''}
     <g class="ln-head"><g transform="${head}">${face(k)}</g></g>
   </g></g>
   <g class="ln-z" fill="${INK}"><text x="140" y="22" font-size="12">z</text><text x="150" y="12" font-size="9">z</text></g>
@@ -133,7 +164,8 @@ function start() {
     const el = document.createElement('div');
     el.className = `lion lion-${kind} is-idle`;
     el.style.width = `${KINDS[kind].width}px`;
-    el.innerHTML = lionSVG(kind);
+    // 12月: the father dresses up as Santa
+    el.innerHTML = lionSVG(kind, Number(window.MONTH) === 12 && kind === 'father' ? 'santa' : null);
     path.append(el);
     return { kind, el, w: KINDS[kind].width, x: 0, timer: null, action: 'idle' };
   });
