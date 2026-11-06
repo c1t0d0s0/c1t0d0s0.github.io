@@ -5,7 +5,7 @@
 /* --- Translation Data --- */
 const I18N_DATA = {
   ja: {
-    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。マンホールカード、NoxMind、世界遺産マスター、LexiDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブ、カレンダー、Sumris、Bubblin\'、ISS Tracker、ABC譜面スタジオ、ジローバックス、法令図書館などにアクセスできます。',
+    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。マンホールカード、NoxMind、世界遺産マスター、LexiDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブ、カレンダー、Sumris、Bubblin\'、ISS Tracker、ABC譜面スタジオ、ジローバックス、法令図書館、地球探検ラボなどにアクセスできます。',
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
@@ -113,11 +113,15 @@ const I18N_DATA = {
       'laws-jp-library': {
         title: '法令図書館',
         desc: '日本国憲法と2,100本超の法律の全文、政令・府省令を全文検索・閲覧できるWeb書庫。法令名検索や五十音・分野別ブラウズにも対応。'
+      },
+      'earth-exploration-lab': {
+        title: '地球探検ラボ',
+        desc: 'JAXA Earth APIの衛星観測データを誰でも自由に探検・比較できるWeb科学室。世界の地表面温度・夜間光・森林被覆・降水量などの地球環境データを地図やタイムマシンで分析できます。'
       }
     }
   },
   en: {
-    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, Sumris, Bubblin\', ISS Tracker, ABC Score Studio, Jirobucks, Laws of Japan Library (Japanese only), and more.',
+    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, Sumris, Bubblin\', ISS Tracker, ABC Score Studio, Jirobucks, Laws of Japan Library (Japanese only), Earth Exploration Lab (Japanese only), and more.',
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
@@ -224,6 +228,11 @@ const I18N_DATA = {
       'laws-jp-library': {
         title: 'Laws of Japan Library (Japanese only)',
         desc: 'A fast, clean full-text search engine and reading room for the Constitution of Japan and 2,100+ Japanese laws and statutes. (Note: Available in Japanese only)',
+        actionText: 'Open App (Japanese only)'
+      },
+      'earth-exploration-lab': {
+        title: 'Earth Exploration Lab (Japanese only)',
+        desc: 'An interactive planetary science platform powered by JAXA Earth API satellite observation data. Explore global surface temperature, nighttime lights, and climate changes. (Note: Available in Japanese only)',
         actionText: 'Open App (Japanese only)'
       }
     }

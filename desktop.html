@@ -2099,6 +2099,7 @@
             <div class="fp-subpanel-item" onclick="AppLauncher.open('music-abc')">🎼 ABC譜面スタジオ</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('jirobucks')">🍜 ジローバックス</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('laws-jp-library')">⚖️ 法令図書館</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('earth-exploration-lab')">🌏 地球探検ラボ</div>
           </div>
         </div>
       </div>
@@ -2293,7 +2294,7 @@
   <!-- JAVASCRIPT LOGIC -->
   <script>
     /* ==========================================================================
-       1. DATA DEFINITIONS (22 PORTAL APPLICATIONS + SYSTEM TOOLS)
+       1. DATA DEFINITIONS (23 PORTAL APPLICATIONS + SYSTEM TOOLS)
        ========================================================================== */
     const APPS = [
       {
@@ -2537,6 +2538,17 @@
         categoryName: 'ツール',
         desc: '日本国憲法と2,100本超の法律の全文、政令・府省令を全文検索・閲覧できるWeb書庫。',
         width: 1020, height: 720, desktop: true
+      },
+      {
+        id: 'earth-exploration-lab',
+        title: '地球探検ラボ',
+        titleEn: 'Earth Exploration Lab',
+        url: 'https://c1t0d0s0.y8n.org/earth-exploration-lab/',
+        icon: 'assets/images/earth-exploration-lab.webp',
+        category: 'education',
+        categoryName: 'クイズ・学習',
+        desc: 'JAXA Earth APIの衛星観測データで地球環境や気候変動を探検・分析できるWeb科学室。',
+        width: 1080, height: 720, desktop: true
       }
     ];
 
@@ -3366,7 +3378,7 @@ Type 'help' for commands, 'ls' for applications, 'cde-fetch' for system info.
 
           case 'ls':
           case 'dir':
-            output.textContent += `total 22 applications (in /opt/c1t0d0s0/apps):
+            output.textContent += `total 23 applications (in /opt/c1t0d0s0/apps):
 drwxr-xr-x   2 root     sys          512 Sep 25 13:46 .
 drwxr-xr-x   4 root     sys          512 Sep 25 13:46 ..
 `;
