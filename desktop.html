@@ -2098,6 +2098,7 @@
             <div class="fp-subpanel-item" onclick="AppLauncher.open('iss-tracker')">🛰️ ISS Tracker</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('music-abc')">🎼 ABC譜面スタジオ</div>
             <div class="fp-subpanel-item" onclick="AppLauncher.open('jirobucks')">🍜 ジローバックス</div>
+            <div class="fp-subpanel-item" onclick="AppLauncher.open('laws-jp-library')">⚖️ 法令図書館</div>
           </div>
         </div>
       </div>
@@ -2292,7 +2293,7 @@
   <!-- JAVASCRIPT LOGIC -->
   <script>
     /* ==========================================================================
-       1. DATA DEFINITIONS (21 PORTAL APPLICATIONS + SYSTEM TOOLS)
+       1. DATA DEFINITIONS (22 PORTAL APPLICATIONS + SYSTEM TOOLS)
        ========================================================================== */
     const APPS = [
       {
@@ -2525,6 +2526,17 @@
         categoryName: 'ツール',
         desc: 'ラーメン二郎のコールとスターバックスのカスタム呪文を直感的に作成！',
         width: 900, height: 700, desktop: true
+      },
+      {
+        id: 'laws-jp-library',
+        title: '法令図書館',
+        titleEn: 'Laws of Japan Library',
+        url: 'https://c1t0d0s0.y8n.org/laws-jp-library/',
+        icon: 'assets/images/laws-jp-library.webp',
+        category: 'tool',
+        categoryName: 'ツール',
+        desc: '日本国憲法と2,100本超の法律の全文、政令・府省令を全文検索・閲覧できるWeb書庫。',
+        width: 1020, height: 720, desktop: true
       }
     ];
 
@@ -3354,7 +3366,7 @@ Type 'help' for commands, 'ls' for applications, 'cde-fetch' for system info.
 
           case 'ls':
           case 'dir':
-            output.textContent += `total 21 applications (in /opt/c1t0d0s0/apps):
+            output.textContent += `total 22 applications (in /opt/c1t0d0s0/apps):
 drwxr-xr-x   2 root     sys          512 Sep 25 13:46 .
 drwxr-xr-x   4 root     sys          512 Sep 25 13:46 ..
 `;

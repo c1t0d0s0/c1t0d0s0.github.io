@@ -5,7 +5,7 @@
 /* --- Translation Data --- */
 const I18N_DATA = {
   ja: {
-    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。マンホールカード、NoxMind、世界遺産マスター、LexiDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブ、カレンダー、Sumris、Bubblin\'、ISS Tracker、ABC譜面スタジオ、ジローバックスなどにアクセスできます。',
+    metaDesc: 'c1t0d0s0が制作・公開しているWebアプリケーションおよびWebツールのポータルサイトです。マンホールカード、NoxMind、世界遺産マスター、LexiDrop、Unit Converter、元素ラボ、ライフゲーム、モールスマスター、Votica、クラシック・ソロゲームズ、Planet Merge、NativeEar、釣行ナビ、QRコード生成、歴代指導者アーカイブ、カレンダー、Sumris、Bubblin\'、ISS Tracker、ABC譜面スタジオ、ジローバックス、法令図書館などにアクセスできます。',
     themeToggleAria: 'テーマ切替',
     langToggleAria: '英語に切り替え',
     langToggleText: 'EN',
@@ -109,11 +109,15 @@ const I18N_DATA = {
       'jirobucks': {
         title: 'ジローバックス',
         desc: 'ラーメン二郎のコールとスターバックスのカスタム呪文を直感的に作成！店員に見せるモードや音声読み上げで注文も安心。'
+      },
+      'laws-jp-library': {
+        title: '法令図書館',
+        desc: '日本国憲法と2,100本超の法律の全文、政令・府省令を全文検索・閲覧できるWeb書庫。法令名検索や五十音・分野別ブラウズにも対応。'
       }
     }
   },
   en: {
-    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, Sumris, Bubblin\', ISS Tracker, ABC Score Studio, Jirobucks, and more.',
+    metaDesc: 'Portal site for web applications and digital tools created by c1t0d0s0. Explore Manhole Cards, NoxMind, World Heritage Master, LexiDrop, Unit Converter, Element Lab, Conway\'s Game of Life, Morse Master, Votica, Classic Solo Games, Planet Merge, NativeEar, Fishing Info, QR Code Generator, National Leaders Archive, Calendar, Sumris, Bubblin\', ISS Tracker, ABC Score Studio, Jirobucks, Laws of Japan Library (Japanese only), and more.',
     themeToggleAria: 'Toggle theme',
     langToggleAria: 'Switch to Japanese',
     langToggleText: 'JA',
@@ -216,6 +220,11 @@ const I18N_DATA = {
       'jirobucks': {
         title: 'Jirobucks',
         desc: 'An intuitive order customizer for Ramen Jiro and Starbucks. Generate ordering calls and custom drink spells with simple taps, text-to-speech, and staff show mode.'
+      },
+      'laws-jp-library': {
+        title: 'Laws of Japan Library (Japanese only)',
+        desc: 'A fast, clean full-text search engine and reading room for the Constitution of Japan and 2,100+ Japanese laws and statutes. (Note: Available in Japanese only)',
+        actionText: 'Open App (Japanese only)'
       }
     }
   }
