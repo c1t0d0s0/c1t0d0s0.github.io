@@ -1400,6 +1400,23 @@
     .progress-guest p { margin: 0 0 10px; }
     .progress-guest .progress-login { min-height: 44px; font-size: 1rem; }
     .progress-note { margin: 10px 0 0; color: var(--chalk-soft); font-size: .85rem; }
+
+    /* "Turn super" hint at the bottom of the progress board */
+    .super-hint {
+      margin-top: 16px;
+      padding: 10px 14px 12px;
+      border: 2px dashed rgba(255, 216, 74, .6);
+      border-radius: 10px;
+      font-size: .88rem;
+      line-height: 1.6;
+    }
+    .super-hint p { margin: 0 0 6px; }
+    .super-hint-head { color: #ffd84a; font-size: 1.02rem; }
+    .super-hint-star { margin-right: 6px; text-shadow: 0 0 6px rgba(255, 200, 40, .8); }
+    .super-hint ul { margin: 0; padding: 0; list-style: none; color: var(--chalk-soft); }
+    .super-hint li { padding: 2px 0; }
+    .super-hint .super-hint-secret { margin: 8px 0 0; padding-top: 8px; border-top: 1px dashed rgba(255, 216, 74, .4); color: #ffe9a8; }
+    .super-hint-small { display: block; color: var(--chalk-soft); font-size: .78rem; }
     .progress-status { margin: 0 0 10px; color: #ffd2a0; font-size: .95rem; }
     .progress-status[hidden] { display: none; }
     .progress-status .progress-retry { min-height: 30px; margin-left: 4px; font-family: 'Zen Maru Gothic', sans-serif; font-size: .85rem; }
@@ -1879,6 +1896,18 @@
           </details>
           <div class="progress-undated" id="progress-undated" hidden></div>
           <p class="progress-note">目標たっせい = それぞれの アプリで その日の 目標（スタンプなど）を もらった 日です。</p>
+        </div>
+        <!-- How the animals turn super (the rule lives in assets/study/super.js) -->
+        <div class="super-hint">
+          <p class="super-hint-head"><span class="super-hint-star" aria-hidden="true">★</span>スーパーに へんしん！</p>
+          <p>それぞれの 教科の「今日のチャレンジ」を 1週間（7日） つづけて クリアすると、その 教科の 動物が 金色に かがやく スーパーに へんしんするよ。1日 お休みすると、もとの すがたに もどるよ。</p>
+          <ul>
+            <li><span class="swatch" style="background:#f4c430" aria-hidden="true"></span>算数　リスザル … 算数チャレンジの 今日のチャレンジ</li>
+            <li><span class="swatch" style="background:#ff7aa2" aria-hidden="true"></span>国語　オオヤマネコ … 国語マスターの 今日のチャレンジ</li>
+            <li><span class="swatch" style="background:#56b4f0" aria-hidden="true"></span>理科　柴犬 … まいにち理科ノートの 今日のチャレンジ</li>
+            <li><span class="swatch" style="background:#b4e05a" aria-hidden="true"></span>社会　スズメ … スズメの社会クイズの 今日のチャレンジ</li>
+          </ul>
+          <p class="super-hint-secret"><span aria-hidden="true">🦁</span> ヒント：4ひき ぜんぶが スーパーに なると、ライオンの 家族にも なにかが おこるかも……？<span class="super-hint-small">（ライオンは パソコンなどの 大きな 画面に いるよ）</span></p>
         </div>
       </div>
     </div>

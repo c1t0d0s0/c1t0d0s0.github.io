@@ -4,7 +4,7 @@
    has been done 7 days in a row, and turns back when the run is broken.
      math     - math-quiz           今日のチャレンジ
      japanese - kokugo-master       今日のチャレンジ
-     science  - science-quiz        今日の10問
+     science  - science-quiz        今日のチャレンジ
      social   - social-studies-quiz 今日のチャレンジ
    The days come from the records the apps keep in this browser (localStorage,
    same origin) and, when logged in, from Firestore (handed over by progress.js).
