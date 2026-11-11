@@ -1,0 +1,22 @@
+{
+  "id": "/study.html",
+  "name": "THE LEARNING ZOO",
+  "short_name": "Learning Zoo",
+  "description": "小学生向けの学習アプリをあつめたリンク集。算数・国語・理科・社会の学習アプリに、教科ごとの動物たちといっしょに出かけよう。",
+  "lang": "ja",
+  "dir": "ltr",
+  "start_url": "/study.html?source=pwa",
+  "scope": "/study.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#a8d4f2",
+  "theme_color": "#a8d4f2",
+  "categories": ["education", "kids"],
+  "icons": [
+    { "src": "/assets/study/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/study/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/study/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/assets/study/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/assets/study/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}
