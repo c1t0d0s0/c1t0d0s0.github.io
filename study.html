@@ -898,6 +898,72 @@
     .season::after  { right: 18%; }
     @keyframes plaque-sway { 0%, 100% { transform: rotate(-1.5deg); } 50% { transform: rotate(1.5deg); } }
 
+    /* News board: updates of the learning apps, read from assets/study/news.txt */
+    .news {
+      position: relative;
+      max-width: 420px;
+      margin: 14px auto 0;
+      border: 2px solid var(--ink);
+      border-radius: 8px;
+      background:
+        repeating-linear-gradient(90deg, rgba(140, 90, 51, .12) 0 2px, transparent 2px 34px),
+        #e8c79a;
+      box-shadow: 0 3px 0 var(--wood-deep);
+      text-align: left;
+    }
+    .news[hidden] { display: none; }
+    .news-label {
+      position: absolute;
+      top: -9px;
+      left: 10px;
+      padding: 0 6px;
+      border-radius: 4px;
+      background: var(--wood-deep);
+      color: var(--paper);
+      font-size: .66rem;
+      font-weight: 700;
+      line-height: 1.5;
+      letter-spacing: .1em;
+    }
+    .news-toggle {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+      min-height: 34px;
+      padding: 5px 8px 4px 10px;
+      border: 0;
+      background: none;
+      color: var(--ink);
+      font: inherit;
+      font-size: .8rem;
+      font-weight: 700;
+      text-align: left;
+      cursor: pointer;
+    }
+    .news-toggle:focus-visible { outline: 3px solid var(--ink); outline-offset: 2px; border-radius: 6px; }
+    .news-arrow { flex: none; margin-left: auto; transition: transform .2s; }
+    .news-toggle[aria-expanded="true"] .news-arrow { transform: rotate(180deg); }
+    .news-list { margin: 0; padding: 0 10px 8px; list-style: none; }
+    .news-list[hidden] { display: none; }
+    .news-item { display: flex; gap: 6px; min-width: 0; line-height: 1.45; }
+    .news-list .news-item { padding: 5px 0 4px; border-top: 1px dashed rgba(28, 42, 74, .3); font-size: .8rem; font-weight: 700; }
+    .news-date { flex: none; color: var(--wood-deep); }
+    .news-text { min-width: 0; }
+    .news-toggle[aria-expanded="false"] .news-text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .news-toggle[aria-expanded="true"] { align-items: flex-start; }
+    .news-new {
+      flex: none;
+      align-self: flex-start;
+      margin-top: .2em;
+      padding: 0 5px;
+      border-radius: 4px;
+      background: #d9473f;
+      color: #fff;
+      font-size: .64rem;
+      line-height: 1.5;
+    }
+
     /* Grade selector inside the entrance gate */
     .grade-box {
       margin: 12px auto 0;
@@ -1625,6 +1691,16 @@
       </div>
       <h1 class="visually-hidden">THE LEARNING ZOO（小学生の 学習アプリ）</h1>
       <p class="season" id="season"></p>
+      <!-- News board: filled from assets/study/news.txt; stays hidden when there is nothing to show -->
+      <div class="news" id="news" hidden>
+        <span class="news-label" aria-hidden="true">おしらせ</span>
+        <button type="button" class="news-toggle" id="news-toggle" aria-expanded="false" aria-controls="news-list">
+          <span class="visually-hidden">おしらせ：</span>
+          <span class="news-item" id="news-latest"></span>
+          <span class="news-arrow" aria-hidden="true">▼</span>
+        </button>
+        <ul class="news-list" id="news-list" hidden></ul>
+      </div>
       <div class="grade-box" role="group" aria-labelledby="grade-label">
         <div class="grade-head">
           <span id="grade-label">学年を えらぶ</span>
@@ -2305,6 +2381,73 @@
       if (history.state && history.state.viewer) {
         show(history.state.viewer.url, history.state.viewer.name);
       }
+    })();
+  </script>
+  <script>
+    /* News board: one line per item in assets/study/news.txt ("2026/11/12 本文"), newest first */
+    (function () {
+      var box = document.getElementById('news');
+      if (!box || !window.fetch) return;
+      var MAX = 5, NEW_DAYS = 7;
+
+      function parse(text) {
+        var items = [];
+        text.split(/\r?\n/).forEach(function (line) {
+          line = line.trim();
+          if (!line || line.charAt(0) === '#') return;
+          var m = line.match(/^(\d{4})[\/-](\d{1,2})[\/-](\d{1,2})\s+(.+)$/);
+          if (!m) return;
+          var d = new Date(+m[1], +m[2] - 1, +m[3]);
+          if (d.getMonth() !== +m[2] - 1) return; // not a real date
+          items.push({ date: d, text: m[4] });
+        });
+        return items.sort(function (a, b) { return b.date - a.date; });
+      }
+
+      function fill(el, item) {
+        var today = new Date(); today.setHours(0, 0, 0, 0);
+        var age = (today - item.date) / 864e5;
+        el.textContent = '';
+        if (age >= 0 && age < NEW_DAYS) {
+          var badge = document.createElement('span');
+          badge.className = 'news-new';
+          badge.textContent = 'NEW';
+          el.appendChild(badge);
+        }
+        var date = document.createElement('span');
+        date.className = 'news-date';
+        date.textContent = (item.date.getMonth() + 1) + '/' + item.date.getDate();
+        var text = document.createElement('span');
+        text.className = 'news-text';
+        text.textContent = item.text;
+        el.appendChild(date);
+        el.appendChild(text);
+      }
+
+      fetch('assets/study/news.txt', { cache: 'no-cache' })
+        .then(function (res) { return res.ok ? res.text() : ''; })
+        .then(function (text) {
+          var items = parse(text).slice(0, MAX);
+          if (!items.length) return;
+          var toggle = document.getElementById('news-toggle');
+          var latest = document.getElementById('news-latest');
+          var list = document.getElementById('news-list');
+          fill(latest, items[0]);
+          // The newest one stays on the toggle row (it wraps when open); the list holds the rest
+          items.slice(1).forEach(function (item) {
+            var li = document.createElement('li');
+            li.className = 'news-item';
+            fill(li, item);
+            list.appendChild(li);
+          });
+          toggle.addEventListener('click', function () {
+            var open = toggle.getAttribute('aria-expanded') !== 'true';
+            toggle.setAttribute('aria-expanded', String(open));
+            list.hidden = !open || !list.children.length;
+          });
+          box.hidden = false;
+        })
+        .catch(function () { /* no news: keep the board hidden */ });
     })();
   </script>
   <script type="module" src="assets/study/progress.js"></script>

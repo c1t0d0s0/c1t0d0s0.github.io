@@ -57,8 +57,25 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // The page's own files: cache first, refreshed in the background
   const path = url.pathname.replace(/^\//, '');
+
+  // News text: network first so a new line shows on the next visit; saved copy when offline
+  if (path === 'assets/study/news.txt') {
+    event.respondWith(
+      fetch(req)
+        .then((res) => {
+          if (res.ok) {
+            const copy = res.clone();
+            caches.open(CACHE).then((cache) => cache.put(path, copy));
+          }
+          return res;
+        })
+        .catch(() => caches.match(path))
+    );
+    return;
+  }
+
+  // The page's own files: cache first, refreshed in the background
   if (path.startsWith('assets/study/') || path === 'config.js' || path === 'study.webmanifest') {
     event.respondWith(
       caches.open(CACHE).then(async (cache) => {
