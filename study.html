@@ -1586,6 +1586,21 @@
     @media (max-width: 520px) { .progress-table .col-subject { display: none; } }
 
     .progress-undated { margin-top: 12px; font-size: .85rem; }
+
+    /* 検定もぎ試験 (kanji-quiz / math-quiz best results) */
+    .progress-kentei-news { margin: -2px 0 8px; color: #ffd84a; font-size: .95rem; }
+    .progress-kentei-news[hidden], .progress-kentei[hidden] { display: none; }
+    .progress-kentei { margin-top: 14px; font-size: .88rem; }
+    .kentei-head { margin: 0 0 4px; color: var(--chalk-soft); }
+    .progress-kentei table { width: 100%; margin-bottom: 8px; border-collapse: collapse; }
+    .progress-kentei caption { padding: 4px 0 2px; text-align: left; color: var(--chalk-white); font-size: .95rem; }
+    .progress-kentei th, .progress-kentei td { padding: 3px 6px; border-top: 1px dashed rgba(253, 253, 250, .2); text-align: left; font-weight: 600; white-space: nowrap; }
+    .progress-kentei .kentei-score { text-align: right; }
+    .progress-kentei .kentei-badges { width: 100%; }
+    .progress-kentei .kentei-date { color: var(--chalk-soft); text-align: right; }
+    .kentei-pass, .kentei-new { display: inline-block; margin-right: 4px; padding: 0 6px; border-radius: 4px; font-size: .75rem; line-height: 1.6; }
+    .kentei-pass { background: #ffd84a; color: var(--board-deep); }
+    .kentei-new { background: #d9473f; color: #fff; }
     .progress-undated[hidden] { display: none; }
     .undated-head { margin: 0 0 2px; color: var(--chalk-soft); }
     .progress-undated ul { margin: 0; padding: 0; list-style: none; }
@@ -1956,6 +1971,7 @@
             <button type="button" class="period-tab" role="tab" data-period="month" aria-selected="false">今月</button>
           </div>
           <p class="progress-summary" id="progress-summary"></p>
+          <p class="progress-kentei-news" id="progress-kentei-news" hidden></p>
           <div class="progress-chart" id="progress-chart"></div>
           <ul class="progress-legend" id="progress-legend" aria-label="教科の 色" hidden>
             <li><span class="swatch" style="background:#f4c430"></span>算数</li>
@@ -1971,6 +1987,7 @@
             </table>
           </details>
           <div class="progress-undated" id="progress-undated" hidden></div>
+          <div class="progress-kentei" id="progress-kentei" hidden></div>
           <p class="progress-note">目標たっせい = それぞれの アプリで その日の 目標（スタンプなど）を もらった 日です。</p>
         </div>
         <!-- How the animals turn super (the rule lives in assets/study/super.js) -->

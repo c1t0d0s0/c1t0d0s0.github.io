@@ -98,6 +98,70 @@ export function summarize(apps, records, kind, today) {
   };
 }
 
+/* ---------- 検定もぎ試験 (kanji-quiz 漢検 / math-quiz 算数検定) ----------
+   Each app keeps only the best result per level, in users/{uid}/apps/{appId}/progress/{id}.
+   Full marks and pass marks mirror kanji-quiz/src/core/kanken.ts and math-quiz/src/kentei/levels.js. */
+
+export const KENTEI = {
+  kanken: {
+    appId: 'kanji-quiz',
+    name: '漢検もぎ試験',
+    unit: '点',
+    id: /^kanken2-(mini-)?k(\d+)$/,
+    // [max, pass] by level
+    full: { 10: [150, 120], 9: [150, 120], 8: [150, 120], 7: [200, 140], 6: [200, 140], 5: [200, 140] },
+    mini: { 10: [100, 80], 9: [100, 80], 8: [100, 80], 7: [100, 70], 6: [100, 70], 5: [100, 70] },
+  },
+  sansu: {
+    appId: 'math-quiz',
+    name: '算数検定もぎ試験',
+    unit: '問',
+    id: /^kentei-(mini-)?k(\d+)$/,
+    full: { 11: [20, 14], 10: [20, 14], 9: [20, 14], 8: [30, 21], 7: [30, 21], 6: [30, 21] },
+    mini: { 11: [10, 7], 10: [10, 7], 9: [10, 7], 8: [15, 11], 7: [15, 11], 6: [15, 11] },
+  },
+};
+
+/** Japan date (YYYY-MM-DD) of a time in milliseconds, the same calendar day the apps use */
+const jstYmd = (ms) => new Date(ms + 9 * 3600 * 1000).toISOString().slice(0, 10);
+const DAY = /^\d{4}-\d{2}-\d{2}$/;
+
+/**
+ * Best results of one exam, from the app's progress documents ({ id, data } list).
+ * Returns [{ kyu, mini, score, max, passed, date }] sorted from the highest level (smallest kyu number).
+ */
+export function readKenteiDocs(kind, docs) {
+  const k = KENTEI[kind];
+  const out = [];
+  for (const { id, data: d } of docs || []) {
+    const m = k.id.exec(id || '');
+    if (!m || !d) continue;
+    const mini = !!m[1];
+    const kyu = Number(m[2]);
+    const level = (mini ? k.mini : k.full)[kyu];
+    if (!level) continue;
+    const [max, pass] = level;
+    let score;
+    let date = null;
+    if (kind === 'kanken') {
+      const best = d.data && d.data.best;
+      if (!Number.isInteger(best) || d.data.total !== max || best < 0 || best > max) continue;
+      score = best;
+      if (typeof d.updatedAt === 'number') date = jstYmd(d.updatedAt);
+    } else {
+      const sc = d.data && d.data.score;
+      if (!Number.isInteger(sc) || sc <= 0 || sc > max) continue;
+      score = sc;
+      if (DAY.test(d.data.date || '')) date = d.data.date;
+      else if (typeof d.updatedAt === 'number') date = jstYmd(d.updatedAt);
+    }
+    out.push({ kyu, mini, score, max, passed: score >= pass, date });
+  }
+  return out.sort((a, b) => a.kyu - b.kyu || Number(a.mini) - Number(b.mini));
+}
+
+const levelName = (r) => `${r.kyu}級${r.mini ? ' ミニ' : ''}`;
+
 /* ---------- Page ---------- */
 
 const SUBJECTS = {
@@ -172,6 +236,8 @@ function start() {
   const tableBody = document.getElementById('progress-rows');
   const tableHead = document.getElementById('progress-head-days');
   const undatedEl = document.getElementById('progress-undated');
+  const kenteiEl = document.getElementById('progress-kentei');
+  const kenteiNewsEl = document.getElementById('progress-kentei-news');
   const tabs = section.querySelectorAll('.period-tab');
 
   const apps = collectApps();
@@ -180,6 +246,7 @@ function start() {
   let fb = null;           // loaded Firebase modules + instances
   let uid = null;
   let records = null;      // { appId: readAppDoc(...) }
+  let kentei = null;       // { kanken: [...], sansu: [...] } from readKenteiDocs
   let period = 'today';
   let loadSeq = 0;
 
@@ -261,10 +328,19 @@ function start() {
   async function loadRecords() {
     if (!fb || !uid) return;
     const seq = ++loadSeq;
-    const { doc, getDoc } = fb.dbMod;
+    const { doc, getDoc, collection, getDocs } = fb.dbMod;
+    // Exams: only for the apps that are on the blackboards
+    const examKinds = Object.keys(KENTEI).filter((kind) => apps.some((a) => a.id === KENTEI[kind].appId));
     try {
-      const snaps = await Promise.all(apps.map((a) => getDoc(doc(fb.db, 'users', uid, 'apps', a.id))));
+      const [snaps, examSnaps] = await Promise.all([
+        Promise.all(apps.map((a) => getDoc(doc(fb.db, 'users', uid, 'apps', a.id)))),
+        Promise.all(examKinds.map((kind) => getDocs(collection(fb.db, 'users', uid, 'apps', KENTEI[kind].appId, 'progress')))),
+      ]);
       if (seq !== loadSeq) return;
+      kentei = {};
+      examKinds.forEach((kind, i) => {
+        kentei[kind] = readKenteiDocs(kind, examSnaps[i].docs.map((d) => ({ id: d.id, data: d.data() })));
+      });
       records = {};
       const docs = {};
       snaps.forEach((snap, i) => {
@@ -305,6 +381,48 @@ function start() {
     }
     renderTable(s);
     renderUndated(s);
+    renderKentei(s);
+  }
+
+  function renderKentei(s) {
+    const inPeriod = (r) => r.date && s.dates.includes(r.date);
+    kenteiEl.replaceChildren();
+    kenteiNewsEl.replaceChildren();
+    const kinds = Object.keys(KENTEI).filter((kind) => kentei && kentei[kind] && kentei[kind].length);
+    kenteiEl.hidden = !kinds.length;
+    if (!kinds.length) { kenteiNewsEl.hidden = true; return; }
+
+    // One line under the summary: best results made in this period
+    const label = { today: '今日', week: '今週', month: '今月' }[s.kind];
+    const news = [];
+    for (const kind of kinds) {
+      for (const r of kentei[kind].filter(inPeriod)) {
+        news.push(`${KENTEI[kind].name.replace('もぎ試験', '')}${levelName(r)} ${r.passed ? '合格！' : `${r.score}${KENTEI[kind].unit}`}`);
+      }
+    }
+    kenteiNewsEl.hidden = !news.length;
+    if (news.length) kenteiNewsEl.textContent = `${label}の もぎ試験：${news.join('、')}`;
+
+    kenteiEl.append(el('p', { class: 'kentei-head', text: 'もぎ試験の きろく' }));
+    for (const kind of kinds) {
+      const k = KENTEI[kind];
+      const table = el('table', {}, [el('caption', { text: k.name })]);
+      const body = el('tbody');
+      for (const r of kentei[kind]) {
+        body.append(el('tr', {}, [
+          el('th', { scope: 'row', text: levelName(r) }),
+          el('td', { class: 'kentei-score', text: `${r.score} / ${r.max}${k.unit}` }),
+          el('td', { class: 'kentei-badges' }, [
+            r.passed ? el('span', { class: 'kentei-pass', text: '合格' }) : null,
+            inPeriod(r) ? el('span', { class: 'kentei-new', text: 'NEW' }) : null,
+          ]),
+          el('td', { class: 'kentei-date', text: r.date ? md(r.date) : '' }),
+        ]));
+      }
+      table.append(body);
+      kenteiEl.append(table);
+    }
+    kenteiEl.append(el('p', { class: 'progress-note', text: 'それぞれの 級の いちばん よい 点だけが のこるよ。' }));
   }
 
   function renderToday(s) {
@@ -464,6 +582,8 @@ function start() {
         chartEl.replaceChildren();
         tableBody.replaceChildren();
         undatedEl.hidden = true;
+        kenteiEl.hidden = true;
+        kenteiNewsEl.hidden = true;
         loadRecords();
       }
     });
