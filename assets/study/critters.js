@@ -38,18 +38,29 @@ function crowSVG() {
   </svg>`;
 }
 
-// Kite seen from below with wings spread, head to the right (it is rotated to its heading)
+// Kite seen from above with wings spread, head to the right (it is rotated to its heading).
+// What makes it a トンビ: long broad wings with dark splayed "fingers", a pale patch near
+// each wrist, and the notched (バチ型) tail. The lower wing is the upper one mirrored.
 function kiteSVG() {
+  const wing = `
+      <path d="M46 29C48.6 24 49.2 19 47.5 14.5L30 12C28.6 18 28.6 24 30 29Z" fill="#8f6038" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M47.5 14.5C46.6 10 44.6 6 42.2 3.2Q41.2 0.2 39.8 2.4L39.2 4.2Q38 0.8 36.6 3L36.2 5.4Q34.8 2 33.6 4.4L33.4 6.6Q31.8 4.4 31 6.8L31.2 8.6Q29.4 7.6 29.4 9.8L30 12Z" fill="#4b3121" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M33 14.4Q39 13 45.6 15.8Q39 18.8 33 14.4Z" fill="#e9d2a8"/>
+      <path d="M32.5 22.5Q39 21 45.5 23" fill="none" stroke="#6e4628" stroke-width="1.1" stroke-linecap="round"/>`;
   return `<svg viewBox="0 0 80 64" aria-hidden="true" focusable="false">
     <g class="cr-glide">
-      <path d="M36 30C30 18 22 6 8 2C12 10 16 18 22 24C26 28 30 30 36 30Z" fill="#8a5a36" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M36 34C30 46 22 58 8 62C12 54 16 46 22 40C26 36 30 34 36 34Z" fill="#8a5a36" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M8 2C10 6 12 9 14 12M8 62C10 58 12 55 14 52" fill="none" stroke="#3d2a1c" stroke-width="2.4" stroke-linecap="round"/>
-      <path d="M28 27L32 30M28 37L32 34" stroke="#f0d9b5" stroke-width="2" stroke-linecap="round"/>
-      <path d="M22 32L6 26C3 30 3 34 6 38Z" fill="#7a4c2c" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M20 32C24 26 48 26 54 32C48 38 24 38 20 32Z" fill="#9b6a42" stroke="${INK}" stroke-width="1.6"/>
-      <circle cx="58" cy="32" r="6" fill="#a87a50" stroke="${INK}" stroke-width="1.6"/>
-      <path d="M63 30L68 32L63 34Z" fill="#f2b23a" stroke="${INK}" stroke-width="1" stroke-linejoin="round"/>
+      <path d="M27 29L11 25.5Q9.6 25.4 10 26.8L13.6 32L10 37.2Q9.6 38.6 11 38.5L27 35Z" fill="#7a4c2c" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M13.5 28.4L19 29.5M13.5 35.6L19 34.5" fill="none" stroke="#4b3121" stroke-width="1.3" stroke-linecap="round"/>
+      <g>${wing}</g>
+      <g transform="translate(0 64) scale(1 -1)">${wing}</g>
+      <path d="M24 32C24 27.5 30 26 40 26C48 26 53 28.5 53 32C53 35.5 48 38 40 38C30 38 24 36.5 24 32Z" fill="#9b6a42" stroke="${INK}" stroke-width="1.6"/>
+      <path d="M33 30.4L36 30.6M38 33.6L41 33.4M42.5 30.6L45 30.8" fill="none" stroke="#6e4628" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M61.5 29.2Q68 29.4 70 32Q68 34.6 61.5 34.8Z" fill="#f2c14e" stroke="${INK}" stroke-width="1.3" stroke-linejoin="round"/>
+      <path d="M67.6 30.3Q70 31 70 32Q70 33 67.6 33.7Z" fill="#3a3a46"/>
+      <ellipse cx="57" cy="32" rx="7" ry="6.4" fill="#c4a07a" stroke="${INK}" stroke-width="1.6"/>
+      <path d="M51.5 29.2Q54 32 51.5 34.8" fill="none" stroke="#9b6a42" stroke-width="1.4" stroke-linecap="round"/>
+      <circle cx="59" cy="28.6" r="1.7" fill="${INK}"/><circle cx="59.5" cy="28.1" r=".55" fill="#fff"/>
+      <circle cx="59" cy="35.4" r="1.7" fill="${INK}"/><circle cx="59.5" cy="34.9" r=".55" fill="#fff"/>
     </g>
   </svg>`;
 }
