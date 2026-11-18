@@ -132,6 +132,32 @@ export function lionSVG(kind, costume) {
 </svg>`;
 }
 
+/* ---------- Mouse (visits the walkway now and then; the cub chases it) ---------- */
+
+export function mouseSVG() {
+  return `<svg viewBox="0 0 70 40" aria-hidden="true" focusable="false">
+  <ellipse class="ln-shadow" cx="34" cy="37" rx="20" ry="2.5"/>
+  <g class="ms-flip"><g class="ms-bob">
+    <path class="ms-tail" d="M14 27C6 27 3 21 6 16C8 12 4 9 1 10" fill="none" stroke="#c98a8a" stroke-width="2.4" stroke-linecap="round"/>
+    <g class="ms-leg ms-leg-a"><path d="M22 29V35H27" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <g class="ms-leg ms-leg-b"><path d="M40 29V35H45" fill="none" stroke="${INK}" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></g>
+    <path d="M14 28C12 18 22 12 34 12C46 12 54 18 58 24C60 28 56 31 50 31H20C16 31 14 30 14 28Z" fill="#a9adb8" stroke="${INK}" stroke-width="2.2" stroke-linejoin="round"/>
+    <ellipse cx="34" cy="28" rx="13" ry="3" fill="#e4e6ec"/>
+    <circle cx="44" cy="12" r="7" fill="#a9adb8" stroke="${INK}" stroke-width="2.2"/>
+    <circle cx="44" cy="12" r="3.6" fill="#f3b8b8"/>
+    <circle cx="51" cy="20" r="2.4" fill="${INK}"/><circle cx="51.8" cy="19.2" r=".9" fill="#fff"/>
+    <circle cx="61" cy="25" r="2.4" fill="#e0707a" stroke="${INK}" stroke-width="1.2"/>
+    <path d="M57 26L66 24M57 28L66 29" stroke="${INK}" stroke-width=".9" stroke-linecap="round" opacity=".6"/>
+  </g></g>
+</svg>`;
+}
+
+/** ?animal=mouse,crow ... : the names asked for in the URL (also used by critters.js) */
+export function forcedAnimals() {
+  const m = /[?&]animal=([\w,-]+)/.exec(typeof location === 'undefined' ? '' : location.search);
+  return m ? m[1].toLowerCase().split(',') : [];
+}
+
 /* ---------- Behavior ---------- */
 
 const SPEED = { walk: 30, run: 110 }; // px per second
@@ -173,6 +199,14 @@ function start() {
 
   let spots = [];          // open ground on the walkway where a lion can be seen: [{ l, r }]
   let running = false;
+
+  // Mouse: about every 5 minutes it runs about on the walkway for about 30 seconds
+  const mouseForced = forcedAnimals().some((n) => n === 'mouse' || n === 'all');
+  const MOUSE_W = 56;
+  const MOUSE_SPEED = 170;  // px per second; the cub runs at 110 and never catches it
+  let mouse = null;         // { el, x, timer, until }
+  let mouseTimer = null;
+  let chaseTimer = null;
 
   /* ----- layout ----- */
 
@@ -273,10 +307,124 @@ function start() {
     else rest(lion, 'idle', rand(2, 4));
   }
 
+  /* ----- mouse and the cub's chase ----- */
+
+  const pathWidth = () => document.documentElement.clientWidth;
+  const actualX = (el) => new DOMMatrixReadOnly(getComputedStyle(el).transform).m41;
+
+  function scheduleMouse(first) {
+    clearTimeout(mouseTimer);
+    if (reduce.matches) return;
+    const wait = mouseForced ? (first ? 1.5 : 12) : (first ? rand(60, 300) : rand(240, 360));
+    mouseTimer = setTimeout(spawnMouse, (wait * 1000) / timeScale);
+  }
+
+  function spawnMouse() {
+    if (!wide.matches || mouse || document.visibilityState !== 'visible' || document.documentElement.classList.contains('viewing')) {
+      scheduleMouse(false);
+      return;
+    }
+    const el = document.createElement('div');
+    el.className = 'mouse is-run';
+    el.style.width = `${MOUSE_W}px`;
+    el.innerHTML = mouseSVG();
+    path.append(el);
+    const fromLeft = Math.random() < 0.5;
+    mouse = { el, x: fromLeft ? -MOUSE_W - 10 : pathWidth() + 10, timer: null, until: Date.now() + (30000 / timeScale) };
+    el.style.transition = 'none';
+    el.style.transform = `translateX(${mouse.x}px)`;
+    el.getBoundingClientRect(); // apply the start position before moving
+    mouseStep();
+    startChase();
+  }
+
+  function moveMouse(x, then) {
+    const dx = x - mouse.x;
+    const secs = Math.max(0.05, Math.abs(dx) / MOUSE_SPEED / timeScale);
+    mouse.el.classList.add('is-run');
+    mouse.el.classList.toggle('is-left', dx < 0);
+    mouse.el.style.transition = `transform ${secs}s linear`;
+    mouse.el.style.transform = `translateX(${x}px)`;
+    mouse.x = x;
+    mouse.timer = setTimeout(then, secs * 1000);
+  }
+
+  // Dart to a random spot, freeze for a moment, again ... then run off the nearest edge
+  function mouseStep() {
+    if (!mouse) return;
+    if (Date.now() >= mouse.until) {
+      const exit = mouse.x < pathWidth() / 2 ? -MOUSE_W - 20 : pathWidth() + 20;
+      moveMouse(exit, removeMouse);
+      return;
+    }
+    // While the cub is after it, the mouse always heads away from the cub
+    const lo = 10, hi = pathWidth() - MOUSE_W - 10;
+    let target = rand(lo, hi);
+    if (chaseTimer) {
+      const cub = byKind.cub;
+      const cubMid = actualX(cub.el) + cub.w / 2;
+      const away = mouse.x + MOUSE_W / 2 >= cubMid ? 1 : -1;
+      const room = away > 0 ? hi - mouse.x : mouse.x - lo;
+      // Cornered at an edge: slip past the cub to the other side
+      target = room > 120 ? mouse.x + away * rand(120, room) : (away > 0 ? rand(lo, Math.max(lo, cubMid - 260)) : rand(Math.min(hi, cubMid + 200), hi));
+    }
+    moveMouse(target, () => {
+      if (!mouse) return;
+      mouse.el.classList.remove('is-run');
+      mouse.timer = setTimeout(mouseStep, (rand(0.3, 1.2) * 1000) / timeScale);
+    });
+  }
+
+  function removeMouse() {
+    if (!mouse) return;
+    clearTimeout(mouse.timer);
+    mouse.el.remove();
+    mouse = null;
+    stopChase();
+    scheduleMouse(false);
+  }
+
+  // The cub runs after the mouse, keeping a little behind it
+  function startChase() {
+    const cub = byKind.cub;
+    if (!running || !cub) return;
+    clearTimeout(cub.timer);
+    const step = () => {
+      if (!mouse || !running) return;
+      cub.x = actualX(cub.el);
+      const mx = actualX(mouse.el) + MOUSE_W / 2;
+      // Almost caught: the mouse darts off before the cub gets there
+      if (Math.abs(mx - (cub.x + cub.w / 2)) < 75 && mouse.el.classList.contains('is-run') === false) {
+        clearTimeout(mouse.timer);
+        mouseStep();
+      }
+      const behind = mx - cub.x - cub.w / 2 >= 0 ? -1 : 1;           // stay on the side it is coming from
+      const target = Math.max(-cub.w * 0.5, Math.min(pathWidth() - cub.w * 0.5, mx - cub.w / 2 + behind * (cub.w * 0.55)));
+      clearTimeout(cub.timer);
+      moveTo(cub, target, 'run', () => {});
+      chaseTimer = setTimeout(step, 450 / timeScale);
+    };
+    step();
+  }
+
+  function stopChase() {
+    clearTimeout(chaseTimer);
+    chaseTimer = null;
+    const cub = byKind.cub;
+    if (!cub || !running) return;
+    clearTimeout(cub.timer);
+    cub.x = actualX(cub.el);
+    jumpTo(cub, cub.x);
+    // A little out of breath, then back to the family
+    rest(cub, 'sit', 2);
+  }
+
   /* ----- start / stop ----- */
 
   function freeze() {
     running = false;
+    clearTimeout(chaseTimer);
+    if (mouse) { clearTimeout(mouse.timer); mouse.el.remove(); mouse = null; }
     lions.forEach((lion) => {
       clearTimeout(lion.timer);
       const m = new DOMMatrixReadOnly(getComputedStyle(lion.el).transform);
@@ -324,8 +472,9 @@ function start() {
 
   firstPlacement();
   run();
+  scheduleMouse(true);
 
-  const restart = () => { freeze(); run(); };
+  const restart = () => { freeze(); run(); scheduleMouse(true); };
   wide.addEventListener('change', restart);
   reduce.addEventListener('change', restart);
   document.addEventListener('visibilitychange', restart);

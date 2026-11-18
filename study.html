@@ -1619,6 +1619,38 @@
     }
     .lion { position: absolute; left: 0; bottom: 0; will-change: transform; }
     .lion-cub { z-index: 2; }
+
+    /* Mouse that visits the walkway (assets/study/lions.js) */
+    .mouse { position: absolute; left: 0; bottom: 0; z-index: 3; will-change: transform; }
+    .mouse svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .mouse svg * { transform-box: view-box; }
+    .ms-flip { transform-origin: 35px 20px; }
+    .mouse.is-left .ms-flip { transform: scaleX(-1); }
+    .ms-leg-a { transform-origin: 22px 29px; }
+    .ms-leg-b { transform-origin: 40px 29px; }
+    .ms-tail { transform-origin: 14px 27px; animation: ms-tail 1.4s ease-in-out infinite; }
+    .mouse.is-run .ms-leg-a { animation: ms-leg .13s linear infinite alternate; }
+    .mouse.is-run .ms-leg-b { animation: ms-leg .13s linear -.13s infinite alternate; }
+    .mouse.is-run .ms-bob { animation: ms-bob .13s linear infinite alternate; }
+    @keyframes ms-leg { from { transform: rotate(-28deg); } to { transform: rotate(28deg); } }
+    @keyframes ms-bob { from { transform: translateY(0); } to { transform: translateY(-1.5px); } }
+    @keyframes ms-tail { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(10deg); } }
+
+    /* Birds in the sky (assets/study/critters.js): behind the gate sign */
+    .sky-critters { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+    .critter { position: absolute; left: 0; top: 0; will-change: transform; }
+    .critter svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .critter svg * { transform-box: view-box; }
+    .critter.is-left svg { transform: scaleX(-1); }
+    .cr-bird .cr-wing { transform-origin: 15px 11px; animation: cr-flap .2s ease-in-out infinite alternate; }
+    .cr-crow .cr-wing { transform-origin: 28px 16px; animation: cr-flap .42s ease-in-out infinite alternate; }
+    .cr-kite .cr-glide { transform-origin: 40px 32px; animation: cr-glide 3s ease-in-out infinite; }
+    .cr-caw { fill: var(--ink); font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; opacity: 0; transition: opacity .3s; }
+    .critter.is-left .cr-caw { transform-box: fill-box; transform-origin: center; transform: scaleX(-1); }
+    .cr-crow.is-calling .cr-caw { opacity: .85; }
+    @keyframes cr-flap { from { transform: scaleY(1); } to { transform: scaleY(-.65); } }
+    @keyframes cr-glide { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(.92); } }
+    .viewing .mouse *, .viewing .critter * { animation-play-state: paused; }
     .lion-mother { z-index: 1; }
     .lion svg { display: block; width: 100%; height: auto; overflow: visible; }
     .lion svg * { transform-box: view-box; }
@@ -2469,6 +2501,7 @@
   <script type="module" src="assets/study/lions.js"></script>
   <script type="module" src="assets/study/costumes.js"></script>
   <script type="module" src="assets/study/super.js"></script>
+  <script type="module" src="assets/study/critters.js"></script>
   <script>
     // Service worker for the installed app (lives at the site root, but only controls study.html)
     if ('serviceWorker' in navigator) {
