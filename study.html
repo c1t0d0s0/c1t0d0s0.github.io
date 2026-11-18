@@ -1651,6 +1651,26 @@
     @keyframes cr-flap { from { transform: scaleY(1); } to { transform: scaleY(-.65); } }
     @keyframes cr-glide { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(.92); } }
     .viewing .mouse *, .viewing .critter * { animation-play-state: paused; }
+    /* Owl at night (critters.js): flies in .owl-sky, then perches on the 算数 / 国語 board in .owl-page */
+    .owl-sky { position: fixed; inset: 0; z-index: 4; overflow: hidden; pointer-events: none; }
+    .owl-page { position: absolute; left: 0; top: 0; z-index: 4; width: 0; height: 0; pointer-events: none; }
+    .cr-owl { transform-origin: 50% 97%; }
+    .cr-owl .ow-fly, .cr-owl.is-flying .ow-fold { display: none; }
+    .cr-owl.is-flying .ow-fly { display: inline; }
+    .cr-owl .ow-wing-l { transform-origin: 46px 33px; animation: ow-flap-l .3s ease-in-out infinite alternate; }
+    .cr-owl .ow-wing-r { transform-origin: 74px 33px; animation: ow-flap-r .3s ease-in-out infinite alternate; }
+    .cr-owl.is-gliding .ow-wing-l, .cr-owl.is-gliding .ow-wing-r { animation: none; }
+    .cr-owl .ow-lid { transform: scaleY(0); transition: transform .07s; }
+    .cr-owl.is-blink .ow-lid { transform: scaleY(1); }
+    .cr-owl .ow-face { transform-origin: 60px 26px; transition: transform .35s ease; }
+    .cr-owl.look-l .ow-face { transform: translateX(-2.5px) rotate(-9deg); }
+    .cr-owl.look-r .ow-face { transform: translateX(2.5px) rotate(9deg); }
+    .cr-owl.is-perched svg { transform-origin: 50% 97%; animation: ow-land .45s ease-out; }
+    .cr-owl.is-perched .ow-body { pointer-events: visiblePainted; cursor: pointer; }
+    .cr-owl.is-hooting .cr-caw { opacity: .85; }
+    @keyframes ow-flap-l { from { transform: rotate(26deg); } to { transform: rotate(-16deg); } }
+    @keyframes ow-flap-r { from { transform: rotate(-26deg); } to { transform: rotate(16deg); } }
+    @keyframes ow-land { 0% { transform: scale(1.06, .88); } 100% { transform: none; } }
     .lion-mother { z-index: 1; }
     .lion svg { display: block; width: 100%; height: auto; overflow: visible; }
     .lion svg * { transform-box: view-box; }

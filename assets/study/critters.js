@@ -3,8 +3,11 @@
      小鳥 (birds) - now and then a little flock, for 3 hours after sunrise
      トンビ (kite) - rarely during the day, circles a few times and glides away
      カラス (crow) - now and then from 1 hour before sunset until sunset
+     フクロウ (owl) - now and then at night, flies down and perches on the 算数 or 国語
+                      board for a while (blinks, turns its head, ホー), then flies off.
+                      Tapping it makes it fly off early.
    Sunrise / sunset come from SUN_TIMES and nowHours() in study.html (so ?month= and
-   ?time= work here too). ?animal=bird,kite,crow (or all) shows them right away.
+   ?time= work here too). ?animal=bird,kite,crow,owl (or all) shows them right away.
    The mouse that visits the lions' walkway lives in lions.js.
    ========================================================================== */
 
@@ -65,6 +68,42 @@ function kiteSVG() {
   </svg>`;
 }
 
+// Owl seen from the front, feet at the bottom middle (60, 64). Folded wings and feet show
+// while it perches (.ow-fold); spread, flapping wings while it flies (.ow-fly, .is-flying).
+// A フクロウ: round head without ear tufts, pale heart-shaped face, big dark eyes.
+const OWL = '#8f7a62', OWL_DEEP = '#6e5c48', OWL_FACE = '#eadfc8', OWL_BELLY = '#e2d3b4', OWL_FOOT = '#e8b04a';
+// Mirror a path of absolute commands (M L C Q Z only) around the owl's middle line x = 60
+const mirrorX = (d) => { let i = 0; return d.replace(/-?\d*\.?\d+/g, (n) => (i++ % 2 ? n : String(120 - Number(n)))); };
+
+function owlSVG() {
+  const wing = 'M47 28C38 20 24 14 6 16Q8 22 14 22Q16 28 22 27Q24 33 30 32Q32 38 38 36Q41 42 47 40Z';
+  const bars = 'M16 19L20 24M26 18L30 27M36 21L38 32';
+  const fold = 'M42 30C37 40 39 53 47 60C50 50 50 40 46 30Z';
+  const flyWing = (side, d, b) => `<g class="ow-wing-${side}">
+      <path d="${d}" fill="${OWL}" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="${b}" fill="none" stroke="${OWL_DEEP}" stroke-width="1.4" stroke-linecap="round"/></g>`;
+  const toes = (xs) => xs.map((x) => `<circle cx="${x}" cy="62" r="1.8" fill="${OWL_FOOT}" stroke="${INK}" stroke-width=".9"/>`).join('');
+  const eye = (x) => `<circle cx="${x}" cy="26" r="5" fill="${INK}"/><circle cx="${x + 1.6}" cy="24.4" r="1.8" fill="#fff"/><circle cx="${x - 1.2}" cy="27.6" r=".8" fill="#fff"/>
+      <ellipse class="ow-lid" cx="${x}" cy="26" rx="5.6" ry="5.6" fill="#cdbb98" style="transform-origin:${x}px 20.4px"/>`;
+  return `<svg viewBox="0 0 120 66" aria-hidden="true" focusable="false">
+    <g class="ow-fly">${flyWing('l', wing, bars)}${flyWing('r', mirrorX(wing), mirrorX(bars))}</g>
+    <path class="ow-body" d="M60 10C76 10 80 24 80 38C80 54 72 62 60 62C48 62 40 54 40 38C40 24 44 10 60 10Z" fill="${OWL}" stroke="${INK}" stroke-width="1.6"/>
+    <ellipse cx="60" cy="48" rx="13" ry="11" fill="${OWL_BELLY}"/>
+    <path d="M53 43L55 45L57 43M63 43L65 45L67 43M57.5 49.5L59.5 51.5L61.5 49.5M53.5 54L55.5 56L57.5 54M62.5 54L64.5 56L66.5 54" fill="none" stroke="${OWL_DEEP}" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+    <g class="ow-fold">
+      <path d="${fold}" fill="${OWL_DEEP}" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/>
+      <path d="${mirrorX(fold)}" fill="${OWL_DEEP}" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/>
+      ${toes([52, 54.6, 57.2])}${toes([62.8, 65.4, 68])}
+    </g>
+    <g class="ow-face">
+      <path d="M60 20C56 14 44 14 44 26C44 35 52 38 60 36C68 38 76 35 76 26C76 14 64 14 60 20Z" fill="${OWL_FACE}" stroke="#7a6650" stroke-width="1.2"/>
+      ${eye(53)}${eye(67)}
+      <path d="M58.4 30L61.6 30L60 35Z" fill="${OWL_FOOT}" stroke="${INK}" stroke-width="1" stroke-linejoin="round"/>
+    </g>
+    <text class="cr-caw" x="80" y="9" font-size="10">ホー</text>
+  </svg>`;
+}
+
 /* ---------- Flights ---------- */
 
 const rand = (a, b) => a + Math.random() * (b - a);
@@ -87,19 +126,22 @@ function start() {
     bird: want('bird') || want('birds') || want('kotori'),
     kite: want('kite') || want('tonbi'),
     crow: want('crow') || want('karasu'),
+    owl: want('owl') || want('fukurou'),
   };
 
   const flyers = new Set();
   let frame = 0;
 
-  function addFlyer(markup, cls, width, update) {
+  function addFlyer(markup, cls, width, update, parent = layer) {
     const el = document.createElement('div');
     el.className = `critter ${cls}`;
     el.style.width = `${width}px`;
+    el.setAttribute('aria-hidden', 'true');
     el.innerHTML = markup;
-    layer.append(el);
+    parent.append(el);
     flyers.add({ el, born: performance.now(), update });
     if (!frame) frame = requestAnimationFrame(tick);
+    return el;
   }
 
   function tick(now) {
@@ -211,6 +253,113 @@ function start() {
     }
   }
 
+  // At night an owl flies down onto the 算数 or 国語 board, stays a while, then flies off.
+  // It flies in a fixed layer over the screen; while it perches it is moved to a layer laid
+  // over the whole page, so it scrolls with the board and stays in front of the hill and
+  // the acorns (which cover the top of the first board on phones). Only comes when one of
+  // those boards is in view.
+  let owlSky = null, owlPage = null;
+  function owl() {
+    const vh = window.innerHeight, vw = window.innerWidth;
+    const boards = ['subject-math', 'subject-japanese']
+      .map((id) => document.getElementById(id))
+      .map((h) => h && h.closest('.board'))
+      .filter((b) => {
+        if (!b) return false;
+        const r = b.getBoundingClientRect();
+        return r.width > 0 && r.top > 90 && r.top < vh * 0.8;
+      });
+    if (!boards.length) return false;
+    if (!owlSky) {
+      owlSky = document.createElement('div');
+      owlSky.className = 'owl-sky';
+      owlSky.setAttribute('aria-hidden', 'true');
+      owlPage = document.createElement('div');
+      owlPage.className = 'owl-page';
+      owlPage.setAttribute('aria-hidden', 'true');
+      document.body.append(owlSky, owlPage);
+    }
+    const board = boards[Math.floor(Math.random() * boards.length)];
+    const u = vw < 700 ? 1 : 1.25;             // px per drawing unit
+    const w = 120 * u;
+    const perchX = board.clientWidth * rand(0.2, 0.8);
+    const FEET = -9;                            // on top of the wooden frame
+    const stay = FORCED.owl ? rand(10, 14) : rand(25, 50);
+    const fromLeft = Math.random() < 0.5;
+    const perch = () => {
+      const r = board.getBoundingClientRect();
+      return { x: r.left + board.clientLeft + perchX, y: r.top + board.clientTop + FEET };
+    };
+    const at = (el, p, s = 1) => place(el, p.x - 60 * u, p.y - 64 * u, s === 1 ? '' : ` scale(${s.toFixed(3)})`);
+    const bezier = (a, c, b, k) => ({
+      x: (1 - k) * (1 - k) * a.x + 2 * (1 - k) * k * c.x + k * k * b.x,
+      y: (1 - k) * (1 - k) * a.y + 2 * (1 - k) * k * c.y + k * k * b.y,
+    });
+
+    const start = { x: fromLeft ? -w : vw + w, y: rand(-40, vh * 0.15) };
+    const p0 = perch();
+    const inTime = Math.min(4.5, Math.max(2.4, Math.hypot(p0.x - start.x, p0.y - start.y) / 300));
+    let state = 'in', perchedAt = 0, outFrom = null, outAt = 0, leaveNow = false;
+    let nextBlink = 0, blinkEnd = 0, nextLook = 0, nextHoot = 0, hootEnd = 0;
+
+    const el = addFlyer(owlSVG(), 'cr-owl is-flying', w, (el, t) => {
+      if (state === 'in') {
+        const k = Math.min(1, t / inTime);
+        const e = 1 - (1 - k) * (1 - k);        // slows down to land
+        const end = perch();
+        // Swoop down below the perch, then glide up onto it
+        const c = { x: (start.x + end.x) / 2, y: Math.min(Math.max(start.y, end.y) + 90, vh - 30) };
+        at(el, bezier(start, c, end, e), 0.55 + 0.45 * e);
+        el.classList.toggle('is-gliding', k > 0.75);
+        if (k >= 1) {
+          state = 'perched';
+          perchedAt = t;
+          nextBlink = t + rand(1, 3);
+          nextLook = t + rand(2, 4);
+          nextHoot = t + rand(2, 5);
+          el.classList.remove('is-flying', 'is-gliding');
+          el.classList.add('is-perched');
+          owlPage.append(el);
+        }
+        return true;
+      }
+      if (state === 'perched') {
+        // Page coordinates: stays put while scrolling, follows the board if the layout changes
+        const p = perch();
+        place(el, p.x + window.scrollX - 60 * u, p.y + window.scrollY - 64 * u);
+        if (t > nextBlink) { el.classList.add('is-blink'); blinkEnd = t + 0.16; nextBlink = t + rand(2, 5); }
+        if (blinkEnd && t > blinkEnd) { el.classList.remove('is-blink'); blinkEnd = 0; }
+        if (t > nextLook) {
+          const look = ['', 'look-l', 'look-r'][Math.floor(Math.random() * 3)];
+          el.classList.remove('look-l', 'look-r');
+          if (look) el.classList.add(look);
+          nextLook = t + rand(2.5, 6);
+        }
+        if (t > nextHoot) { el.classList.add('is-hooting'); hootEnd = t + 1.6; nextHoot = t + rand(8, 15); }
+        if (hootEnd && t > hootEnd) { el.classList.remove('is-hooting'); hootEnd = 0; }
+        if (leaveNow || t > perchedAt + stay) {
+          state = 'out';
+          outAt = t;
+          outFrom = perch();
+          el.classList.remove('is-perched', 'is-blink', 'is-hooting', 'look-l', 'look-r');
+          el.classList.add('is-flying');
+          owlSky.append(el);
+          at(el, outFrom);
+        }
+        return true;
+      }
+      // Fly up and away, out of the side it did not come in from
+      const k = Math.min(1, (t - outAt) / 3);
+      const e = k * k;
+      const end = { x: fromLeft ? vw + w : -w, y: -80 };
+      const c = { x: outFrom.x + (end.x - outFrom.x) * 0.3, y: outFrom.y - 30 };
+      at(el, bezier(outFrom, c, end, e), 1 - 0.45 * e);
+      return k < 1;
+    }, owlSky);
+    el.addEventListener('click', () => { leaveNow = true; });
+    return true;
+  }
+
   /* ---------- When ---------- */
 
   // [first wait, next wait] in seconds; forced ones come quickly and keep coming
@@ -218,6 +367,7 @@ function start() {
     bird: { spawn: flock, active: (h, rise) => h >= rise && h < rise + 3, wait: () => rand(25, 60) },
     kite: { spawn: kite, active: (h, rise, set) => h >= rise + 0.5 && h < set - 0.5, wait: () => rand(150, 330), busy: () => !!layer.querySelector('.cr-kite') },
     crow: { spawn: crows, active: (h, rise, set) => h >= set - 1 && h < set, wait: () => rand(20, 50) },
+    owl: { spawn: owl, active: (h, rise, set) => h >= set + 0.5 || h < rise - 0.5, wait: () => rand(60, 180), busy: () => !!document.querySelector('.cr-owl') },
   };
   const next = {};
   const nowSec = () => performance.now() / 1000;
@@ -233,8 +383,9 @@ function start() {
       const on = FORCED[name] || (times && k.active(h, times[0], times[1]));
       if (!on || t < next[name]) continue;
       if (k.busy && k.busy()) continue;
-      k.spawn();
-      next[name] = t + (FORCED[name] ? (name === 'kite' ? 3 : rand(6, 10)) : k.wait());
+      // A spawn that returns false found nowhere to go (owl: no board in view): try again soon
+      if (k.spawn() === false) { next[name] = t + 4; continue; }
+      next[name] = t + (FORCED[name] ? (name === 'kite' || name === 'owl' ? 3 : rand(6, 10)) : k.wait());
     }
   }
   check();

@@ -76,7 +76,7 @@ GitHub Pages でビルドなしにそのまま公開しています（https://c1
 | `time` | `?time=18`、`?time=18:30` | 指定した時刻の空で表示（`hour` も可） |
 | `super` | `?super=all`、`?super=lynx,math`、`?super=none` | スーパーの姿を確認。動物名と教科名のどちらでも指定できる |
 | `lions` | `?lions=walk`（`run` / `sit` / `sleep` / `idle`） | ライオン全員のポーズを固定 |
-| `animal` | `?animal=mouse,crow`（`mouse` / `bird` / `kite` / `crow` / `all`） | ネズミ・小鳥・トンビ・カラスを時刻に関係なくすぐ出す |
+| `animal` | `?animal=mouse,crow`（`mouse` / `bird` / `kite` / `crow` / `owl` / `all`） | ネズミ・小鳥・トンビ・カラス・フクロウを時刻に関係なくすぐ出す |
 | `lionspeed` | `?lionspeed=10` | ライオンの動きを速くする |
 | `emulator` | `?emulator=1` | localhost のとき、Firebase エミュレーターに接続 |
 
@@ -92,7 +92,7 @@ GitHub Pages でビルドなしにそのまま公開しています（https://c1
 | `assets/study/costumes.js` | 季節の衣装 |
 | `assets/study/super.js` | スーパー判定と金色の姿 |
 | `assets/study/news.txt` | おしらせ板の文言 |
-| `assets/study/critters.js` | 空の小鳥・トンビ・カラス |
+| `assets/study/critters.js` | 空の小鳥・トンビ・カラスと、夜に黒板に止まるフクロウ |
 | `study.webmanifest`、`study-sw.js` | PWA（スコープは `/study.html`） |
 
 ## PWA
