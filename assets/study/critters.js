@@ -139,45 +139,53 @@ function start() {
     }
   }
 
-  // The kite glides in, circles a few times, then glides away
+  // The kite glides in, circles a few times, then glides away. The circle lies flat, parallel
+  // to the ground, and we look at it from below at a slant: on screen it is a squashed ellipse,
+  // the bird is a little smaller on the far side and bigger on the near side, and the drawing
+  // itself is turned to its heading on that flat plane and then squashed the same way.
+  // Ground coordinates: gx = left/right (same as the screen), gz = depth (+ = toward the viewer).
   function kite() {
     const size = small() ? 58 : 80;
-    const r = small() ? rand(36, 52) : rand(55, 85);
-    const cx = Math.random() < 0.5 ? W() * rand(0.12, 0.3) : W() * rand(0.7, 0.88);
-    const cy = H() * rand(0.25, 0.4);
-    const ccw = Math.random() < 0.5 ? 1 : -1;
-    const loops = Math.round(rand(2, 4));
-    const loopTime = rand(5.5, 7.5);
-    const fromLeft = cx > W() / 2;            // come in from the far side
-    const inTime = 4;
-    const sx = fromLeft ? -size : W() + size;
-    const sy = cy - rand(10, 40);
-    const a0 = fromLeft ? Math.PI : 0;         // join the circle on the side facing the way in
+    const r = small() ? rand(48, 66) : rand(80, 115);
+    const FLAT = 0.32;                         // how squashed the circle looks on screen
+    const BODY = 0.62;                         // how squashed the bird looks (it banks, so we see more of it)
+    const DEPTH = 0.16;                        // size change between the near and far side
+    const cx = Math.random() < 0.5 ? W() * rand(0.15, 0.3) : W() * rand(0.7, 0.85);
+    const cy = H() * rand(0.25, 0.38);
+    const ccw = Math.random() < 0.5 ? 1 : -1;  // which way round it circles
+    const loops = Math.round(rand(2, 3));
+    const loopTime = rand(6.5, 8.5);
+    const speed = (2 * Math.PI * r) / loopTime;
+    const dir = cx < W() / 2 ? 1 : -1;         // come in from the nearer edge, leave toward the far one
+    const hIn = dir > 0 ? 0 : Math.PI;         // heading on the ground plane while flying straight
+    // Join (and later leave) the circle where its direction matches the straight flight
+    const a0 = hIn - ccw * Math.PI / 2;
+    const jgx = cx + r * Math.cos(a0), jgz = r * Math.sin(a0);
+    const sgx = dir > 0 ? -size : W() + size;
+    const inTime = Math.abs(jgx - sgx) / speed;
     const circleEnd = inTime + loops * loopTime;
-    let exit = null;
+    const lift = rand(10, 30);                 // drifts down a little on the way in, climbs on the way out
     addFlyer(kiteSVG(), 'cr-kite', size, (el, t) => {
-      let x, y, heading;
+      let gx, gz, heading, up = 0;
       if (t < inTime) {
-        const k = t / inTime;
-        const jx = cx + r * Math.cos(a0), jy = cy + r * Math.sin(a0);
-        x = sx + (jx - sx) * k; y = sy + (jy - sy) * k;
-        heading = Math.atan2(jy - sy, jx - sx);
+        gx = sgx + dir * speed * t; gz = jgz;
+        heading = hIn;
+        up = lift * (1 - t / inTime);
       } else if (t < circleEnd) {
         const a = a0 + ccw * ((t - inTime) / loopTime) * Math.PI * 2;
-        x = cx + r * Math.cos(a); y = cy + r * Math.sin(a);
+        gx = cx + r * Math.cos(a); gz = r * Math.sin(a);
         heading = a + ccw * Math.PI / 2;
       } else {
-        if (!exit) {
-          const a = a0 + ccw * loops * Math.PI * 2;
-          const h = a + ccw * Math.PI / 2;
-          exit = { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a), dx: Math.cos(h) >= 0 ? 1 : -1 };
-        }
         const k = t - circleEnd;
-        x = exit.x + exit.dx * k * 70; y = exit.y - k * 14;
-        heading = exit.dx > 0 ? -0.2 : Math.PI + 0.2;
+        gx = jgx + dir * speed * k; gz = jgz;
+        heading = hIn;
+        up = lift * Math.min(1, k / 4);
       }
-      place(el, x - size / 2, y - size * 0.4, ` rotate(${(heading * 180 / Math.PI).toFixed(1)}deg)`);
-      return x > -size * 2 && x < W() + size * 2 && y > -size * 2;
+      const x = gx, y = cy + gz * FLAT - up;
+      const s = 1 + DEPTH * (gz / r);
+      place(el, x - size / 2, y - size * 0.4,
+        ` scale(${s.toFixed(3)}) scaleY(${BODY}) rotate(${(heading * 180 / Math.PI).toFixed(1)}deg)`);
+      return x > -size * 2 && x < W() + size * 2;
     });
   }
 
