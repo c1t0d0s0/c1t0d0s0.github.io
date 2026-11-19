@@ -1635,6 +1635,9 @@
     @keyframes ms-leg { from { transform: rotate(-28deg); } to { transform: rotate(28deg); } }
     @keyframes ms-bob { from { transform: translateY(0); } to { transform: translateY(-1.5px); } }
     @keyframes ms-tail { 0%, 100% { transform: rotate(-8deg); } 50% { transform: rotate(10deg); } }
+    /* "!" when the falcon dives at it */
+    .ms-alert { fill: #d9473f; stroke: #fff; stroke-width: 3px; paint-order: stroke; font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; opacity: 0; }
+    .mouse.is-startled .ms-alert { opacity: 1; }
 
     /* Birds in the sky (assets/study/critters.js): behind the gate sign */
     .sky-critters { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
@@ -1644,15 +1647,51 @@
     .critter.is-left svg { transform: scaleX(-1); }
     .cr-bird .cr-wing { transform-origin: 15px 11px; animation: cr-flap .2s ease-in-out infinite alternate; }
     .cr-crow .cr-wing { transform-origin: 28px 16px; animation: cr-flap .42s ease-in-out infinite alternate; }
-    .cr-kite .cr-glide { transform-origin: 40px 32px; animation: cr-glide 3s ease-in-out infinite; }
+    .cr-falcon .cr-glide { transform-origin: 40px 32px; animation: cr-glide 3s ease-in-out infinite; }
+    .cr-falcon .fa-stoop, .cr-falcon .fa-feet, .cr-falcon.is-stoop .fa-spread { display: none; }
+    .cr-falcon.is-stoop .fa-stoop, .cr-falcon.is-strike .fa-feet { display: inline; }
+    .cr-falcon.is-stoop .cr-glide, .cr-falcon.is-strike .cr-glide { animation: none; }
+    .cr-falcon .fa-spread { transform-origin: 40px 32px; }
+    .cr-falcon.is-flap .fa-spread { animation: cr-flap .15s ease-in-out infinite alternate; }
+    /* スカッ where the falcon's talons hit the ground instead of the mouse */
+    .fa-miss {
+      position: absolute;
+      color: var(--ink);
+      font-family: 'Zen Maru Gothic', sans-serif;
+      font-size: 21px;
+      font-weight: 700;
+      white-space: nowrap;
+      text-shadow: 0 0 2px #fff, 0 0 2px #fff, 0 0 4px #fff, 0 0 6px #fff;
+      pointer-events: none;
+      animation: fa-miss .95s ease-out forwards;
+    }
+    .fa-miss::before {
+      content: '';
+      position: absolute;
+      left: 50%;
+      top: 120%;
+      width: 46px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(150, 120, 80, .4);
+      transform: translateX(-50%);
+      animation: fa-dust .95s ease-out forwards;
+    }
+    @keyframes fa-miss {
+      0% { opacity: 0; transform: translate(-50%, -40%) scale(.6); }
+      20% { opacity: 1; transform: translate(-50%, -110%) scale(1.15); }
+      100% { opacity: 0; transform: translate(-50%, -170%) scale(1); }
+    }
+    @keyframes fa-dust { from { opacity: 1; transform: translateX(-50%) scale(.4); } to { opacity: 0; transform: translateX(-50%) scale(1.5); } }
     .cr-caw { fill: var(--ink); font-family: 'Zen Maru Gothic', sans-serif; font-weight: 700; opacity: 0; transition: opacity .3s; }
     .critter.is-left .cr-caw { transform-box: fill-box; transform-origin: center; transform: scaleX(-1); }
     .cr-crow.is-calling .cr-caw { opacity: .85; }
     @keyframes cr-flap { from { transform: scaleY(1); } to { transform: scaleY(-.65); } }
     @keyframes cr-glide { 0%, 100% { transform: scaleY(1); } 50% { transform: scaleY(.92); } }
     .viewing .mouse *, .viewing .critter * { animation-play-state: paused; }
-    /* Owl at night (critters.js): flies in .owl-sky, then perches on the 算数 / 国語 board in .owl-page */
-    .owl-sky { position: fixed; inset: 0; z-index: 4; overflow: hidden; pointer-events: none; }
+    /* Screen layer for flights that leave the sky: the owl, the falcon's dive (critters.js) */
+    .sky-overlay { position: fixed; inset: 0; z-index: 4; overflow: hidden; pointer-events: none; }
+    /* Owl at night: flies in .sky-overlay, then perches on the 算数 / 国語 board in .owl-page */
     .owl-page { position: absolute; left: 0; top: 0; z-index: 4; width: 0; height: 0; pointer-events: none; }
     .cr-owl { transform-origin: 50% 97%; }
     .cr-owl .ow-fly, .cr-owl.is-flying .ow-fold { display: none; }

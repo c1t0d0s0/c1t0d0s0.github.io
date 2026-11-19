@@ -1,13 +1,16 @@
 /* ==========================================================================
    THE LEARNING ZOO - creatures of the sky (header of study.html)
      小鳥 (birds) - now and then a little flock, for 3 hours after sunrise
-     トンビ (kite) - rarely during the day, circles a few times and glides away
+     ハヤブサ (falcon) - rarely during the day, crosses the sky fast in a straight line.
+                      If the mouse is on the lions' walkway when it passes overhead, now and
+                      then it dives for it ... and misses (the mouse dashes off just in time).
      カラス (crow) - now and then from 1 hour before sunset until sunset
      フクロウ (owl) - now and then at night, flies down and perches on the 算数 or 国語
                       board for a while (blinks, turns its head, ホー), then flies off.
                       Tapping it makes it fly off early.
    Sunrise / sunset come from SUN_TIMES and nowHours() in study.html (so ?month= and
-   ?time= work here too). ?animal=bird,kite,crow,owl (or all) shows them right away.
+   ?time= work here too). ?animal=bird,falcon,crow,owl (or all) shows them right away;
+   ?animal=falcon,mouse makes the falcon always dive when it passes over the mouse.
    The mouse that visits the lions' walkway lives in lions.js.
    ========================================================================== */
 
@@ -41,29 +44,46 @@ function crowSVG() {
   </svg>`;
 }
 
-// Kite seen from above with wings spread, head to the right (it is rotated to its heading).
-// What makes it a トンビ: long broad wings with dark splayed "fingers", a pale patch near
-// each wrist, and the notched (バチ型) tail. The lower wing is the upper one mirrored.
-function kiteSVG() {
-  const wing = `
-      <path d="M46 29C48.6 24 49.2 19 47.5 14.5L30 12C28.6 18 28.6 24 30 29Z" fill="#8f6038" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M47.5 14.5C46.6 10 44.6 6 42.2 3.2Q41.2 0.2 39.8 2.4L39.2 4.2Q38 0.8 36.6 3L36.2 5.4Q34.8 2 33.6 4.4L33.4 6.6Q31.8 4.4 31 6.8L31.2 8.6Q29.4 7.6 29.4 9.8L30 12Z" fill="#4b3121" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M33 14.4Q39 13 45.6 15.8Q39 18.8 33 14.4Z" fill="#e9d2a8"/>
-      <path d="M32.5 22.5Q39 21 45.5 23" fill="none" stroke="#6e4628" stroke-width="1.1" stroke-linecap="round"/>`;
+// Peregrine falcon seen from above, head to the right (it is rotated to its heading).
+// What makes it a ハヤブサ: long, narrow, pointed wings swept back like a sickle, a short
+// narrow tail, slate-blue back, a dark hood with white cheeks and a black "moustache",
+// and yellow eye rings. The lower wing is the upper one mirrored.
+//   .fa-spread  wings spread (gliding; .is-flap flaps them)
+//   .fa-stoop   wings tucked in for the dive (.is-stoop)
+//   .fa-feet    talons thrust forward at the end of the dive (.is-strike)
+const FA = '#55637a', FA_DEEP = '#333f52', FA_BACK = '#64738b', FA_HOOD = '#2b3445', FA_YELLOW = '#f2c14e';
+function falconSVG() {
+  const mirror = (inner) => `<g>${inner}</g><g transform="translate(0 64) scale(1 -1)">${inner}</g>`;
+  const spread = `
+      <path d="M44 28.5C47.5 23 48.5 16 45.5 10.5C41.5 5.5 33 2.5 23 1C28.5 5 31.5 9.5 32.5 15C33.2 20 32.6 25 32 28.5Z" fill="${FA}" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M45.5 10.5C41.5 5.5 33 2.5 23 1C28.5 5 31.5 9.5 32.5 15C37 12.2 41.4 10.8 45.5 10.5Z" fill="${FA_DEEP}" stroke="${INK}" stroke-width="1.4" stroke-linejoin="round"/>
+      <path d="M34 21Q40 19.6 46.8 20.4" fill="none" stroke="${FA_DEEP}" stroke-width="1.1" stroke-linecap="round"/>`;
+  const stoop = `
+      <path d="M46 28.6C42 25.4 32 24.4 17 26C28 28.4 38 29.2 46 29.6Z" fill="${FA}" stroke="${INK}" stroke-width="1.5" stroke-linejoin="round"/>`;
+  const foot = `
+      <path d="M49 29L60 24.4" fill="none" stroke="${INK}" stroke-width="4" stroke-linecap="round"/>
+      <path d="M49 29L60 24.4" fill="none" stroke="${FA_YELLOW}" stroke-width="2.4" stroke-linecap="round"/>
+      <path d="M58.6 21.6L64.6 22.6L63 26.8L58.4 27Z" fill="${FA_YELLOW}" stroke="${INK}" stroke-width="1.1" stroke-linejoin="round"/>
+      <path d="M64.6 22.6L66.4 23.8M63 26.8L64.8 27.6" fill="none" stroke="${INK}" stroke-width="1.3" stroke-linecap="round"/>`;
+  const eye = `<circle cx="59.6" cy="29.4" r="1.6" fill="${INK}" stroke="${FA_YELLOW}" stroke-width=".8"/><circle cx="60.1" cy="28.9" r=".5" fill="#fff"/>`;
+  const cheek = `<path d="M51.6 28.2Q55.4 25.2 60.8 26.6Q57.4 27.4 54.6 29.2Q53 29.4 51.6 28.2Z" fill="#f4f1ea"/>
+      <path d="M57.4 26.4L56.4 29.4" fill="none" stroke="${INK}" stroke-width="1.5" stroke-linecap="round"/>`;
   return `<svg viewBox="0 0 80 64" aria-hidden="true" focusable="false">
     <g class="cr-glide">
-      <path d="M27 29L11 25.5Q9.6 25.4 10 26.8L13.6 32L10 37.2Q9.6 38.6 11 38.5L27 35Z" fill="#7a4c2c" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>
-      <path d="M13.5 28.4L19 29.5M13.5 35.6L19 34.5" fill="none" stroke="#4b3121" stroke-width="1.3" stroke-linecap="round"/>
-      <g>${wing}</g>
-      <g transform="translate(0 64) scale(1 -1)">${wing}</g>
-      <path d="M24 32C24 27.5 30 26 40 26C48 26 53 28.5 53 32C53 35.5 48 38 40 38C30 38 24 36.5 24 32Z" fill="#9b6a42" stroke="${INK}" stroke-width="1.6"/>
-      <path d="M33 30.4L36 30.6M38 33.6L41 33.4M42.5 30.6L45 30.8" fill="none" stroke="#6e4628" stroke-width="1.3" stroke-linecap="round"/>
-      <path d="M61.5 29.2Q68 29.4 70 32Q68 34.6 61.5 34.8Z" fill="#f2c14e" stroke="${INK}" stroke-width="1.3" stroke-linejoin="round"/>
-      <path d="M67.6 30.3Q70 31 70 32Q70 33 67.6 33.7Z" fill="#3a3a46"/>
-      <ellipse cx="57" cy="32" rx="7" ry="6.4" fill="#c4a07a" stroke="${INK}" stroke-width="1.6"/>
-      <path d="M51.5 29.2Q54 32 51.5 34.8" fill="none" stroke="#9b6a42" stroke-width="1.4" stroke-linecap="round"/>
-      <circle cx="59" cy="28.6" r="1.7" fill="${INK}"/><circle cx="59.5" cy="28.1" r=".55" fill="#fff"/>
-      <circle cx="59" cy="35.4" r="1.7" fill="${INK}"/><circle cx="59.5" cy="34.9" r=".55" fill="#fff"/>
+      <path d="M25 29L10.6 28.2Q8.6 32 10.6 35.8L25 35Z" fill="${FA}" stroke="${INK}" stroke-width="1.6" stroke-linejoin="round"/>
+      <path d="M15 29L15 35M19.4 29.2L19.4 34.8" fill="none" stroke="${FA_DEEP}" stroke-width="1.3" stroke-linecap="round"/>
+      <path d="M11.2 29.2Q9.8 32 11.2 34.8" fill="none" stroke="#e9eef5" stroke-width="1.3" stroke-linecap="round"/>
+      <g class="fa-spread">${mirror(spread)}</g>
+      <g class="fa-stoop">${mirror(stoop)}</g>
+      <g class="fa-feet">${mirror(foot)}</g>
+      <path d="M23 32C23 28.6 30 27.4 40 27.4C48 27.4 52.5 29.2 52.5 32C52.5 34.8 48 36.6 40 36.6C30 36.6 23 35.4 23 32Z" fill="${FA_BACK}" stroke="${INK}" stroke-width="1.6"/>
+      <path d="M32 30L35 32L32 34M39 30L42 32L39 34" fill="none" stroke="#8593aa" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M62 30.2Q66.4 30.6 67.2 32Q66.4 33.4 62 33.8Z" fill="#8a96ad" stroke="${INK}" stroke-width="1.1" stroke-linejoin="round"/>
+      <path d="M65.6 31Q67.2 31.4 67.2 32Q67.2 32.6 65.6 33Z" fill="${INK}"/>
+      <ellipse cx="56.5" cy="32" rx="6.6" ry="6.2" fill="${FA_HOOD}" stroke="${INK}" stroke-width="1.6"/>
+      ${mirror(cheek)}
+      <path d="M62.4 30.4Q63.6 32 62.4 33.6" fill="none" stroke="${FA_YELLOW}" stroke-width="1.4" stroke-linecap="round"/>
+      ${mirror(eye)}
     </g>
   </svg>`;
 }
@@ -124,7 +144,8 @@ function start() {
   const want = (name) => forced.includes(name) || forced.includes('all');
   const FORCED = {
     bird: want('bird') || want('birds') || want('kotori'),
-    kite: want('kite') || want('tonbi'),
+    falcon: want('falcon') || want('hayabusa'),
+    mouse: want('mouse'),
     crow: want('crow') || want('karasu'),
     owl: want('owl') || want('fukurou'),
   };
@@ -181,53 +202,152 @@ function start() {
     }
   }
 
-  // The kite glides in, circles a few times, then glides away. The circle lies flat, parallel
-  // to the ground, and we look at it from below at a slant: on screen it is a squashed ellipse,
-  // the bird is a little smaller on the far side and bigger on the near side, and the drawing
-  // itself is turned to its heading on that flat plane and then squashed the same way.
-  // Ground coordinates: gx = left/right (same as the screen), gz = depth (+ = toward the viewer).
-  function kite() {
+  // A layer fixed over the whole screen, for flights that leave the sky (owl, falcon's dive)
+  let overlay = null;
+  function screenLayer() {
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'sky-overlay';
+      overlay.setAttribute('aria-hidden', 'true');
+      document.body.append(overlay);
+    }
+    return overlay;
+  }
+
+  const bezier = (a, c, b, k) => ({
+    x: (1 - k) * (1 - k) * a.x + 2 * (1 - k) * k * c.x + k * k * b.x,
+    y: (1 - k) * (1 - k) * a.y + 2 * (1 - k) * k * c.y + k * k * b.y,
+  });
+
+  // The mouse on the lions' walkway (lions.js), if it is fully on screen
+  function mouseOnScreen() {
+    const m = document.querySelector('#lion-path .mouse');
+    if (!m) return null;
+    const r = m.getBoundingClientRect();
+    return r.left >= 10 && r.right <= window.innerWidth - 10 && r.top >= 0 && r.bottom <= window.innerHeight ? r : null;
+  }
+
+  // The falcon crosses the sky in a straight line, fast, gliding with now and then a quick
+  // burst of wingbeats, drifting a little up or down on the way. We look at it from below at a
+  // slant, so the drawing (seen from above) is squashed a little, like a bird banking.
+  //
+  // Hunting: if it passes right above the mouse, there is a chance it goes for it.
+  // It moves to the screen layer, tucks its wings and dives at the mouse; halfway down the
+  // mouse notices (lions.js listens for 'zoo:falcon-strike') and dashes off, so the falcon
+  // flares its wings and thrusts its talons at empty ground (スカッ), then climbs away.
+  function falcon() {
     const size = small() ? 58 : 80;
-    const r = small() ? rand(48, 66) : rand(80, 115);
-    const FLAT = 0.32;                         // how squashed the circle looks on screen
-    const BODY = 0.62;                         // how squashed the bird looks (it banks, so we see more of it)
-    const DEPTH = 0.16;                        // size change between the near and far side
-    const cx = Math.random() < 0.5 ? W() * rand(0.15, 0.3) : W() * rand(0.7, 0.85);
-    const cy = H() * rand(0.25, 0.38);
-    const ccw = Math.random() < 0.5 ? 1 : -1;  // which way round it circles
-    const loops = Math.round(rand(2, 3));
-    const loopTime = rand(6.5, 8.5);
-    const speed = (2 * Math.PI * r) / loopTime;
-    const dir = cx < W() / 2 ? 1 : -1;         // come in from the nearer edge, leave toward the far one
-    const hIn = dir > 0 ? 0 : Math.PI;         // heading on the ground plane while flying straight
-    // Join (and later leave) the circle where its direction matches the straight flight
-    const a0 = hIn - ccw * Math.PI / 2;
-    const jgx = cx + r * Math.cos(a0), jgz = r * Math.sin(a0);
-    const sgx = dir > 0 ? -size : W() + size;
-    const inTime = Math.abs(jgx - sgx) / speed;
-    const circleEnd = inTime + loops * loopTime;
-    const lift = rand(10, 30);                 // drifts down a little on the way in, climbs on the way out
-    addFlyer(kiteSVG(), 'cr-kite', size, (el, t) => {
-      let gx, gz, heading, up = 0;
-      if (t < inTime) {
-        gx = sgx + dir * speed * t; gz = jgz;
-        heading = hIn;
-        up = lift * (1 - t / inTime);
-      } else if (t < circleEnd) {
-        const a = a0 + ccw * ((t - inTime) / loopTime) * Math.PI * 2;
-        gx = cx + r * Math.cos(a); gz = r * Math.sin(a);
-        heading = a + ccw * Math.PI / 2;
-      } else {
-        const k = t - circleEnd;
-        gx = jgx + dir * speed * k; gz = jgz;
-        heading = hIn;
-        up = lift * Math.min(1, k / 4);
+    const BODY = 0.62;                         // how squashed the bird looks from below
+    const ltr = Math.random() < 0.5;
+    const speed = rand(170, 230);              // px per second
+    const sx = ltr ? -size : W() + size, ex = ltr ? W() + size : -size;
+    const y0 = H() * rand(0.15, 0.4), y1 = H() * rand(0.12, 0.42);
+    const crossTime = Math.abs(ex - sx) / speed;
+    const slope = Math.atan2(y1 - y0, ex - sx);
+    let nextFlap = rand(0.3, 1.2), flapEnd = 0;
+    const CHANCE = FORCED.falcon && FORCED.mouse ? 1 : 0.35;
+    const DIVE = 1.0, HOLD = 0.35, CLIMB = 2.4;
+    const deg = (a) => `${(a * 180 / Math.PI).toFixed(1)}deg`;
+
+    let state = 'fly', tried = false, wasAbove = false;
+    let from = null, target = null, locked = false, s0 = 1, diveAt = 0, missAt = 0, away = 1, diveHeading = 0;
+
+    addFlyer(falconSVG(), 'cr-falcon', size, (el, t) => {
+      if (state === 'fly') {
+        const k = t / crossTime;
+        const x = sx + (ex - sx) * k, y = y0 + (y1 - y0) * k + Math.sin(t * 1.6) * 3;
+        const s = 1;
+        // Glide, with a short burst of quick wingbeats every couple of seconds
+        if (t > nextFlap) { el.classList.add('is-flap'); flapEnd = t + rand(0.45, 0.8); nextFlap = flapEnd + rand(1.4, 2.8); }
+        if (flapEnd && t > flapEnd) { el.classList.remove('is-flap'); flapEnd = 0; }
+        place(el, x - size / 2, y - size * 0.4, ` scaleY(${BODY}) rotate(${deg(slope)})`);
+
+        // Right above the mouse? Roll once as it comes over. The walkway is a long way
+        // below the sky (on a 800px-high screen they don't fit on it together), so the falcon
+        // may be above the top of the screen: then the dive starts just above the top edge.
+        if (!tried) {
+          const m = mouseOnScreen();
+          const sr = sky.getBoundingClientRect();
+          const fx = sr.left + x, fy = sr.top + y;
+          const above = !!m && fy < m.top - 80 && Math.abs(fx - (m.left + m.width / 2)) < 16;
+          if (above && !wasAbove && Math.random() < CHANCE) {
+            tried = true;
+            state = 'dive';
+            diveAt = t;
+            s0 = s;
+            from = { x: fx, y: Math.max(fy, -size) };
+            target = { x: m.left + m.width / 2, y: m.top + m.height * 0.6 };
+            el.classList.remove('is-flap');
+            el.classList.add('is-stoop');
+            screenLayer().append(el);
+          }
+          wasAbove = above;
+        }
+        return k < 1;
       }
-      const x = gx, y = cy + gz * FLAT - up;
-      const s = 1 + DEPTH * (gz / r);
-      place(el, x - size / 2, y - size * 0.4,
-        ` scale(${s.toFixed(3)}) scaleY(${BODY}) rotate(${(heading * 180 / Math.PI).toFixed(1)}deg)`);
-      return x > -size * 2 && x < W() + size * 2;
+
+      if (state === 'dive') {
+        const k = Math.min(1, (t - diveAt) / DIVE);
+        // Aim at the mouse until halfway; then the mouse spots it and runs, too late to re-aim
+        if (!locked) {
+          const m = mouseOnScreen();
+          if (m) target = { x: m.left + m.width / 2, y: m.top + m.height * 0.6 };
+          if (k >= 0.55 || !m) {
+            locked = true;
+            document.dispatchEvent(new CustomEvent('zoo:falcon-strike', { detail: { fromX: from.x, x: target.x } }));
+          }
+        }
+        const e = k * k;                          // speeds up as it drops
+        const x = from.x + (target.x - from.x) * e, y = from.y + (target.y - from.y) * e;
+        const heading = diveHeading = Math.atan2(target.y - from.y, target.x - from.x);
+        const squash = BODY + (1 - BODY) * Math.min(1, k * 4);
+        const s = s0 + (1.35 - s0) * e;
+        if (k > 0.82 && !el.classList.contains('is-strike')) {
+          el.classList.remove('is-stoop');
+          el.classList.add('is-strike');         // wings flare, talons out
+        }
+        place(el, x - size / 2, y - size * 0.4, ` scale(${s.toFixed(3)}) scaleY(${squash.toFixed(3)}) rotate(${deg(heading)})`);
+        if (k >= 1) {
+          state = 'miss';
+          missAt = t;
+          away = target.x >= from.x ? 1 : -1;     // carry on the way it was going
+          const puff = document.createElement('div');
+          puff.className = 'fa-miss';
+          puff.textContent = 'スカッ';
+          puff.style.left = `${target.x}px`;
+          puff.style.top = `${target.y}px`;
+          screenLayer().append(puff);
+          setTimeout(() => puff.remove(), 1000);
+        }
+        return true;
+      }
+
+      if (state === 'miss') {
+        // A moment on the ground with wings spread, turning toward the way it will climb off
+        const k = Math.min(1, (t - missAt) / HOLD);
+        const goal = away > 0 ? 0 : Math.PI;
+        let turn = goal - diveHeading;
+        turn = Math.atan2(Math.sin(turn), Math.cos(turn));
+        place(el, target.x - size / 2, target.y - size * 0.4, ` scale(1.35) rotate(${deg(diveHeading + turn * k * k * (3 - 2 * k))})`);
+        if (k >= 1) {
+          state = 'climb';
+          el.classList.remove('is-strike');
+          el.classList.add('is-flap');
+        }
+        return true;
+      }
+
+      // Climb away, flapping hard, getting smaller as it goes
+      const k = Math.min(1, (t - missAt - HOLD) / CLIMB);
+      const e = k * k * (3 - 2 * k);
+      const end = { x: target.x + away * window.innerWidth * 0.7, y: -120 };
+      const c = { x: target.x + away * 140, y: target.y + 10 };
+      const p = bezier(target, c, end, e);
+      const dx = 2 * (1 - e) * (c.x - target.x) + 2 * e * (end.x - c.x);
+      const dy = 2 * (1 - e) * (c.y - target.y) + 2 * e * (end.y - c.y);
+      const s = 1.35 - 0.65 * e;
+      place(el, p.x - size / 2, p.y - size * 0.4, ` scale(${s.toFixed(3)}) scaleY(${(1 - 0.25 * e).toFixed(3)}) rotate(${deg(Math.atan2(dy, dx))})`);
+      return k < 1;
     });
   }
 
@@ -254,11 +374,11 @@ function start() {
   }
 
   // At night an owl flies down onto the 算数 or 国語 board, stays a while, then flies off.
-  // It flies in a fixed layer over the screen; while it perches it is moved to a layer laid
+  // It flies in the screen layer; while it perches it is moved to a layer laid
   // over the whole page, so it scrolls with the board and stays in front of the hill and
   // the acorns (which cover the top of the first board on phones). Only comes when one of
   // those boards is in view.
-  let owlSky = null, owlPage = null;
+  let owlPage = null;
   function owl() {
     const vh = window.innerHeight, vw = window.innerWidth;
     const boards = ['subject-math', 'subject-japanese']
@@ -270,14 +390,12 @@ function start() {
         return r.width > 0 && r.top > 90 && r.top < vh * 0.8;
       });
     if (!boards.length) return false;
-    if (!owlSky) {
-      owlSky = document.createElement('div');
-      owlSky.className = 'owl-sky';
-      owlSky.setAttribute('aria-hidden', 'true');
+    const owlSky = screenLayer();
+    if (!owlPage) {
       owlPage = document.createElement('div');
       owlPage.className = 'owl-page';
       owlPage.setAttribute('aria-hidden', 'true');
-      document.body.append(owlSky, owlPage);
+      document.body.append(owlPage);
     }
     const board = boards[Math.floor(Math.random() * boards.length)];
     const u = vw < 700 ? 1 : 1.25;             // px per drawing unit
@@ -291,10 +409,6 @@ function start() {
       return { x: r.left + board.clientLeft + perchX, y: r.top + board.clientTop + FEET };
     };
     const at = (el, p, s = 1) => place(el, p.x - 60 * u, p.y - 64 * u, s === 1 ? '' : ` scale(${s.toFixed(3)})`);
-    const bezier = (a, c, b, k) => ({
-      x: (1 - k) * (1 - k) * a.x + 2 * (1 - k) * k * c.x + k * k * b.x,
-      y: (1 - k) * (1 - k) * a.y + 2 * (1 - k) * k * c.y + k * k * b.y,
-    });
 
     const start = { x: fromLeft ? -w : vw + w, y: rand(-40, vh * 0.15) };
     const p0 = perch();
@@ -365,7 +479,7 @@ function start() {
   // [first wait, next wait] in seconds; forced ones come quickly and keep coming
   const KINDS = {
     bird: { spawn: flock, active: (h, rise) => h >= rise && h < rise + 3, wait: () => rand(25, 60) },
-    kite: { spawn: kite, active: (h, rise, set) => h >= rise + 0.5 && h < set - 0.5, wait: () => rand(150, 330), busy: () => !!layer.querySelector('.cr-kite') },
+    falcon: { spawn: falcon, active: (h, rise, set) => h >= rise + 0.5 && h < set - 0.5, wait: () => rand(150, 330), busy: () => !!document.querySelector('.cr-falcon') },
     crow: { spawn: crows, active: (h, rise, set) => h >= set - 1 && h < set, wait: () => rand(20, 50) },
     owl: { spawn: owl, active: (h, rise, set) => h >= set + 0.5 || h < rise - 0.5, wait: () => rand(60, 180), busy: () => !!document.querySelector('.cr-owl') },
   };
@@ -385,7 +499,7 @@ function start() {
       if (k.busy && k.busy()) continue;
       // A spawn that returns false found nowhere to go (owl: no board in view): try again soon
       if (k.spawn() === false) { next[name] = t + 4; continue; }
-      next[name] = t + (FORCED[name] ? (name === 'kite' || name === 'owl' ? 3 : rand(6, 10)) : k.wait());
+      next[name] = t + (FORCED[name] ? (name === 'falcon' || name === 'owl' ? 3 : rand(6, 10)) : k.wait());
     }
   }
   check();

@@ -148,6 +148,7 @@ export function mouseSVG() {
     <circle cx="51" cy="20" r="2.4" fill="${INK}"/><circle cx="51.8" cy="19.2" r=".9" fill="#fff"/>
     <circle cx="61" cy="25" r="2.4" fill="#e0707a" stroke="${INK}" stroke-width="1.2"/>
     <path d="M57 26L66 24M57 28L66 29" stroke="${INK}" stroke-width=".9" stroke-linecap="round" opacity=".6"/>
+    <text class="ms-alert" x="47" y="2" font-size="22" text-anchor="middle">!</text>
   </g></g>
 </svg>`;
 }
@@ -338,9 +339,9 @@ function start() {
     startChase();
   }
 
-  function moveMouse(x, then) {
+  function moveMouse(x, then, boost = 1) {
     const dx = x - mouse.x;
-    const secs = Math.max(0.05, Math.abs(dx) / MOUSE_SPEED / timeScale);
+    const secs = Math.max(0.05, Math.abs(dx) / (MOUSE_SPEED * boost) / timeScale);
     mouse.el.classList.add('is-run');
     mouse.el.classList.toggle('is-left', dx < 0);
     mouse.el.style.transition = `transform ${secs}s linear`;
@@ -352,6 +353,7 @@ function start() {
   // Dart to a random spot, freeze for a moment, again ... then run off the nearest edge
   function mouseStep() {
     if (!mouse) return;
+    mouse.el.classList.remove('is-startled'); // (the cub's chase can cut short the pause after a dodge)
     if (Date.now() >= mouse.until) {
       const exit = mouse.x < pathWidth() / 2 ? -MOUSE_W - 20 : pathWidth() + 20;
       moveMouse(exit, removeMouse);
@@ -374,6 +376,31 @@ function start() {
       mouse.timer = setTimeout(mouseStep, (rand(0.3, 1.2) * 1000) / timeScale);
     });
   }
+
+  // The falcon (critters.js) is diving at it: "!", then a dash away from where the falcon
+  // came from, fast enough that it grabs only the ground. A short freeze, then back to normal.
+  function dodgeMouse(detail) {
+    if (!mouse || !running) return;
+    clearTimeout(mouse.timer);
+    const left = path.getBoundingClientRect().left;
+    mouse.x = actualX(mouse.el);              // it may be mid-run: start from where it is now
+    const mid = mouse.x + MOUSE_W / 2;
+    const lo = 10, hi = pathWidth() - MOUSE_W - 10;
+    let dir = detail && Number.isFinite(detail.fromX) && mid < detail.fromX - left ? -1 : 1;
+    if ((dir > 0 ? hi - mouse.x : mouse.x - lo) < 110) dir = -dir;
+    const target = Math.max(lo, Math.min(hi, mouse.x + dir * rand(160, 230)));
+    mouse.el.classList.add('is-startled');
+    moveMouse(target, () => {
+      if (!mouse) return;
+      mouse.el.classList.remove('is-run');
+      mouse.timer = setTimeout(() => {
+        if (!mouse) return;
+        mouse.el.classList.remove('is-startled');
+        mouseStep();
+      }, 1000 / timeScale);
+    }, 2.2);
+  }
+  document.addEventListener('zoo:falcon-strike', (e) => dodgeMouse(e.detail));
 
   function removeMouse() {
     if (!mouse) return;
