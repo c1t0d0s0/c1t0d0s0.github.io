@@ -15,6 +15,7 @@ const ASSETS = [
   'assets/study/costumes.js',
   'assets/study/super.js',
   'assets/study/critters.js',
+  'assets/study/beach.js',
   'assets/study/favicon.svg',
   'assets/study/icon-192.png',
   'study.webmanifest',

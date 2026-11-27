@@ -1204,7 +1204,7 @@
 
     /* ---------- Footer signpost ---------- */
     .exit {
-      padding: 20px 16px calc(32px + env(safe-area-inset-bottom));
+      padding: 20px 16px 28px;
       text-align: center;
       font-size: .9rem;
     }
@@ -1222,6 +1222,66 @@
     .exit a:hover { background: var(--wood-deep); }
     .exit a:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
     .exit p { margin: 16px 0 0; opacity: .75; }
+
+    /* ---------- Beach at the very bottom (birds: assets/study/beach.js) ---------- */
+    .beach {
+      --sea: color-mix(in srgb, #5ab3dc, #2c4580 calc(var(--night, 0) * 70%));
+      --sand: color-mix(in srgb, #efdcaa, #8a86a6 calc(var(--night, 0) * 45%));
+      position: relative;
+      height: calc(clamp(160px, 24vw, 250px) + env(safe-area-inset-bottom));
+      overflow: hidden;
+    }
+    .beach-land { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .beach-sand { fill: var(--sand); }
+    .beach-wet { fill: color-mix(in srgb, var(--sand), #b0925a 35%); }
+    .beach-sea { fill: var(--sea); }
+    .beach-foam { fill: none; stroke: rgba(255, 255, 255, .85); stroke-width: 3; stroke-linecap: round; vector-effect: non-scaling-stroke; }
+    .beach-wash { transform-box: view-box; animation: beach-wash 5s ease-in-out infinite alternate; }
+    @keyframes beach-wash { from { transform: translateY(0); } to { transform: translateY(-5px); } }
+    /* Little waves drifting across the sea */
+    .beach-waves {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 50%;
+      bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='60'%3E%3Cg fill='none' stroke='%23fff' stroke-width='2' stroke-linecap='round' opacity='.45'%3E%3Cpath d='M10 14q8-6 16 0'/%3E%3Cpath d='M100 34q10-7 20 0'/%3E%3Cpath d='M48 52q7-5 14 0'/%3E%3Cpath d='M150 10q7-5 14 0'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: 180px 60px;
+      animation: beach-waves 14s linear infinite;
+    }
+    @keyframes beach-waves { from { background-position: 0 0; } to { background-position: -180px 0; } }
+    .beach-life { position: absolute; inset: 0; overflow: hidden; }
+    .bird { position: absolute; left: 0; top: 0; will-change: transform; }
+    .bird svg { display: block; width: 100%; height: auto; overflow: visible; }
+    .bird svg * { transform-box: view-box; }
+    .bird.is-left svg { transform: scaleX(-1); }
+    .duck { transform-origin: 50% 75%; }
+    .duckling { transform-origin: 50% 77.27%; }
+    .gull { transform-origin: 50% 77.5%; }
+    .bird .dk-ring { fill: rgba(255, 255, 255, .3); }
+    .bird .dk-cover { fill: var(--sea); }
+    .bird .dk-line { stroke: rgba(255, 255, 255, .55); }
+    .bird .dk-wake { stroke: rgba(255, 255, 255, .6); opacity: 0; transition: opacity .6s; }
+    .bird.is-swim .dk-wake { opacity: 1; }
+    .bird svg { animation: bd-bob 2.4s ease-in-out infinite alternate; }
+    .gull.is-air svg { animation: none; }
+    @keyframes bd-bob { from { transform: translateY(0); } to { transform: translateY(1.6px); } }
+    .bird.is-left svg { animation-name: bd-bob-l; }
+    @keyframes bd-bob-l { from { transform: scaleX(-1) translateY(0); } to { transform: scaleX(-1) translateY(1.6px); } }
+    .duck .dk-body { transform-origin: 42px 29px; transition: transform .35s ease-in-out; }
+    .duckling .dk-body { transform-origin: 19px 16px; transition: transform .3s ease-in-out; }
+    .bird.is-dabble .dk-body { transform: rotate(62deg); }
+    .gull .gl-fly, .gull.is-air .gl-float { display: none; }
+    .gull.is-air .gl-fly { display: inline; }
+    .gull .gl-hood, .gull .gl-ring, .gull.is-summer .gl-spot { display: none; }
+    .gull.is-summer .gl-hood, .gull.is-summer .gl-ring { display: inline; }
+    .gull .gl-wing { transform-origin: 30px 23px; }
+    .gull .gl-wing-far { transform-origin: 24px 22px; }
+    .gull.is-flap .gl-wing { animation: gl-flap .22s ease-in-out infinite alternate; }
+    @keyframes gl-flap { from { transform: scaleY(1); } to { transform: scaleY(-.55); } }
+    .bird .dk-head { transition: opacity .2s; }
+    .bird.is-dabble .dk-head { opacity: 0; transition-delay: .12s; }
+    .viewing .beach * { animation-play-state: paused; }
 
     /* ---------- Animal motion ---------- */
     .animal * { transform-box: view-box; }
@@ -2100,6 +2160,20 @@
     <p>&copy; c1t0d0s0</p>
   </footer>
 
+  <!-- The beach: カルガモ swim by in the daytime, ユリカモメ stay from October to May (assets/study/beach.js) -->
+  <div class="beach" aria-hidden="true">
+    <svg class="beach-land" viewBox="0 0 1200 240" preserveAspectRatio="none">
+      <path class="beach-sand" d="M0 26C200 10 420 34 640 20C860 6 1040 30 1200 16V240H0Z"/>
+      <g class="beach-wash">
+        <path class="beach-wet" d="M0 94C150 84 300 102 450 94C600 84 750 102 900 94C1050 84 1140 98 1200 90V260H0Z"/>
+        <path class="beach-sea" d="M0 106C150 96 300 114 450 106C600 96 750 114 900 106C1050 96 1140 110 1200 102V260H0Z"/>
+        <path class="beach-foam" d="M0 106C150 96 300 114 450 106C600 96 750 114 900 106C1050 96 1140 110 1200 102"/>
+      </g>
+    </svg>
+    <div class="beach-waves"></div>
+    <div class="beach-life"></div>
+  </div>
+
   <div class="fall" id="fall" aria-hidden="true"></div>
 
   <!-- App viewer (filled in by the script at the bottom when a link on a blackboard is clicked) -->
@@ -2561,6 +2635,7 @@
   <script type="module" src="assets/study/costumes.js"></script>
   <script type="module" src="assets/study/super.js"></script>
   <script type="module" src="assets/study/critters.js"></script>
+  <script type="module" src="assets/study/beach.js"></script>
   <script>
     // Service worker for the installed app (lives at the site root, but only controls study.html)
     if ('serviceWorker' in navigator) {
