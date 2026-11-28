@@ -1228,10 +1228,12 @@
       --sea: color-mix(in srgb, #5ab3dc, #2c4580 calc(var(--night, 0) * 70%));
       --sand: color-mix(in srgb, #efdcaa, #8a86a6 calc(var(--night, 0) * 45%));
       position: relative;
+      isolation: isolate;
       height: calc(clamp(160px, 24vw, 250px) + env(safe-area-inset-bottom));
-      overflow: hidden;
+      overflow-x: clip;
+      pointer-events: none;
     }
-    .beach-land { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+    .beach-land { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
     .beach-sand { fill: var(--sand); }
     .beach-wet { fill: color-mix(in srgb, var(--sand), #b0925a 35%); }
     .beach-sea { fill: var(--sea); }
@@ -1250,7 +1252,7 @@
       animation: beach-waves 14s linear infinite;
     }
     @keyframes beach-waves { from { background-position: 0 0; } to { background-position: -180px 0; } }
-    .beach-life { position: absolute; inset: 0; overflow: hidden; }
+    .beach-life { position: absolute; inset: 0; }
     .bird { position: absolute; left: 0; top: 0; will-change: transform; }
     .bird svg { display: block; width: 100%; height: auto; overflow: visible; }
     .bird svg * { transform-box: view-box; }

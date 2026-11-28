@@ -46,7 +46,7 @@ function duckSVG() {
       <path d="M56.2 8.7L58.2 9.2Q59.4 10.2 58.2 11.2L56.2 11.5Z" fill="#f2c14e"/>
       </g>
     </g>
-    <rect class="dk-cover" x="-6" y="30.3" width="72" height="24"/>
+    <rect class="dk-cover" x="-6" y="30.3" width="72" height="10"/>
     <path class="dk-line" d="M2 30.4H58" fill="none" stroke-width="1.2" stroke-linecap="round"/>
   </svg>`;
 }
@@ -69,7 +69,7 @@ function ducklingSVG() {
       <path d="M25 6.6L28.6 7.6Q29.2 8.2 28.6 8.8L25.2 9.4Z" fill="#4a4a52" stroke="${INK}" stroke-width=".9" stroke-linejoin="round"/>
       </g>
     </g>
-    <rect class="dk-cover" x="-4" y="17.2" width="38" height="14"/>
+    <rect class="dk-cover" x="-4" y="17.2" width="38" height="6"/>
     <path class="dk-line" d="M2 17.3H27" fill="none" stroke-width="1" stroke-linecap="round"/>
   </svg>`;
 }
@@ -187,7 +187,7 @@ function start() {
         if (g.state === 'air') return;
         g.state = 'arrive';
         g.t = -i * rand(0.4, 0.8);
-        g.from = { x: W() + 60 + rand(0, 80), y: H() * rand(0.02, 0.2) };
+        g.from = { x: W() + 60 + rand(0, 80), y: H() * rand(0.06, 0.22) };
       });
     }
     gulls.forEach((g) => layoutGull(g, 0));
@@ -198,7 +198,7 @@ function start() {
     g.state = immediate ? 'air' : 'takeoff';
     g.t = 0;
     g.air = {
-      cx: rand(0.2, 0.8), cy: rand(0.08, 0.26), rx: rand(0.12, 0.3), ry: rand(0.05, 0.1),
+      cx: rand(0.2, 0.8), cy: rand(0.14, 0.28), rx: rand(0.12, 0.3), ry: rand(0.05, 0.09),
       a: rand(0, Math.PI * 2), speed: rand(0.35, 0.55) * (Math.random() < 0.5 ? 1 : -1),
       nextFlap: rand(0.5, 2), flapEnd: 0,
     };
