@@ -762,7 +762,51 @@
     }
     .star.is-placed { visibility: visible; }
     .star:nth-of-type(3n) { width: 3px; height: 3px; }
-    @media (max-width: 860px) { .sun, .star { display: none; } }
+    .shooting-star {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 0;
+      height: 0;
+      pointer-events: none;
+      --peak: calc(var(--night, 0) * var(--sun));
+      animation: shooting-star var(--dur, .9s) ease-out forwards;
+    }
+    .shooting-star::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: -1.25px;
+      width: var(--len, 90px);
+      height: 2.5px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(255, 251, 234, 0), rgba(255, 251, 234, .75) 65%, #fffef5);
+      transform-origin: right center;
+      animation: shooting-tail var(--dur, .9s) ease-out forwards;
+    }
+    .shooting-star::after {
+      content: '';
+      position: absolute;
+      left: -2.5px;
+      top: -2.5px;
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #fffef5;
+      box-shadow: 0 0 8px 2px rgba(255, 251, 234, .95);
+    }
+    @keyframes shooting-star {
+      0%   { opacity: 0; transform: rotate(var(--angle)) translateX(0); }
+      15%  { opacity: var(--peak); }
+      70%  { opacity: var(--peak); }
+      100% { opacity: 0; transform: rotate(var(--angle)) translateX(var(--dist)); }
+    }
+    @keyframes shooting-tail {
+      0%   { transform: scaleX(.15); }
+      25%  { transform: scaleX(1); }
+      100% { transform: scaleX(.2); }
+    }
+    @media (max-width: 860px) { .sun, .star, .shooting-star { display: none; } }
 
     .cloud {
       position: absolute;
@@ -1479,7 +1523,7 @@
 
     /* While an app is open, the zoo behind it stands still */
     .viewing body { overflow: hidden; }
-    .viewing .animal *, .viewing .cloud, .viewing .season { animation-play-state: paused; }
+    .viewing .animal *, .viewing .cloud, .viewing .season, .viewing .shooting-star, .viewing .shooting-star::before { animation-play-state: paused; }
     .viewing .fall { display: none; }
 
     /* Google login row at the bottom of the grade box */
@@ -1833,7 +1877,7 @@
       .lion * { transition: none !important; }
       .cloud-a { left: 6%; }
       .cloud-b { left: 70%; }
-      .fall { display: none; }
+      .fall, .shooting-star { display: none; }
     }
   </style>
 </head>
@@ -2249,6 +2293,82 @@
       window.addEventListener('resize', function () { clearTimeout(resizeTimer); resizeTimer = setTimeout(placeSky, 150); });
       if (document.fonts && document.fonts.ready) document.fonts.ready.then(placeSky);
 
+      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // Occasional shooting star across the night sky (preview quickly with ?time=22&meteor=1)
+      if (skyEl && signEl && !reduce) {
+        var firstCloud = skyEl.querySelector('.cloud');
+        var forceMeteor = /[?&](?:meteor=1|animal=(?:[^&]*,)?(?:meteor|star)(?:,|$|&))/i.test(location.search);
+
+        function spawnShootingStar() {
+          var st = window.SKY_STATE;
+          if (!st || st.night < 0.4 || !season.sun) return;
+          if (document.visibilityState !== 'visible' || document.documentElement.classList.contains('viewing')) return;
+          if (window.innerWidth <= 860) return;
+
+          var sky = skyEl.getBoundingClientRect();
+          if (sky.bottom <= 0) return;
+          var sign = signEl.getBoundingClientRect();
+          var gap = 12;
+          var bands = [
+            [gap, sign.left - sky.left - gap],
+            [sign.right - sky.left + gap, sky.width - gap]
+          ].filter(function (b) { return b[1] - b[0] >= 70; });
+          if (!bands.length) return;
+
+          var band = bands[Math.floor(Math.random() * bands.length)];
+          var bw = band[1] - band[0];
+          var dir = Math.random() < 0.5 ? 1 : -1;
+          var slope = 18 + Math.random() * 18;
+          var rad = slope * Math.PI / 180;
+          var maxDist = Math.min(bw * 0.85 / Math.cos(rad), sky.height * 0.45 / Math.sin(rad));
+          var dist = Math.min(maxDist, 100 + Math.random() * 90);
+          if (dist < 50) return;
+          var dx = dist * Math.cos(rad);
+          var dy = dist * Math.sin(rad);
+          var sx = dir > 0
+            ? band[0] + Math.random() * Math.max(0, bw - dx)
+            : band[1] - Math.random() * Math.max(0, bw - dx);
+          var sy = gap + Math.random() * Math.max(10, sky.height * 0.52 - dy - gap);
+          var angle = dir > 0 ? slope : 180 - slope;
+          var len = Math.min(dist * 0.65, 65 + Math.random() * 45);
+          var dur = 0.7 + Math.random() * 0.45;
+
+          var el = document.createElement('span');
+          el.className = 'shooting-star';
+          el.setAttribute('aria-hidden', 'true');
+          el.style.left = Math.round(sx) + 'px';
+          el.style.top = Math.round(sy) + 'px';
+          el.style.setProperty('--angle', angle.toFixed(1) + 'deg');
+          el.style.setProperty('--dist', Math.round(dist) + 'px');
+          el.style.setProperty('--len', Math.round(len) + 'px');
+          el.style.setProperty('--dur', dur.toFixed(2) + 's');
+
+          var done = false;
+          function cleanup() {
+            if (done) return;
+            done = true;
+            if (el.parentNode) el.parentNode.removeChild(el);
+          }
+          el.addEventListener('animationend', function (e) {
+            if (e.animationName === 'shooting-star') cleanup();
+          });
+          setTimeout(cleanup, (dur + 0.5) * 1000);
+          skyEl.insertBefore(el, firstCloud);
+        }
+
+        function scheduleShootingStar(first) {
+          var wait = forceMeteor
+            ? (first ? 1200 : 3500 + Math.random() * 3000)
+            : (first ? 12000 + Math.random() * 33000 : 25000 + Math.random() * 50000);
+          setTimeout(function () {
+            spawnShootingStar();
+            scheduleShootingStar(false);
+          }, wait);
+        }
+        scheduleShootingStar(true);
+      }
+
       // One small ornament per month, standing beside the trees
       var DECOR = {
         snowman:
@@ -2315,7 +2435,6 @@
       });
 
       // Falling snow / petals / rain / leaves
-      var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (season.fall !== 'none' && !reduce) {
         var layer = document.getElementById('fall');
         layer.className = 'fall fall-' + season.fall;
